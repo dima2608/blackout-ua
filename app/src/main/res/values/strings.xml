@@ -3,4 +3,28 @@
     <string name="home">Дім</string>
     <string name="settings">Налаштування</string>
     <string name="search">Пошук</string>
+
+    <string name="cherkasy">Черкаська</string>
+
+    <string name="next">Далі</string>
+    <string name="skip">Пропустити</string>
+    
+    <string name="welcome">Вітаємо у додатку про вимкнення світла!</string>
+    <string name="welcome_description"></string>
+
+    <string name="choose_your_oblast">Оберіть свою область</string>
+    <string name="choose_your_oblast_description"></string>
+
+    <string name="choose_your_queue">Оберіть свою чергу</string>
+    <string name="choose_your_queue_description"></string>
+
+    <string name="give_notification_permission">Надайте дозвіл на отримання пуш сповіщень</string>
+    <string name="give_notification_permission_description">будь завжди в курсі вимкнень світла</string>
+    <string name="give_permission">Надати</string>
+    
+    <string name="thanks">Дякуємо!</string>
+    <string name="your_setup_is_successful">Ви успішно завершили налаштування.</string>
+    <string name="lets_began">Почати</string>
+
+
 </resources>

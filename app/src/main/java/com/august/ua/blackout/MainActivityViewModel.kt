@@ -3,6 +3,7 @@ package com.august.ua.blackout
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.august.ua.blackout.data.local.datastore.LocalCacheData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.delay
@@ -15,6 +16,7 @@ import javax.inject.Inject
 @HiltViewModel
 class MainActivityViewModel @Inject constructor(
     @ApplicationContext context: Context,
+    localCacheData: LocalCacheData,
 ): ViewModel() {
 
     val uiState: StateFlow<MainActivityUiState> = flow<MainActivityUiState> {

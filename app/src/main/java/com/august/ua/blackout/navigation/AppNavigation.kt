@@ -4,6 +4,8 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.august.ua.blackout.presentation.onboarding.navigation.ONBOARDING_GRAPH_ROUTE_PATTERN
+import com.august.ua.blackout.presentation.onboarding.navigation.onboardingGraph
 import com.august.ua.blackout.presentation.splash.SplashScreen
 
 @Composable
@@ -12,7 +14,7 @@ fun AppNavigation(
 ) {
     NavHost(
         navController = navController,
-        startDestination = Screen.SplashScreen.route
+        startDestination = ONBOARDING_GRAPH_ROUTE_PATTERN
     ) {
 
         composable(route = Screen.SplashScreen.route) {
@@ -24,5 +26,7 @@ fun AppNavigation(
                 }
             }
         }
+
+        onboardingGraph(navController)
     }
 }

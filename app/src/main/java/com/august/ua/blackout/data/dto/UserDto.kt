@@ -7,6 +7,7 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class UserDto(
     val id: String?,
-    val location: String?,
     val isPushEnabled: Boolean?,
+    val oblast: Oblast?,
+    val queues: Int?,
 ) : Parcelable, Entity
