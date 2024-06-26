@@ -1,4 +1,4 @@
-package com.august.ua.balackout
+package com.august.ua.blackout
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

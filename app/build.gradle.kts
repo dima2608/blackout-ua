@@ -9,7 +9,7 @@ plugins {
 }
 
 android {
-    namespace = "com.august.ua.balackout"
+    namespace = "com.august.ua.blackout"
     compileSdk = 34
 
     bundle {

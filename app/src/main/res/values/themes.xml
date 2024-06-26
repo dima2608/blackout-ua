@@ -1,5 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
-    <style name="Theme.Balackoutua" parent="android:Theme.Material.Light.NoActionBar" />
+    <style name="NightAdjusted.Theme.Blackoutua" parent="android:Theme.Material.Light.NoActionBar" >
+        <item name="android:forceDarkAllowed" tools:target="Q">false</item>
+    </style>
+
+    <style name="Theme.Blackoutua" parent="NightAdjusted.Theme.Blackoutua" />
+
+    <style name="NightAdjusted.Theme.Splash" parent="Theme.SplashScreen">
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar">true</item>
+    </style>
+
+    <style name="Theme.Blackoutua.Splash" parent="NightAdjusted.Theme.Splash">
+        <item name="windowSplashScreenBackground">@color/on_primary</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher_foreground</item>
+        <item name="postSplashScreenTheme">@style/Theme.Blackoutua</item>
+        <item name="android:dialogTheme">@style/AppTheme.DialogTheme</item>
+        <item name="android:datePickerDialogTheme">@style/AppTheme.DialogTheme</item>
+    </style>
+
+    <style name="AppTheme.DialogTheme" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">#FFF3A482</item>
+        <item name="android:colorPrimary">#FFF3A482</item>
+        <item name="android:colorPrimaryDark">#FFF3A482</item>
+        <item name="android:colorAccent">#FFF3A482</item>
+    </style>
 </resources>

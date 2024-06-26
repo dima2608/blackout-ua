@@ -1,4 +1,4 @@
-package com.august.ua.balackout
+package com.august.ua.blackout
 
 import org.junit.Test
 

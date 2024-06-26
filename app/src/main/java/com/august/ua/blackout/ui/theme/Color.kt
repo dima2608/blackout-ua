@@ -1,4 +1,4 @@
-package com.august.ua.balackout.ui.theme
+package com.august.ua.blackout.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
