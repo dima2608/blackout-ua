@@ -4,8 +4,8 @@ plugins {
     alias(libs.plugins.com.google.devtools.ksp)
     id("kotlin-parcelize")
     id("dagger.hilt.android.plugin")
-    //alias(libs.plugins.com.google.gms.google.services)
-    //id("com.google.firebase.crashlytics")
+    alias(libs.plugins.com.google.gms.google.services)
+    id("com.google.firebase.crashlytics")
 }
 
 android {
@@ -24,7 +24,7 @@ android {
 
     signingConfigs {
         create("release") {
-            storeFile = file("keys/storekay")
+            storeFile = file("keys/storekey.jks")
             keyAlias = "keyalias"
             keyPassword = "keypassword"
             storePassword = "storepassword"
@@ -45,54 +45,35 @@ android {
     }
 
     buildTypes {
-        getByName("release") {
+
+        release {
             signingConfig = signingConfigs.getByName("release")
             isMinifyEnabled = true
             isDebuggable = false
             isShrinkResources = true
+            applicationIdSuffix = ".app"
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            buildConfigField(
+                "String",
+                "BASE_URL",
+                "\"someURL\""
+            )
         }
-
-        getByName("debug") {
+        debug {
             isMinifyEnabled = false
             isDebuggable = true
             isShrinkResources = false
-        }
+            applicationIdSuffix = ".dev"
+            versionNameSuffix = ".dev"
 
-        flavorDimensions("environment")
-        productFlavors {
-            create("prod") {
-                dimension = "environment"
-                applicationIdSuffix = ".app"
-                buildConfigField(
-                    "String",
-                    "BASE_URL",
-                    "\"someURL\""
-                )
-            }
-            create("dev") {
-                dimension = "environment"
-                applicationIdSuffix = ".dev"
-                versionNameSuffix = "-dev"
-                buildConfigField(
-                    "String",
-                    "BASE_URL",
-                    "\"someURL\""
-                )
-            }
-            create("stage") {
-                dimension = "environment"
-                applicationIdSuffix = ".stage"
-                versionNameSuffix = "-stage"
-                buildConfigField(
-                    "String",
-                    "BASE_URL",
-                    "\"someURL\""
-                )
-            }
+            buildConfigField(
+                "String",
+                "BASE_URL",
+                "\"someURL\""
+            )
         }
     }
     compileOptions {
