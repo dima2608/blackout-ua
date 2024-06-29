@@ -15,6 +15,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.ProgressIndicatorDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -43,12 +44,13 @@ fun CompletionStepsProgressButton(
 
         CircularProgressIndicator(
             modifier = Modifier
-                .size(60.dp)
+                .size(80.dp)
                 .align(Alignment.Center),
-            strokeWidth = 1.dp,
+            strokeWidth = 4.dp,
             color = OnboardingProgress,
             progress = progressState,
-            trackColor = OnboardingProgressTrack
+            trackColor = OnboardingProgressTrack,
+            strokeCap =  ProgressIndicatorDefaults.CircularIndeterminateStrokeCap
         )
 
         Button(
@@ -56,7 +58,7 @@ fun CompletionStepsProgressButton(
                 onClick.invoke()
             },
             modifier = Modifier
-                .size(50.dp)
+                .size(60.dp)
                 .align(Alignment.Center),
             shape = CircleShape,
             contentPadding = PaddingValues(0.dp),

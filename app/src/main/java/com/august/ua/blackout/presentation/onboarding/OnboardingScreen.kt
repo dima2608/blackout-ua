@@ -14,9 +14,14 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.august.ua.blackout.presentation.common.DevicePreviews
 import com.august.ua.blackout.presentation.common.ScreenState
+import com.august.ua.blackout.presentation.onboarding.components.CompletionStepsProgressButton
+import com.august.ua.blackout.presentation.onboarding.components.OnboardingBottomBar
 import com.august.ua.blackout.presentation.onboarding.state.OnboardingScreenState
 import com.august.ua.blackout.ui.components.AppSnackBar
+import com.august.ua.blackout.ui.components.OnboardingToolbar
+import com.august.ua.blackout.ui.theme.BlackoutUaTheme
 
 @Composable
 fun OnboardingScreen(
@@ -45,6 +50,14 @@ private fun OnboardingScreenContent(
 
 
     Scaffold(
+        topBar = {
+            OnboardingToolbar(
+                isBackButtonVisible = false,
+                showProgressIndicator = true
+            ) {
+
+            }
+        },
         snackbarHost = {
             AppSnackBar(
                 modifier = Modifier
@@ -53,8 +66,24 @@ private fun OnboardingScreenContent(
                     .padding(bottom = 28.dp),
                 snackBarHostState = snackbar
             )
-        }
+        },
+        bottomBar = {
+            OnboardingBottomBar(
+
+            )
+        },
     ) { innerPadding ->
 
+    }
+}
+
+@DevicePreviews
+@Composable
+private fun OnboardingScreenContentPreview() {
+    BlackoutUaTheme {
+        OnboardingScreenContent(
+            uiState = OnboardingScreenState.HelloState,
+            screenState = ScreenState.None
+        )
     }
 }
