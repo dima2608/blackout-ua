@@ -42,6 +42,7 @@ fun AppTextField(
                 style = BlackoutTextStyle.t4TextSmallDescription
             )
         },
+
         placeholder = {
             Text(
                 text = placeholder,
