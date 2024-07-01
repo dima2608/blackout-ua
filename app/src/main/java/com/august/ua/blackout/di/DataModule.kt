@@ -3,6 +3,9 @@ package com.august.ua.blackout.di
 import android.content.SharedPreferences
 import androidx.datastore.core.DataStore
 import com.august.ua.blackout.data.dto.UserDto
+import com.august.ua.blackout.data.remote.api.BlackoutService
+import com.august.ua.blackout.data.remote.datasource.BlackoutDataSource
+import com.august.ua.blackout.data.remote.datasource.BlackoutDataSourceImpl
 import com.august.ua.blackout.data.remote.datasource.UserDataSource
 import com.august.ua.blackout.data.repository.UserRepositoryImpl
 import com.august.ua.blackout.domain.repository.UserRepository
@@ -32,6 +35,19 @@ class DataModule {
 //    ): ComplexDataSource {
 //        return ComplexDataSourceImpl(complexService = complexService, userRepository)
 //    }
+
+
+        @Provides
+    @Singleton
+    fun provideBlackoutService(retrofit: Retrofit): BlackoutService {
+        return create(retrofit)
+    }
+
+
+    @Provides
+    fun provideBlackoutDataSource(blackoutService: BlackoutService): BlackoutDataSource {
+        return BlackoutDataSourceImpl(blackoutService = blackoutService)
+    }
 
     @Provides
     @Singleton
