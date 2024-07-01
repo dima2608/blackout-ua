@@ -8,11 +8,14 @@ enum class Oblast(
     id: String,
     @StringRes
     name: Int,
-    isBlackoutsKnown: Boolean
 ) {
     Cherkasy(
         id = "Che",
-        name = R.string.cherkasy,
-        isBlackoutsKnown = true
+        name = R.string.cherkasy
+    ),
+
+    Unknown(
+        id = "-1",
+        name = R.string.unknown,
     )
 }

@@ -23,10 +23,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.august.ua.blackout.presentation.common.DevicePreviews
+import com.august.ua.blackout.ui.theme.Black
+import com.august.ua.blackout.ui.theme.BlackAlpha80
 import com.august.ua.blackout.ui.theme.BlackoutUaTheme
+import com.august.ua.blackout.ui.theme.Bubbles
 import com.august.ua.blackout.ui.theme.OnboardingButton
 import com.august.ua.blackout.ui.theme.OnboardingProgress
 import com.august.ua.blackout.ui.theme.OnboardingProgressTrack
+import com.august.ua.blackout.ui.theme.Primary
+import com.august.ua.blackout.ui.theme.Violet
+import com.august.ua.blackout.ui.theme.Yellow
 
 @Composable
 fun CompletionStepsProgressButton(
@@ -46,10 +52,10 @@ fun CompletionStepsProgressButton(
             modifier = Modifier
                 .size(80.dp)
                 .align(Alignment.Center),
-            strokeWidth = 4.dp,
-            color = OnboardingProgress,
+            strokeWidth = 3.dp,
+            color = BlackAlpha80,
             progress = progressState,
-            trackColor = OnboardingProgressTrack,
+            trackColor = Primary,
             strokeCap =  ProgressIndicatorDefaults.CircularIndeterminateStrokeCap
         )
 
@@ -62,7 +68,7 @@ fun CompletionStepsProgressButton(
                 .align(Alignment.Center),
             shape = CircleShape,
             contentPadding = PaddingValues(0.dp),
-            colors = ButtonDefaults.buttonColors(contentColor = Color.White, containerColor = OnboardingButton)
+            colors = ButtonDefaults.buttonColors(contentColor = Color.White)
         ) {
             Icon(Icons.AutoMirrored.Filled.ArrowForward, contentDescription = "content description")
         }

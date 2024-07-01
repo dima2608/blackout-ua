@@ -45,20 +45,20 @@ private val DarkColorScheme = darkColorScheme(
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = Color(0xFFFCE000),
-    onPrimary = Color(0xFF1F1F1F),
-    primaryContainer = Color(0xFFFEF9CC),
-    onPrimaryContainer = Color(0xFF434343),
+    primary = Black,
+    onPrimary = White,
+    primaryContainer = Gray,
+    onPrimaryContainer = White,
 
     secondary = Color(0xFF1F1F1F),
     onSecondary = Color(0xFFFAFAFA),
     secondaryContainer = Color(0xFFF0F0F0),
     onSecondaryContainer = Color(0xFF1F1F1F),
 
-    error = Color(0xFFFF012F),
-    onError = Color(0xFFFFFFFF),
-    errorContainer = Color(0xFFF9DEDC),
-    onErrorContainer = Color(0xFF40000C),
+    error = RedIndicator,
+    onError = White,
+    errorContainer = RedAttention,
+    onErrorContainer = White,
 
     surface = Color(0xFFFFFFFF),
     surfaceContainer = Color(0xFFF5F5F5),
@@ -71,7 +71,7 @@ private val LightColorScheme = lightColorScheme(
     outlineVariant = Color(0xFFD4D4D4),
 
     tertiary = Color(0xFFA098FF),
-    background = Color.Transparent,
+    background = Transparent,
 
     onBackground = Color(0xFF1C1B1F),
 )
@@ -95,7 +95,6 @@ fun BlackoutUaTheme(
 
     MaterialTheme(
         colorScheme = colorScheme,
-        typography = Typography,
         shapes = Shapes,
         content = content
     )

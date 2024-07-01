@@ -65,7 +65,7 @@ fun OnboardingToolbar(
                 actionIconContentColor = Color.Unspecified,
                 containerColor = Color.Transparent
             ),
-            modifier = Modifier.background(MaterialTheme.colorScheme.surface)
+            modifier = Modifier.background(Color.Transparent)
         )
         if (showProgressIndicator) {
             LinearProgressIndicator(

@@ -5,8 +5,7 @@ enum class OnboardingPage(
 ) {
     Undefined(itOrdinal = -1),
     Hello(itOrdinal = 0),
-    SelectOblast(itOrdinal = 1),
-    SelectQueue(itOrdinal = 2),
-    GiveNotificationPermission(itOrdinal = 3),
-    Enjoy(itOrdinal = 4)
+    SelectOblastAndQueue(itOrdinal = 1),
+    GiveNotificationPermission(itOrdinal = 2),
+    Enjoy(itOrdinal = 3)
 }

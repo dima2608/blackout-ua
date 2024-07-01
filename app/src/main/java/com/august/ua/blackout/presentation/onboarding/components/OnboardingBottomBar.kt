@@ -19,7 +19,10 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun OnboardingBottomBar(
+    currentStep: Int,
+    totalSteps: Int,
     title: String? = null,
+    onClick: () -> Unit
 ) {
     Row(
         modifier = Modifier
@@ -54,11 +57,10 @@ fun OnboardingBottomBar(
 
         CompletionStepsProgressButton(
             modifier = Modifier,
-            4,
-            5,
-        ) {
-
-        }
+            currentStep = currentStep,
+            totalSteps = totalSteps,
+            onClick = onClick,
+        )
 
     }
 }

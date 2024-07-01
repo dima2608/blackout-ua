@@ -9,5 +9,5 @@ data class UserDto(
     val id: String?,
     val isPushEnabled: Boolean?,
     val oblast: Oblast?,
-    val queues: Int?,
+    val queue: Int?,
 ) : Parcelable, Entity

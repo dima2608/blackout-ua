@@ -21,6 +21,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.august.ua.blackout.ui.theme.Black
+import com.august.ua.blackout.ui.theme.BlackoutTextStyle
+import com.august.ua.blackout.ui.theme.RedAttention
+import com.august.ua.blackout.ui.theme.RedNegative
+import com.august.ua.blackout.ui.theme.White
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -54,7 +59,7 @@ private fun AppSnackBarContent(
     onActionClick: () -> Unit,
 ) {
     Snackbar(
-        dismissActionContentColor = MaterialTheme.colorScheme.onSurfaceVariant,
+        dismissActionContentColor = White,
         dismissAction = {
             IconButton(
                 onClick = { onDismiss() }
@@ -71,22 +76,22 @@ private fun AppSnackBarContent(
                     Text(
                         text = title,
                         modifier = Modifier,
-                        style = MaterialTheme.typography.labelLarge,
-                        color = MaterialTheme.colorScheme.onPrimaryContainer,
+                        style = BlackoutTextStyle.h5SmallestHeading,
+                        color = White,
                         textAlign = TextAlign.Center,
                         textDecoration = TextDecoration.Underline
                     )
                 }
             }
         },
-        containerColor = MaterialTheme.colorScheme.primaryContainer,
+        containerColor = RedNegative,
         shape = RoundedCornerShape(14.dp),
     ) {
         Text(
             text = message,
             modifier = Modifier.padding(start = 16.dp),
             style = MaterialTheme.typography.bodyMedium.copy(lineHeight = 18.sp, fontSize = 15.sp),
-            color = MaterialTheme.colorScheme.onPrimaryContainer
+            color = White
         )
     }
 }

@@ -4,11 +4,13 @@ import android.annotation.SuppressLint
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.Indication
 import androidx.compose.foundation.LocalIndication
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.indication
 import androidx.compose.foundation.interaction.InteractionSource
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsPressedAsState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -19,10 +21,23 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.debugInspectorInfo
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.unit.dp
 import com.august.ua.blackout.presentation.common.single_click.MultipleEventsCutter
 import com.august.ua.blackout.presentation.common.single_click.get
+import com.august.ua.blackout.ui.theme.GradientAlternativePosition01
+import com.august.ua.blackout.ui.theme.GradientAlternativePosition02
+import com.august.ua.blackout.ui.theme.GradientAlternativePosition03
+import com.august.ua.blackout.ui.theme.GradientAlternativePosition04
+import com.august.ua.blackout.ui.theme.GradientAlternativePosition05
+import com.august.ua.blackout.ui.theme.GradientAlternativePosition06
+import com.august.ua.blackout.ui.theme.GradientAlternativePosition1
+import com.august.ua.blackout.ui.theme.GradientAlternativePosition2
+import com.august.ua.blackout.ui.theme.GradientAlternativePosition3
+import com.august.ua.blackout.ui.theme.GradientAlternativePosition4
+import com.august.ua.blackout.ui.theme.PeriwinkleGray
 import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.min
@@ -110,3 +125,46 @@ fun Modifier.gradientBackground(colors: List<Color>, angle: Float) = this.then(
         )
     }
 )
+
+@SuppressLint("UnnecessaryComposedModifier", "ModifierFactoryUnreferencedReceiver")
+fun Modifier.blackoutLinearGradientBorder() =
+    composed {
+        border(
+            2.dp, brush = Brush.linearGradient(
+                colors = listOf(
+                    GradientAlternativePosition1,
+                    GradientAlternativePosition2,
+                    GradientAlternativePosition3,
+                    GradientAlternativePosition4,
+                    PeriwinkleGray,
+                )
+            ), RoundedCornerShape(8.dp)
+        )
+    }
+
+private const val RADIUS_MULTIPLIER = 3.0f
+
+@SuppressLint("ModifierFactoryUnreferencedReceiver")
+fun Modifier.blackoutRadialGradientBorder() =
+    composed {
+
+        val configuration = LocalConfiguration.current
+
+        val screenWidth = configuration.screenWidthDp.dp.value
+
+        border(
+            2.dp, brush = Brush.radialGradient(
+//                center = Offset.Zero,
+                center = Offset(0.0f, 100.0f),
+                radius = screenWidth * RADIUS_MULTIPLIER,
+                colors = listOf(
+                    GradientAlternativePosition01,
+                    GradientAlternativePosition02,
+                    GradientAlternativePosition03,
+                    GradientAlternativePosition04,
+                    GradientAlternativePosition05,
+                    GradientAlternativePosition06,
+                ),
+            ), RoundedCornerShape(8.dp)
+        )
+    }
