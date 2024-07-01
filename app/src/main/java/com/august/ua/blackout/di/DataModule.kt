@@ -7,7 +7,9 @@ import com.august.ua.blackout.data.remote.api.BlackoutService
 import com.august.ua.blackout.data.remote.datasource.BlackoutDataSource
 import com.august.ua.blackout.data.remote.datasource.BlackoutDataSourceImpl
 import com.august.ua.blackout.data.remote.datasource.UserDataSource
+import com.august.ua.blackout.data.repository.BlackoutRepositoryImpl
 import com.august.ua.blackout.data.repository.UserRepositoryImpl
+import com.august.ua.blackout.domain.repository.BlackoutRepository
 import com.august.ua.blackout.domain.repository.UserRepository
 import dagger.Module
 import dagger.Provides
@@ -47,6 +49,16 @@ class DataModule {
     @Provides
     fun provideBlackoutDataSource(blackoutService: BlackoutService): BlackoutDataSource {
         return BlackoutDataSourceImpl(blackoutService = blackoutService)
+    }
+
+    @Provides
+    @Singleton
+    fun provideBlackoutRepository(
+        blackoutService: BlackoutService,
+    ): BlackoutRepository {
+        return BlackoutRepositoryImpl(
+            blackoutService = blackoutService
+        )
     }
 
     @Provides
