@@ -8,8 +8,23 @@
     <string name="no_internet_connection">Немає з\'єднання з інтернетом</string>
     <string name="retry">Повторити</string>
 
-    <string name="unknown">Невідомо</string>
-    <string name="cherkasy">Черкаська</string>
+    <string name="unknown">Невідомо </string>
+    
+    <string name="cherkasy">Черкаська область</string>
+    <string name="kyiv_oblast">Київська область</string>
+    <string name="luhansk_oblast">Луганська область</string>
+    <string name="lviv_oblast">Львівська область</string>
+    <string name="mykolaiv_oblast">Миколаївська область</string>
+    <string name="odesa_oblast">Одеська область</string>
+    <string name="poltava_oblast">Полтавська область</string>
+    <string name="rivne_oblast">Рівненська область</string>
+    <string name="sumy_oblast">Сумська область</string>
+    <string name="ternopil_oblast">Тернопільська область</string>
+    <string name="vinnytsia_oblast">Вінницька область</string>
+    <string name="volyn_oblast">Волинська область</string>
+    <string name="zakarpattia_oblast">Закарпатьська область</string>
+    <string name="zaporizhia_oblast">Запорізька область</string>
+    <string name="zhytomyr_oblast">Житомирська область</string>
 
     <string name="next">Далі</string>
     <string name="skip">Пропустити</string>
