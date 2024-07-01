@@ -11,7 +11,7 @@ interface UserRepository<T, D> {
     suspend fun saveNewUserData(user: D)
 
     suspend fun saveOblast(oblast: Oblast)
-    suspend fun saveQueue(queue: Int)
+    suspend fun saveQueue(queue: String)
 
     suspend fun clearUserLocalData()
     suspend fun clearUserData()

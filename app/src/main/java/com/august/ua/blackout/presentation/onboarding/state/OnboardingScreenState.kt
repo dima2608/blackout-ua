@@ -35,11 +35,11 @@ sealed class OnboardingScreenState(
     )
     data class SelectOblastAndQueueState(
         val oblast: Oblast,
-        val queue: Int
+        val queue: String
     ): OnboardingScreenState(
         image = R.drawable.saly_10_dummy,
-        title = R.string.choose_your_oblast,
-        description = R.string.choose_your_oblast_description,
+        title = R.string.choose_your_oblast_title,
+        description = R.string.choose_your_queue_and_region_description,
         currentIndicatorPosition = 2,
     )
 

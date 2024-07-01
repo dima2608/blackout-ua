@@ -31,7 +31,7 @@ class UserRepositoryImpl(
         }
     }
 
-    override suspend fun saveQueue(queue: Int) {
+    override suspend fun saveQueue(queue: String) {
         userDataStorePreferences.updateData {
             it!!.copy(
                 queue = queue

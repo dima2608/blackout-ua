@@ -25,18 +25,21 @@
     <string name="zakarpattia_oblast">Закарпатьська область</string>
     <string name="zaporizhia_oblast">Запорізька область</string>
     <string name="zhytomyr_oblast">Житомирська область</string>
+    <string name="chernivtsi_oblast">Чернівецька область</string>
 
     <string name="next">Далі</string>
     <string name="skip">Пропустити</string>
 
-    <string name="welcome">Привіт</string>
-    <string name="welcome_description">Хочеш дізнавайся першим про\nвідключення світла та час його відновлення?\nТоді погнали</string>
+    <string name="welcome">Привіт!</string>
+    <string name="welcome_description">Отримуйте своєчасні сповіщення про\nвідключення світла та час його відновлення.\nТепер єСвітло завжди буде тримати\nвас в курсі. Гайда починати!</string>
 
-    <string name="choose_your_oblast">Оберіть свою область</string>
-    <string name="choose_your_oblast_description"></string>
+    <string name="choose_your_oblast_title">Налаштування локації</string>
+    <string name="choose_your_oblast">Оберіть область</string>
 
-    <string name="choose_your_queue">Оберіть свою чергу</string>
-    <string name="choose_your_queue_description"></string>
+    <string name="click_here_to_select">натисніть тут, щоб обрати</string>
+
+    <string name="choose_your_queue">Оберіть чергу</string>
+    <string name="choose_your_queue_and_region_description">Оберіть область та чергу для отримання сповіщень про відключення електропостачання.</string>
 
     <string name="give_notification_permission">Надайте дозвіл на отримання пуш сповіщень</string>
     <string name="give_notification_permission_description">будь завжди в курсі вимкнень світла</string>

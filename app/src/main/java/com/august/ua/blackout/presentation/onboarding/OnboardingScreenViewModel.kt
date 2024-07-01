@@ -79,7 +79,7 @@ class OnboardingScreenViewModel @Inject constructor(
                 Hello -> OnboardingScreenState.HelloState
                 SelectOblastAndQueue -> OnboardingScreenState.SelectOblastAndQueueState(
                     oblast = userForm.oblast ?: Oblast.Unknown,
-                    queue = userForm.queue ?: 0
+                    queue = userForm.queue ?: "-1"
                 )
 
                 GiveNotificationPermission -> OnboardingScreenState.GivePermissionState
@@ -190,7 +190,7 @@ class OnboardingScreenViewModel @Inject constructor(
     private fun saveUserOblastAndQueue() {
         viewModelScope.launch {
             userRepository.saveOblast(userForm.oblast ?: Oblast.Unknown)
-            userRepository.saveQueue(userForm.queue ?: -1)
+            userRepository.saveQueue(userForm.queue ?: "-1")
         }
     }
 

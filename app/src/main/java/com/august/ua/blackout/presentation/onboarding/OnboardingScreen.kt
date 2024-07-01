@@ -32,8 +32,10 @@ import com.august.ua.blackout.presentation.common.extensions.gradientBackground
 import com.august.ua.blackout.presentation.onboarding.components.CompletionStepsProgressButton
 import com.august.ua.blackout.presentation.onboarding.components.ImageAndDescription
 import com.august.ua.blackout.presentation.onboarding.components.OnboardingBottomBar
+import com.august.ua.blackout.presentation.onboarding.components.SelectOblastAndQueue
 import com.august.ua.blackout.presentation.onboarding.event.OnboardingEvent
 import com.august.ua.blackout.presentation.onboarding.state.OnboardingScreenState
+import com.august.ua.blackout.presentation.select_oblast.SelectOblastBottomSheet
 import com.august.ua.blackout.ui.components.AppSnackBar
 import com.august.ua.blackout.ui.components.OnboardingToolbar
 import com.august.ua.blackout.ui.components.showSnackbar
@@ -155,10 +157,12 @@ private fun OnboardingScreenContent(
                         )
                     }
                     is OnboardingScreenState.SelectOblastAndQueueState -> {
-                        ImageAndDescription(
-                            image = uiState.image,
+                        SelectOblastAndQueue(
+                            icon = uiState.image,
                             title = uiState.title,
-                            description = uiState.description
+                            description = uiState.description,
+                            selectedOblast = stringResource(id = uiState.oblast.oblastName),
+                            selectedQueue = uiState.queue
                         )
                     }
                 }
