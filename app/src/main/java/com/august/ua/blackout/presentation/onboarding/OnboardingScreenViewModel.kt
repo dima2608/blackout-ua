@@ -58,6 +58,7 @@ class OnboardingScreenViewModel @Inject constructor(
 
     init {
         initUserForm()
+        initFcm()
     }
 
     private fun initUserForm() {
@@ -213,7 +214,7 @@ class OnboardingScreenViewModel @Inject constructor(
             }
             val token = task.result
             Log.d(MainActivity::class.java.simpleName, "token =========>>>>>> $token")
-            sendFcmToken(token = token)
+            //sendFcmToken(token = token)
         })
     }
 

@@ -73,7 +73,7 @@ android {
             buildConfigField(
                 "String",
                 "BASE_URL",
-                "\"someURL\""
+                "\"https://someURL\""
             )
         }
         debug {
@@ -86,7 +86,7 @@ android {
             buildConfigField(
                 "String",
                 "BASE_URL",
-                "\"someURL\""
+                "\"https://someURL\""
             )
         }
     }
