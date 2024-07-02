@@ -39,10 +39,10 @@
     <string name="click_here_to_select">натисніть тут, щоб обрати</string>
 
     <string name="choose_your_queue">Оберіть чергу</string>
-    <string name="choose_your_queue_and_region_description">Оберіть область та чергу для отримання сповіщень про відключення електропостачання.</string>
+    <string name="choose_your_queue_and_region_description">Оберіть вашу основну область та чергу </string>
 
-    <string name="give_notification_permission">Надайте дозвіл на отримання пуш сповіщень</string>
-    <string name="give_notification_permission_description">будь завжди в курсі вимкнень світла</string>
+    <string name="give_notification_permission">Push-сповіщення</string>
+    <string name="give_notification_permission_description">Увімкніть сповіщення від єСвітло,\nщоб знати розклад знеструмлень</string>
     <string name="give_permission">Надати</string>
 
     <string name="thanks">Дякуємо!</string>
@@ -52,4 +52,6 @@
     <string name="select_oblast_error">Будь ласка оберіть область</string>
     <string name="select_queue_error">Будь ласка оберіть чергу</string>
     <string name="select_oblast_and_queue_error">Будь ласка оберіть область та чергу</string>
+    <string name="select_oblast_first">Спочатку оберіть область</string>
+    <string name="queue">черга</string>
 </resources>

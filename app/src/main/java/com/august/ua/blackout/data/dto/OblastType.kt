@@ -5,7 +5,7 @@ import androidx.annotation.StringRes
 import com.august.ua.blackout.R
 import com.google.gson.annotations.SerializedName
 
-enum class Oblast(
+enum class OblastType(
     val id: String,
     @StringRes
     val oblastName: Int,

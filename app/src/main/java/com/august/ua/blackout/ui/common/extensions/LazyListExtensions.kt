@@ -1,10 +1,21 @@
 package com.august.ua.blackout.ui.common.extensions
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.foundation.layout.safeDrawingPadding
+import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.produceState
 import androidx.compose.runtime.snapshotFlow
+import androidx.compose.ui.Modifier
 
 @Composable
 fun LazyListState.isScrollingUp(): State<Boolean> {
@@ -22,4 +33,12 @@ fun LazyListState.isScrollingUp(): State<Boolean> {
             }
         }
     }
+}
+
+fun LazyListScope.bottomSpacer() = item {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .safeDrawingPadding()
+    )
 }

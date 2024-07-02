@@ -1,12 +1,8 @@
 package com.august.ua.blackout.data.dvo
 
-import androidx.annotation.DrawableRes
-import androidx.annotation.StringRes
+import com.august.ua.blackout.data.dto.OblastType
 
 data class OblastDvo(
-    val id: String,
-    @DrawableRes
-    val icon: Int,
-    @StringRes
-    val name: Int,
+    var oblastType: OblastType,
+    val queue: List<String>
 )

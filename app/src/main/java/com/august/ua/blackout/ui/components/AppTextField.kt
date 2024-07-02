@@ -1,5 +1,7 @@
 package com.august.ua.blackout.ui.components
 
+import androidx.compose.foundation.interaction.InteractionSource
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActions
@@ -41,6 +43,7 @@ fun InputTextField(
     trailingIcon: @Composable (() -> Unit)? = null,
     visualTransformation: VisualTransformation = VisualTransformation.None,
     focusRequester: FocusRequester? = null,
+    interactionSource: MutableInteractionSource = MutableInteractionSource(),
     onFocusChanged: (() -> Unit)? = null,
     onValueChange: (String) -> Unit,
 ) {
@@ -84,7 +87,8 @@ fun InputTextField(
             }
         },
         trailingIcon = trailingIcon,
-        readOnly = readOnly
+        readOnly = readOnly,
+        interactionSource = interactionSource
     )
 
 }

@@ -4,23 +4,23 @@ import android.app.Application
 import android.content.Context
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.august.ua.blackout.MainActivity
 import com.august.ua.blackout.MainActivityViewModel
 import com.august.ua.blackout.R
-import com.august.ua.blackout.data.dto.Oblast
+import com.august.ua.blackout.data.dto.OblastType
 import com.august.ua.blackout.data.dto.UserDto
+import com.august.ua.blackout.data.dvo.OblastDvo
+import com.august.ua.blackout.data.dvo.OblastsDvo
 import com.august.ua.blackout.domain.ResultState
-import com.august.ua.blackout.domain.common.EMPTY_STRING
 import com.august.ua.blackout.domain.repository.UserRepository
-import com.august.ua.blackout.navigation.Screen
 import com.august.ua.blackout.presentation.common.NavigationEvent
 import com.august.ua.blackout.presentation.common.ScreenState
 import com.august.ua.blackout.presentation.onboarding.OnboardingPage.*
 import com.august.ua.blackout.presentation.onboarding.event.OnboardingEvent
 import com.august.ua.blackout.presentation.onboarding.event.OnboardingEvent.*
 import com.august.ua.blackout.presentation.onboarding.form.UserForm
+import com.august.ua.blackout.presentation.onboarding.state.OnboardingBottomSheetState
 import com.august.ua.blackout.presentation.onboarding.state.OnboardingScreenState
 import com.august.ua.blackout.ui.common.extensions.getDeviceHardwareId
 import com.august.ua.blackout.ui.common.extensions.isConnected
@@ -55,6 +55,11 @@ class OnboardingScreenViewModel @Inject constructor(
     private val _navEvent = MutableStateFlow<NavigationEvent>(NavigationEvent.None)
     val navEvent = _navEvent.asStateFlow()
 
+    private val _bottomSheetState =
+        MutableStateFlow<OnboardingBottomSheetState>(OnboardingBottomSheetState.Initial)
+    val bottomSheetState = _bottomSheetState.asStateFlow()
+
+    private var selectedOblast: OblastDvo? = null
 
     init {
         initUserForm()
@@ -63,9 +68,8 @@ class OnboardingScreenViewModel @Inject constructor(
 
     private fun initUserForm() {
         viewModelScope.launch {
-
             userRepository.userData.first()?.let {
-                userForm.oblast = it.oblast
+                userForm.oblastType = it.oblastType
                 userForm.queue = it.queue
             }
             initDefaultUiState()
@@ -75,7 +79,9 @@ class OnboardingScreenViewModel @Inject constructor(
     private fun initDefaultUiState() {
         currentPage = when {
             userForm.isOblastAndQueueSelected() && !userForm.isNotificationPermissionScreenSeen -> GiveNotificationPermission
-            userForm.isOblastAndQueueSelected().not() && userForm.onboardingWasStartedBefore -> SelectOblastAndQueue
+            userForm.isOblastAndQueueSelected()
+                .not() && userForm.onboardingWasStartedBefore -> SelectOblastAndQueue
+
             else -> Hello
         }
         configUiState()
@@ -87,8 +93,11 @@ class OnboardingScreenViewModel @Inject constructor(
                 Undefined -> OnboardingScreenState.Initial
                 Hello -> OnboardingScreenState.HelloState
                 SelectOblastAndQueue -> OnboardingScreenState.SelectOblastAndQueueState(
-                    oblast = userForm.oblast ?: Oblast.Unknown,
-                    queue = userForm.queue ?: "-1"
+                    oblastType = userForm.oblastType ?: OblastType.Unknown,
+                    queue = userForm.queue ?: "",
+                    oblastStr = userForm.oblastType.getOblastName(),
+                    oblastError = userForm.oblastTypeError,
+                    queueError = userForm.queueError
                 )
 
                 GiveNotificationPermission -> OnboardingScreenState.GivePermissionState
@@ -103,11 +112,13 @@ class OnboardingScreenViewModel @Inject constructor(
             GivePermission -> givePermission()
             NextScreen -> processOnNextEvent()
             PreviousScreen -> onBackPressed()
-            SelectOblast -> TODO()
-            SelectQueue -> TODO()
+            SelectOblast -> selectOblast()
+            SelectQueue -> selectQueue()
             ResetScreenState -> resetScreenState()
             OnSnackbarDismissed -> resetScreenState()
             OnSnackbarRetry -> retry()
+            is OblastChanged -> oblastChanged(event.oblast)
+            is QueueChanged -> queueChanged(event.queue)
         }
     }
 
@@ -146,6 +157,7 @@ class OnboardingScreenViewModel @Inject constructor(
 
     private fun resetScreenState() {
         _screenState.update { ScreenState.None }
+        _bottomSheetState.update { OnboardingBottomSheetState.Initial }
     }
 
     private fun processOnNextEvent() {
@@ -197,9 +209,17 @@ class OnboardingScreenViewModel @Inject constructor(
     }
 
     private fun saveUserOblastAndQueue() {
+
         viewModelScope.launch {
-            userRepository.saveOblast(userForm.oblast ?: Oblast.Unknown)
-            userRepository.saveQueue(userForm.queue ?: "-1")
+            val user = UserDto(
+                id  = null,
+                isPushEnabled = null,
+                oblastType = userForm.oblastType ?: OblastType.Unknown,
+                queue = userForm.queue ?: "-1"
+            )
+
+            userRepository.saveNewUserData(user)
+
         }
     }
 
@@ -214,7 +234,7 @@ class OnboardingScreenViewModel @Inject constructor(
             }
             val token = task.result
             Log.d(MainActivity::class.java.simpleName, "token =========>>>>>> $token")
-            //sendFcmToken(token = token)
+            sendFcmToken(token = token)
         })
     }
 
@@ -225,11 +245,71 @@ class OnboardingScreenViewModel @Inject constructor(
                     deviceId = getApplication<Application>().getDeviceHardwareId(),
                     token = token
                 )) {
-                    is ResultState.Error -> Log.i(MainActivityViewModel::class.java.simpleName, response.errorDvo.toString())
-                    is ResultState.Success -> Log.i(MainActivityViewModel::class.java.simpleName, "FCM token sent successfully")
+                    is ResultState.Error -> Log.i(
+                        MainActivityViewModel::class.java.simpleName,
+                        response.errorDvo.toString()
+                    )
+
+                    is ResultState.Success -> Log.i(
+                        MainActivityViewModel::class.java.simpleName,
+                        "FCM token sent successfully"
+                    )
                 }
             }
         }
+    }
+
+    private fun OblastType?.getOblastName() = if (this == OblastType.Unknown || this == null) {
+        ""
+    } else {
+        getApplication<Application>().getString(oblastName)
+    }
+
+
+    private fun selectOblast() {
+        _bottomSheetState.update {
+            OnboardingBottomSheetState.ShowOblastsBottomSheet(
+                oblasts = OblastsDvo(
+                    oblasts = listOf(
+                        OblastDvo(OblastType.Cherkasy, listOf("1", "2", "3")),
+                        OblastDvo(OblastType.Kyiv, listOf("1", "2", "3", "5"))
+                    )
+                )
+            )
+        }
+    }
+
+    private fun selectQueue() {
+        if (userForm.isOblastSelected().not()) {
+            userForm.queueError = R.string.select_oblast_first
+            configUiState()
+            return
+        }
+
+        if (userForm.oblastType == null || userForm.oblastType == OblastType.Unknown) {
+            showError(getApplication<Application>().getString(R.string.something_went_wrong))
+            return
+        }
+
+        _bottomSheetState.update {
+            OnboardingBottomSheetState.ShowQueueBottomSheet(
+                oblast = selectedOblast ?: return
+            )
+        }
+    }
+
+    private fun oblastChanged(oblast: OblastDvo) {
+        selectedOblast = oblast
+        userForm.oblastType = oblast.oblastType
+        userForm.queueError = null
+        configUiState()
+        resetScreenState()
+    }
+
+    private fun queueChanged(queue: String) {
+        userForm.queue = queue
+        configUiState()
+        resetScreenState()
     }
 
     //whenlogout  clear token

@@ -3,11 +3,8 @@ package com.august.ua.blackout.presentation.select_oblast
 import android.app.Application
 import android.content.Context
 import androidx.lifecycle.AndroidViewModel
-import com.august.ua.blackout.data.dto.Oblast
-import com.august.ua.blackout.data.dto.Oblast.*
-import com.august.ua.blackout.data.dvo.OblastDvo
+import com.august.ua.blackout.data.dto.OblastType
 import com.august.ua.blackout.data.dvo.OblastsDvo
-import com.august.ua.blackout.domain.use_kase.GetOblastsUseCase
 import com.august.ua.blackout.presentation.common.ScreenState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -37,7 +34,7 @@ class SelectOblastViewModel @Inject constructor(
 //            return
 //        } toDo add connectivity check
 
-        _dataState.tryEmit(OblastsDvo(oblasts = Oblast.entries))
+        //_dataState.tryEmit(OblastsDvo(oblasts = OblastType.entries))
 
     }
 

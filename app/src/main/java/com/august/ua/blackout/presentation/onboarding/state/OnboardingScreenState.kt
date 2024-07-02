@@ -3,7 +3,7 @@ package com.august.ua.blackout.presentation.onboarding.state
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import com.august.ua.blackout.R
-import com.august.ua.blackout.data.dto.Oblast
+import com.august.ua.blackout.data.dto.OblastType
 
 sealed class OnboardingScreenState(
     @DrawableRes
@@ -34,8 +34,13 @@ sealed class OnboardingScreenState(
         backButtonPresent = false,
     )
     data class SelectOblastAndQueueState(
-        val oblast: Oblast,
-        val queue: String
+        val oblastType: OblastType,
+        val queue: String,
+        val oblastStr: String,
+        @StringRes
+        val oblastError: Int?,
+        @StringRes
+        val queueError: Int?,
     ): OnboardingScreenState(
         image = R.drawable.saly_10_dummy,
         title = R.string.choose_your_oblast_title,

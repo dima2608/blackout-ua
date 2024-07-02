@@ -15,7 +15,7 @@ class AuthKeyInterceptor(
 
         requestBuilder
             .header("Accept", "application/json")
-            .header("api key", "key-value")
+            .header("api-key", "key-value")
             .addHeader("User-Agent", userAgent)
             .method(original.method, original.body)
 
