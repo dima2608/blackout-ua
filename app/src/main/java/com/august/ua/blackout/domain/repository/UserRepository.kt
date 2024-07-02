@@ -15,4 +15,11 @@ interface UserRepository<T, D> {
 
     suspend fun clearUserLocalData()
     suspend fun clearUserData()
+
+    suspend fun sendFcmToken(deviceId: String, token: String): ResultState<Unit>
+
+    suspend fun clearFcmToken(
+        deviceId: String,
+        userId: String
+    ): ResultState<Unit>
 }

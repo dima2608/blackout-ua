@@ -2,12 +2,16 @@ package com.august.ua.blackout.presentation.onboarding
 
 import android.app.Application
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.august.ua.blackout.MainActivity
+import com.august.ua.blackout.MainActivityViewModel
 import com.august.ua.blackout.R
 import com.august.ua.blackout.data.dto.Oblast
 import com.august.ua.blackout.data.dto.UserDto
+import com.august.ua.blackout.domain.ResultState
 import com.august.ua.blackout.domain.common.EMPTY_STRING
 import com.august.ua.blackout.domain.repository.UserRepository
 import com.august.ua.blackout.navigation.Screen
@@ -18,6 +22,10 @@ import com.august.ua.blackout.presentation.onboarding.event.OnboardingEvent
 import com.august.ua.blackout.presentation.onboarding.event.OnboardingEvent.*
 import com.august.ua.blackout.presentation.onboarding.form.UserForm
 import com.august.ua.blackout.presentation.onboarding.state.OnboardingScreenState
+import com.august.ua.blackout.ui.common.extensions.getDeviceHardwareId
+import com.august.ua.blackout.ui.common.extensions.isConnected
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
@@ -197,4 +205,35 @@ class OnboardingScreenViewModel @Inject constructor(
     private fun retry() {
 
     }
+
+    private fun initFcm() {
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                return@OnCompleteListener
+            }
+            val token = task.result
+            Log.d(MainActivity::class.java.simpleName, "token =========>>>>>> $token")
+            sendFcmToken(token = token)
+        })
+    }
+
+    private fun sendFcmToken(token: String) {
+        if (getApplication<Application>().isConnected) {
+            viewModelScope.launch {
+                when (val response = userRepository.sendFcmToken(
+                    deviceId = getApplication<Application>().getDeviceHardwareId(),
+                    token = token
+                )) {
+                    is ResultState.Error -> Log.i(MainActivityViewModel::class.java.simpleName, response.errorDvo.toString())
+                    is ResultState.Success -> Log.i(MainActivityViewModel::class.java.simpleName, "FCM token sent successfully")
+                }
+            }
+        }
+    }
+
+    //whenlogout  clear token
+//    userRepository.clearFcmToken(
+//    userId = userRepository.userData.firstOrNull()?.id ?: "",
+//    deviceId = getApplication<Application>().getDeviceHardwareId()
+//    )
 }

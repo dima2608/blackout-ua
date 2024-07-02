@@ -4,9 +4,11 @@ import android.content.SharedPreferences
 import androidx.datastore.core.DataStore
 import com.august.ua.blackout.data.dto.UserDto
 import com.august.ua.blackout.data.remote.api.BlackoutService
+import com.august.ua.blackout.data.remote.api.UserService
 import com.august.ua.blackout.data.remote.datasource.BlackoutDataSource
 import com.august.ua.blackout.data.remote.datasource.BlackoutDataSourceImpl
 import com.august.ua.blackout.data.remote.datasource.UserDataSource
+import com.august.ua.blackout.data.remote.datasource.UserDataSourceImpl
 import com.august.ua.blackout.data.repository.BlackoutRepositoryImpl
 import com.august.ua.blackout.data.repository.UserRepositoryImpl
 import com.august.ua.blackout.domain.repository.BlackoutRepository
@@ -23,25 +25,15 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 class DataModule {
 
-//    @Provides
-//    @Singleton
-//    fun provideAuthService(retrofit: Retrofit): AuthService {
-//        return create(retrofit)
-//    }
-
-
-//    @Provides
-//    fun provideComplexDataSource(
-//        complexService: ComplexService,
-//        userRepository: UserRepository<Flow<UserDto?>, UserDto>,
-//    ): ComplexDataSource {
-//        return ComplexDataSourceImpl(complexService = complexService, userRepository)
-//    }
-
-
-        @Provides
+    @Provides
     @Singleton
     fun provideBlackoutService(retrofit: Retrofit): BlackoutService {
+        return create(retrofit)
+    }
+
+    @Provides
+    @Singleton
+    fun provideUserService(retrofit: Retrofit): UserService {
         return create(retrofit)
     }
 
@@ -49,6 +41,11 @@ class DataModule {
     @Provides
     fun provideBlackoutDataSource(blackoutService: BlackoutService): BlackoutDataSource {
         return BlackoutDataSourceImpl(blackoutService = blackoutService)
+    }
+
+    @Provides
+    fun provideUserDataSource(userService: UserService): UserDataSource {
+        return UserDataSourceImpl(userService = userService)
     }
 
     @Provides
@@ -66,10 +63,12 @@ class DataModule {
     fun provideUserRepository(
         userDataStorePreferences: DataStore<UserDto?>,
         sharedPreferences: SharedPreferences,
+        userDataSource: UserDataSource
     ): UserRepository<Flow<UserDto?>, UserDto> {
         return UserRepositoryImpl(
             userDataStorePreferences = userDataStorePreferences,
-            sharedPreferences = sharedPreferences
+            sharedPreferences = sharedPreferences,
+            userDataSource = userDataSource
         )
     }
 

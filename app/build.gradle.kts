@@ -157,4 +157,5 @@ dependencies {
     implementation(libs.lottie.compose)
     implementation(libs.appcompat)
     implementation(libs.kotlinx.serialization.json)
+    implementation(libs.firebase.messagin)
 }

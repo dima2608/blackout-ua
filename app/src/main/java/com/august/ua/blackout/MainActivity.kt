@@ -1,5 +1,7 @@
 package com.august.ua.blackout
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -31,6 +33,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.august.ua.blackout.data.dto.PushNotificationDto
 import com.august.ua.blackout.navigation.AppNavigation
 import com.august.ua.blackout.ui.components.AppSnackBar
 import com.august.ua.blackout.ui.theme.BlackoutUaTheme
@@ -120,6 +123,20 @@ class MainActivity : ComponentActivity() {
             Modifier.background(MaterialTheme.colorScheme.surface)
         ) {
             AppNavigation(navController)
+        }
+    }
+
+    companion object {
+
+        const val KEY_PUSH_NOTIFICATION_MODEL = "key_push_notification_model"
+
+        fun prepareIntent(
+            context: Context,
+            model: PushNotificationDto
+        ): Intent {
+            return Intent(context, MainActivity::class.java).apply {
+                putExtra(KEY_PUSH_NOTIFICATION_MODEL, model)
+            }
         }
     }
 }
