@@ -10,14 +10,20 @@ import com.august.ua.blackout.data.dto.UserDto
 data class UserDbo(
     @PrimaryKey(autoGenerate = true)
     var id: Int,
-    @ColumnInfo("current_location")
-    val location: OblastType?
 
+    @ColumnInfo("isPushEnabled")
+    val isPushEnabled: Boolean = false,
+
+    @ColumnInfo("onboardingWasStartedBefore")
+    val onboardingWasStartedBefore: Boolean = false,
+
+    @ColumnInfo("isNotificationPermissionScreenSeen")
+    val isNotificationPermissionScreenSeen: Boolean = false,
 )
 
 fun UserDbo.toUserDto() = UserDto(
     id = id.toString(),
     isPushEnabled = false,
-    oblastType = location,
+    oblastType = OblastType.Kyiv,
     queue = "1"
 )
