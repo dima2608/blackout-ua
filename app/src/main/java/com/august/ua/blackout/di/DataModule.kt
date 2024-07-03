@@ -3,6 +3,8 @@ package com.august.ua.blackout.di
 import android.content.SharedPreferences
 import androidx.datastore.core.DataStore
 import com.august.ua.blackout.data.dto.UserDto
+import com.august.ua.blackout.data.local.datastore.LocalCacheData
+import com.august.ua.blackout.data.local.db.dao.UserDao
 import com.august.ua.blackout.data.remote.api.BlackoutService
 import com.august.ua.blackout.data.remote.api.UserService
 import com.august.ua.blackout.data.remote.datasource.BlackoutDataSource
@@ -63,12 +65,14 @@ class DataModule {
     fun provideUserRepository(
         userDataStorePreferences: DataStore<UserDto?>,
         sharedPreferences: SharedPreferences,
-        userDataSource: UserDataSource
+        userDataSource: UserDataSource,
+        userDao: UserDao
     ): UserRepository<Flow<UserDto?>, UserDto> {
         return UserRepositoryImpl(
             userDataStorePreferences = userDataStorePreferences,
             sharedPreferences = sharedPreferences,
-            userDataSource = userDataSource
+            userDataSource = userDataSource,
+            userDao = userDao
         )
     }
 

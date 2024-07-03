@@ -8,6 +8,8 @@ plugins {
     id("dagger.hilt.android.plugin")
     alias(libs.plugins.com.google.gms.google.services)
     id("com.google.firebase.crashlytics")
+    alias(libs.plugins.androidx.room)
+    //id("androidx.room")
 }
 
 android {
@@ -43,6 +45,14 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true
+        }
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments += mapOf(
+                    "room.schemaLocation" to "$projectDir/schemas"
+                )
+            }
         }
 
         val keystoreFile = project.rootProject.file("local.properties")
@@ -109,6 +119,9 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+    room {
+        schemaDirectory("$projectDir/schemas")
+    }
 }
 
 dependencies {
@@ -158,4 +171,11 @@ dependencies {
     implementation(libs.appcompat)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.firebase.messagin)
+
+    implementation(libs.room.runtime)
+    annotationProcessor(libs.room.compiler)
+    ksp(libs.room.compiler)
+    implementation(libs.room.ktx)
+    implementation(libs.room.guava)
+    testImplementation(libs.room.testing)
 }

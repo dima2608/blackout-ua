@@ -31,6 +31,7 @@ appcompat = "1.7.0"
 uiDesktop = "1.6.8"
 datastoreCoreAndroid = "1.1.1"
 kotlinxSerialization = "1.4.1"
+roomVersion = "2.6.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -85,6 +86,13 @@ androidx-datastore = { group = "androidx.datastore", name = "datastore-preferenc
 androidx-datastore-core-android = { group = "androidx.datastore", name = "datastore-preferences-core", version.ref = "datastoreCoreAndroid" }
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
 
+room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "roomVersion" }
+room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "roomVersion" }
+room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "roomVersion" }
+room-guava = { group = "androidx.room", name = "room-guava", version.ref = "roomVersion" }
+room-testing = { group = "androidx.room", name = "room-testing", version.ref = "roomVersion" }
+
+
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
@@ -96,3 +104,5 @@ com-google-gms-google-services = { id = "com.google.gms.google-services", versio
 kotlin-parcelize = { id = "kotlin-parcelize" }
 dagger-hilt-android-plugin = { id = "dagger.hilt.android.plugin" }
 com-google-firebase-crashlytics = { id = "com.google.firebase.crashlytics" }
+
+androidx-room = { id = "androidx.room", version.ref = "roomVersion" }
