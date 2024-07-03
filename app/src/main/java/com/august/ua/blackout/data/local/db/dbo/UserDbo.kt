@@ -9,7 +9,7 @@ import com.august.ua.blackout.data.dto.UserDto
 @Entity(tableName = "user")
 data class UserDbo(
     @PrimaryKey(autoGenerate = true)
-    var id: Int,
+    var id: Int = 0,
 
     @ColumnInfo("isPushEnabled")
     val isPushEnabled: Boolean = false,
@@ -19,11 +19,16 @@ data class UserDbo(
 
     @ColumnInfo("isNotificationPermissionScreenSeen")
     val isNotificationPermissionScreenSeen: Boolean = false,
+
+    @ColumnInfo("isOnboardingComplete")
+    val isOnboardingComplete: Boolean = false
 )
 
 fun UserDbo.toUserDto() = UserDto(
     id = id.toString(),
     isPushEnabled = false,
     oblastType = OblastType.Kyiv,
-    queue = "1"
+    queue = "1",
+    isNotificationPermissionScreenSeen = isNotificationPermissionScreenSeen,
+    isOnboardingComplete = isOnboardingComplete
 )

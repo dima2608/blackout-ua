@@ -8,9 +8,7 @@ import com.august.ua.blackout.data.dto.OblastType
 @Entity("available_location")
 data class AvailableLocationDbo(
     @PrimaryKey(autoGenerate = true)
-    var id: Int,
+    var availableLocationId: Long = 0,
     @ColumnInfo("location")
     val location: OblastType?,
-    @ColumnInfo("location_queues")
-    val queues: List<String>?
 )

@@ -14,7 +14,7 @@ fun AppNavigation(
 ) {
     NavHost(
         navController = navController,
-        startDestination = ONBOARDING_GRAPH_ROUTE_PATTERN
+        startDestination = Screen.SplashScreen.route
     ) {
 
         composable(route = Screen.SplashScreen.route) {

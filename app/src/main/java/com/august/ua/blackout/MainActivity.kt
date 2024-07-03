@@ -7,6 +7,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -68,10 +69,10 @@ class MainActivity : ComponentActivity() {
         splashScreen.setOnExitAnimationListener { splashScreenViewProvider ->
             splashScreenViewProvider.view
                 .animate()
-//                .setDuration(500)
                 .translationY(-100f)
                 .alpha(0f)
                 .withEndAction { splashScreenViewProvider.remove() }
+
             enableEdgeToEdge()
         }
 

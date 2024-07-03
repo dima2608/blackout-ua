@@ -13,7 +13,7 @@
     </style>
 
     <style name="Theme.Blackoutua.Splash" parent="NightAdjusted.Theme.Splash">
-        <item name="windowSplashScreenBackground">@color/splash_background</item>
+        <item name="android:windowBackground">@drawable/bg_blue_yellow_gradient</item>
         <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher</item>
         <item name="postSplashScreenTheme">@style/Theme.Blackoutua</item>
         <item name="android:dialogTheme">@style/AppTheme.DialogTheme</item>

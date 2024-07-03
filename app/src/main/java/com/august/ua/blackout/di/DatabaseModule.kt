@@ -31,4 +31,6 @@ object DatabaseModule {
 
     @Provides
     fun provideUserDao(appDatabase: AppDatabase) = appDatabase.userDao()
+    @Provides
+    fun provideAvailableLocationDao(appDatabase: AppDatabase) = appDatabase.availableLocationsDao()
 }

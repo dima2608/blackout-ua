@@ -22,8 +22,8 @@ interface UserDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(userDbo: UserDbo)
 
-    @Query("UPDATE user SET current_location = :location WHERE id = :id")
-    suspend fun updatePushEnabled(id: String, location: OblastType)
+//    @Query("UPDATE user SET current_location = :location WHERE id = :id")
+//    suspend fun updatePushEnabled(id: String, location: OblastType)
 
     @Query("DELETE FROM user")
     suspend fun deleteAll()

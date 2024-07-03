@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "1f5338d978b9d3347029ade4c0e00433",
+    "identityHash": "a4a9ff6ad02cda0a577dda24afaf74a9",
     "entities": [
       {
         "tableName": "user",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `current_location` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `isPushEnabled` INTEGER NOT NULL, `onboardingWasStartedBefore` INTEGER NOT NULL, `isNotificationPermissionScreenSeen` INTEGER NOT NULL, `isOnboardingComplete` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -15,10 +15,28 @@
             "notNull": true
           },
           {
-            "fieldPath": "location",
-            "columnName": "current_location",
-            "affinity": "TEXT",
-            "notNull": false
+            "fieldPath": "isPushEnabled",
+            "columnName": "isPushEnabled",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "onboardingWasStartedBefore",
+            "columnName": "onboardingWasStartedBefore",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "isNotificationPermissionScreenSeen",
+            "columnName": "isNotificationPermissionScreenSeen",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "isOnboardingComplete",
+            "columnName": "isOnboardingComplete",
+            "affinity": "INTEGER",
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -29,12 +47,70 @@
         },
         "indices": [],
         "foreignKeys": []
+      },
+      {
+        "tableName": "available_location",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`availableLocationId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `location` TEXT)",
+        "fields": [
+          {
+            "fieldPath": "availableLocationId",
+            "columnName": "availableLocationId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "location",
+            "columnName": "location",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "availableLocationId"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "queue",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`queueId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `parentAvailableLocationId` INTEGER NOT NULL, `queue` TEXT NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "queueId",
+            "columnName": "queueId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "parentAvailableLocationId",
+            "columnName": "parentAvailableLocationId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "queue",
+            "columnName": "queue",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "queueId"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '1f5338d978b9d3347029ade4c0e00433')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'a4a9ff6ad02cda0a577dda24afaf74a9')"
     ]
   }
 }

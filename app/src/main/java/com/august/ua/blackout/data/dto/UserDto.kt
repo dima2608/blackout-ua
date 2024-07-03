@@ -7,13 +7,17 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class UserDto(
-    val id: String?,
-    val isPushEnabled: Boolean?,
-    val oblastType: OblastType?,
-    val queue: String?,
+    val id: String? = null,
+    val isPushEnabled: Boolean? = false,
+    val oblastType: OblastType? = null,
+    val queue: String? = null,
+    val isNotificationPermissionScreenSeen: Boolean? = false,
+    val isOnboardingComplete: Boolean? = false
 ) : Parcelable, Entity
 
 fun UserDto.toUserDbo() = UserDbo(
     id = 1,
-    location = oblastType
+    isPushEnabled = isPushEnabled ?: false,
+    isNotificationPermissionScreenSeen = isNotificationPermissionScreenSeen ?: false,
+
 )

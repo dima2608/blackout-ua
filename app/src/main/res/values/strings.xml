@@ -3,6 +3,7 @@
     <string name="home">Дім</string>
     <string name="settings">Налаштування</string>
     <string name="search">Пошук</string>
+    <string name="hello">Привіт</string>
 
     <string name="something_went_wrong">Упс, щось пішло не так</string>
     <string name="no_internet_connection">Немає з\'єднання з інтернетом</string>
@@ -29,6 +30,7 @@
 
     <string name="next">Далі</string>
     <string name="skip">Пропустити</string>
+    <string name="splash_screen_title_text">Привіт 🫶🏻</string>
 
     <string name="welcome">Привіт!</string>
     <string name="welcome_description">Отримуйте своєчасні сповіщення про\nвідключення світла та час його відновлення.\nТепер єСвітло завжди буде тримати\nвас в курсі. Гайда починати!</string>
