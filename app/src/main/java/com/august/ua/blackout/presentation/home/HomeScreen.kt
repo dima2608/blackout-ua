@@ -44,6 +44,10 @@ import com.august.ua.blackout.presentation.home.navigation.LOCATIONS_GRAPH_ROUTE
 import com.august.ua.blackout.presentation.home.navigation.calendarGraph
 import com.august.ua.blackout.presentation.home.navigation.locationsGraph
 import com.august.ua.blackout.presentation.home.navigation.settingsGraph
+import com.august.ua.blackout.ui.theme.Black
+import com.august.ua.blackout.ui.theme.BlackoutTextStyle
+import com.august.ua.blackout.ui.theme.Transparent
+import com.august.ua.blackout.ui.theme.White
 
 @Composable
 fun HomeScreen(
@@ -63,8 +67,9 @@ fun HomeScreen(
     Scaffold(
         bottomBar = {
             NavigationBar(
-                modifier = Modifier.background(MaterialTheme.colorScheme.surface),
-                containerColor = Color.Transparent
+                modifier = Modifier.background(Black),
+                containerColor = Transparent,
+                contentColor = Transparent
             ) {
                 bottomNavigationItems.forEach { item ->
                     val selected = navController.currentDestinationObserved.isTopLevelDestinationInHierarchy(item.route)
@@ -78,7 +83,8 @@ fun HomeScreen(
                                 text = stringResource(id = item.title),
                                 maxLines = 1,
                                 overflow = TextOverflow.Ellipsis,
-                                style = MaterialTheme.typography.labelMedium.copy(letterSpacing = 0.sp)
+                                style = BlackoutTextStyle.t4TextSmallDescription,
+                                color = White
                             )
                         },
                         icon = {
@@ -87,11 +93,16 @@ fun HomeScreen(
                                     Badge()
                                 }
                             }) {
-                                Icon(item.icon, contentDescription = null)
+                                val icon = if(selected) item.iconFill else item.icon
+                                Icon(imageVector = icon, contentDescription = null)
                             }
                         },
                         colors = NavigationBarItemDefaults.colors(
-                            indicatorColor = MaterialTheme.colorScheme.primary
+                            indicatorColor = Transparent,
+                            selectedIconColor = White,
+                            selectedTextColor = White,
+                            unselectedIconColor = White,
+                            unselectedTextColor = White
                         )
                     )
                 }

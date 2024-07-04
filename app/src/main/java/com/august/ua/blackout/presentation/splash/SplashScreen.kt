@@ -40,7 +40,7 @@ fun SplashScreen(
     navigate: (String) -> Unit
 ) {
     val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.animation_ukrain))
-    val progress by animateLottieCompositionAsState(composition)
+    val progress by animateLottieCompositionAsState(composition = composition, speed = 1.5f)
     val navState by viewModel.navEvent.collectAsState()
     val data = viewModel.uiData.value
 

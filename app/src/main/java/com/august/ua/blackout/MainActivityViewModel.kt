@@ -20,7 +20,7 @@ class MainActivityViewModel @Inject constructor(
 ): ViewModel() {
 
     val uiState: StateFlow<MainActivityUiState> = flow<MainActivityUiState> {
-        delay(1000)
+        delay(50)
         emit(MainActivityUiState.Success)
     }.stateIn(
         scope = viewModelScope,
