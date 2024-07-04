@@ -5,6 +5,9 @@
     <string name="search">Пошук</string>
     <string name="hello">Привіт</string>
 
+    <string name="locations">Локації</string>
+    <string name="calendar">Календар</string>
+
     <string name="something_went_wrong">Упс, щось пішло не так</string>
     <string name="no_internet_connection">Немає з\'єднання з інтернетом</string>
     <string name="retry">Повторити</string>

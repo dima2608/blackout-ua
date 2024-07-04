@@ -1,5 +1,6 @@
 package com.august.ua.blackout.presentation.home
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -32,14 +33,17 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
+import com.august.ua.blackout.R
+import com.august.ua.blackout.navigation.Screen
 import com.august.ua.blackout.navigation.currentDestinationObserved
 import com.august.ua.blackout.navigation.isTopLevelDestinationInHierarchy
 import com.august.ua.blackout.presentation.home.navigation.BottomNavigationItems
-import com.august.ua.blackout.presentation.home.navigation.HOME_GRAPH_ROUTE_PATTERN
-import com.august.ua.blackout.presentation.home.navigation.homeGraph
+import com.august.ua.blackout.presentation.home.navigation.LOCATIONS_GRAPH_ROUTE_PATTERN
+import com.august.ua.blackout.presentation.home.navigation.calendarGraph
+import com.august.ua.blackout.presentation.home.navigation.locationsGraph
+import com.august.ua.blackout.presentation.home.navigation.settingsGraph
 
 @Composable
 fun HomeScreen(
@@ -49,8 +53,12 @@ fun HomeScreen(
     var tab by rememberSaveable {
         mutableStateOf(selectedTab)
     }
+
     val bottomNavigationItems = BottomNavigationItems.entries
     val navController = rememberNavController()
+    //val notificationsCount by viewModel.notificationsCount.collectAsStateWithLifecycle(initialValue = 0)
+    val notificationsCount = 0
+
 
     Scaffold(
         bottomBar = {
@@ -74,13 +82,13 @@ fun HomeScreen(
                             )
                         },
                         icon = {
-//                            BadgedBox(badge = {
-//                                if (item.hasNews && notificationsCount > 0) {
-//                                    Badge()
-//                                }
-//                            }) {
-//                                Icon(painterResource(id = item.icon), contentDescription = null)
-//                            }
+                            BadgedBox(badge = {
+                                if (item.hasNews && notificationsCount > 0) {
+                                    Badge()
+                                }
+                            }) {
+                                Icon(item.icon, contentDescription = null)
+                            }
                         },
                         colors = NavigationBarItemDefaults.colors(
                             indicatorColor = MaterialTheme.colorScheme.primary
@@ -91,12 +99,13 @@ fun HomeScreen(
         }
     ) { padding ->
         Box(modifier = Modifier.fillMaxSize()) {
-//            Image(
-//                modifier = Modifier.fillMaxSize(),
-//                painter = painterResource(id = R.drawable.bg_home),
-//                contentDescription = null,
-//                contentScale = ContentScale.Crop
-//            )
+            Image(
+                modifier = Modifier.fillMaxSize(),
+                painter = painterResource(id = R.drawable.bg_blue_yellow_gradient),
+                contentDescription = null,
+                contentScale = ContentScale.Fit
+            )
+
             Column(
                 Modifier
                     .fillMaxSize()
@@ -104,24 +113,20 @@ fun HomeScreen(
             ) {
                 NavHost(
                     navController = navController,
-                    startDestination = HOME_GRAPH_ROUTE_PATTERN,
+                    startDestination = LOCATIONS_GRAPH_ROUTE_PATTERN,
                 ) {
-                    homeGraph(navController, externalNavController = externalNavController)
+                    locationsGraph(navController = navController, externalNavController = externalNavController)
+                    calendarGraph(navController = navController, externalNavController = externalNavController)
+                    settingsGraph(navController = navController, externalNavController = externalNavController)
                 }
             }
         }
     }
 
-//    LaunchedEffect(tab) {
-//        if (tab != Screen.CalendarTabScreen.route) {
-//            navigate(route = tab, navController = navController)
-//            tab = Screen.CalendarTabScreen.route
-//        }
-//    }
     LaunchedEffect(tab) {
-        if (tab != HOME_GRAPH_ROUTE_PATTERN) {
+        if (tab != Screen.LocationsTabScreen.route) {
             navigate(route = tab, navController = navController)
-            tab = HOME_GRAPH_ROUTE_PATTERN
+            tab = Screen.LocationsTabScreen.route
         }
     }
 }

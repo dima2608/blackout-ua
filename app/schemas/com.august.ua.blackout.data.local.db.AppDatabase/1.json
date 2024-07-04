@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "a4a9ff6ad02cda0a577dda24afaf74a9",
+    "identityHash": "becfc3dc94e63c92dc04f1584816260e",
     "entities": [
       {
         "tableName": "user",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `isPushEnabled` INTEGER NOT NULL, `onboardingWasStartedBefore` INTEGER NOT NULL, `isNotificationPermissionScreenSeen` INTEGER NOT NULL, `isOnboardingComplete` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `isBlackoutScheduleChangesPushEnabled` INTEGER NOT NULL, `onboardingWasViewed` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -15,26 +15,14 @@
             "notNull": true
           },
           {
-            "fieldPath": "isPushEnabled",
-            "columnName": "isPushEnabled",
+            "fieldPath": "isBlackoutScheduleChangesPushEnabled",
+            "columnName": "isBlackoutScheduleChangesPushEnabled",
             "affinity": "INTEGER",
             "notNull": true
           },
           {
-            "fieldPath": "onboardingWasStartedBefore",
-            "columnName": "onboardingWasStartedBefore",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "isNotificationPermissionScreenSeen",
-            "columnName": "isNotificationPermissionScreenSeen",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "isOnboardingComplete",
-            "columnName": "isOnboardingComplete",
+            "fieldPath": "onboardingWasViewed",
+            "columnName": "onboardingWasViewed",
             "affinity": "INTEGER",
             "notNull": true
           }
@@ -76,7 +64,7 @@
       },
       {
         "tableName": "queue",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`queueId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `parentAvailableLocationId` INTEGER NOT NULL, `queue` TEXT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`queueId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `parentAvailableLocationId` INTEGER NOT NULL, `queue` TEXT NOT NULL, `light_status` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "queueId",
@@ -95,6 +83,12 @@
             "columnName": "queue",
             "affinity": "TEXT",
             "notNull": true
+          },
+          {
+            "fieldPath": "lightStatus",
+            "columnName": "light_status",
+            "affinity": "INTEGER",
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -105,12 +99,132 @@
         },
         "indices": [],
         "foreignKeys": []
+      },
+      {
+        "tableName": "color",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`colorId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `colorSRGB` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "colorId",
+            "columnName": "colorId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "colorSRGB",
+            "columnName": "colorSRGB",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "colorId"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "icon",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`iconId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `icon` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "iconId",
+            "columnName": "iconId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "icon",
+            "columnName": "icon",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "iconId"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "user_location",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`locationId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `locationOrder` INTEGER NOT NULL, `blackout_id` INTEGER NOT NULL, `user_location_name` TEXT NOT NULL, `selected_location_icon_id` INTEGER NOT NULL, `selected_location_color_id` INTEGER NOT NULL, `selected_location` TEXT NOT NULL, `selected_queue` TEXT NOT NULL, `is_location_push_enabled` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "locationId",
+            "columnName": "locationId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "locationOrder",
+            "columnName": "locationOrder",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "blackoutId",
+            "columnName": "blackout_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "locationName",
+            "columnName": "user_location_name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "selectedLocationIconId",
+            "columnName": "selected_location_icon_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "selectedColorId",
+            "columnName": "selected_location_color_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "selectedLocation",
+            "columnName": "selected_location",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "selectedQueue",
+            "columnName": "selected_queue",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "isLocationPushEnabled",
+            "columnName": "is_location_push_enabled",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "locationId"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'a4a9ff6ad02cda0a577dda24afaf74a9')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'becfc3dc94e63c92dc04f1584816260e')"
     ]
   }
 }

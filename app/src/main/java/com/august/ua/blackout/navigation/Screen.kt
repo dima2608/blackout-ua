@@ -17,7 +17,9 @@ sealed class Screen(val route: String) {
     data object HomeScreen: Screen("home_screen")
     data object OnboardingScreen: Screen("onboarding_screen")
     data object SearchScreen: Screen("search_screen")
-    data object SettingsScreen: Screen("settings_screen")
+    data object CalendarTabScreen: Screen("calendar_screen")
+    data object SettingsTabScreen: Screen("settings_screen")
+    data object LocationsTabScreen: Screen("locations_screen")
 
 
     fun withArgs(vararg args: String): String {

@@ -14,5 +14,5 @@ data class QueueDbo(
     @ColumnInfo("queue")
     val queue: String,
     @ColumnInfo("light_status")
-    val lightStatus: String
+    val lightStatus: Int
 )

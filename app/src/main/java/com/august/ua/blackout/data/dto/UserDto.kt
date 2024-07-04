@@ -17,7 +17,7 @@ data class UserDto(
 
 fun UserDto.toUserDbo() = UserDbo(
     id = 1,
-    isPushEnabled = isPushEnabled ?: false,
-    isNotificationPermissionScreenSeen = isNotificationPermissionScreenSeen ?: false,
+//    isPushEnabled = isPushEnabled ?: false,
+//    isNotificationPermissionScreenSeen = isNotificationPermissionScreenSeen ?: false,
 
 )

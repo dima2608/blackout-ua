@@ -111,12 +111,12 @@ class SplashScreenViewModel @Inject constructor(
     fun onUIAction(uiAction: UIAction) {
         when (uiAction.actionKey) {
             ANIMATION_END_KEY -> {
-                //_navEvent.update { NavigationEvent.NavigateTo(Screen.HomeScreen.route) }
+                _navEvent.update { NavigationEvent.NavigateTo(Screen.HomeScreen.route) }
 
-                viewModelScope.launch {
-                    Log.d("TEST", "${availableLocationDao.getAvailableLocationsWithQueue()}")
-                    Log.d("TEST", "${availableLocationDao.getAvailableLocations()}")
-                }
+//                viewModelScope.launch {
+//                    Log.d("TEST", "${availableLocationDao.getAvailableLocationsWithQueue()}")
+//                    Log.d("TEST", "${availableLocationDao.getAvailableLocations()}")
+//                }
             }
         }
     }
