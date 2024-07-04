@@ -28,9 +28,18 @@ class App: Application() {
     }
 
     private fun setupPluto() {
-        Pluto.Installer(this)
+        if (BuildConfig.DEBUG) initializePluto(this)
+
+        PlutoRoomsDBWatcher.watch(DATA_BASE_NAME, AppDatabase::class.java)
+    }
+
+    private fun initializePluto(application: Application) {
+        Pluto.Installer(application)
+//            .addPlugin(PlutoNetworkPlugin("network"))
+//            .addPlugin(PlutoExceptionsPlugin("exceptions"))
+//            .addPlugin(PlutoSharePreferencesPlugin("share_preferences"))
             .addPlugin(PlutoRoomsDatabasePlugin())
-        .install()
+            .install()
 
         PlutoRoomsDBWatcher.watch(DATA_BASE_NAME, AppDatabase::class.java)
     }
