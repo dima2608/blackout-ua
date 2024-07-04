@@ -3,6 +3,11 @@ package com.august.ua.blackout
 import android.app.Activity
 import android.app.Application
 import android.os.Bundle
+import com.august.ua.blackout.data.local.db.AppDatabase
+import com.august.ua.blackout.di.DatabaseModule.DATA_BASE_NAME
+import com.pluto.Pluto
+import com.pluto.plugins.rooms.db.PlutoRoomsDBWatcher
+import com.pluto.plugins.rooms.db.PlutoRoomsDatabasePlugin
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
@@ -12,6 +17,7 @@ class App: Application() {
         super.onCreate()
         application = this
 
+        setupPluto()
         registerActivityLifecycleCallbacks(AppLifecycleTracker())
 
         //FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(!BuildConfig.DEBUG)
@@ -19,6 +25,14 @@ class App: Application() {
 
     companion object {
         lateinit var application: Application
+    }
+
+    private fun setupPluto() {
+        Pluto.Installer(this)
+            .addPlugin(PlutoRoomsDatabasePlugin())
+        .install()
+
+        PlutoRoomsDBWatcher.watch(DATA_BASE_NAME, AppDatabase::class.java)
     }
 
     class AppLifecycleTracker : ActivityLifecycleCallbacks  {

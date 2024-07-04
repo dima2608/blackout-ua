@@ -14,7 +14,7 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object DatabaseModule {
 
-    private const val DATA_BASE_NAME = "blackout_cache"
+    const val DATA_BASE_NAME = "blackout_cache"
 
     @Provides
     @Singleton
@@ -33,4 +33,6 @@ object DatabaseModule {
     fun provideUserDao(appDatabase: AppDatabase) = appDatabase.userDao()
     @Provides
     fun provideAvailableLocationDao(appDatabase: AppDatabase) = appDatabase.availableLocationsDao()
+
+
 }

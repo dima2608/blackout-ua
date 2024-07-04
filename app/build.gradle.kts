@@ -178,4 +178,13 @@ dependencies {
     implementation(libs.room.ktx)
     implementation(libs.room.guava)
     testImplementation(libs.room.testing)
+
+    debugImplementation(libs.pluto)
+    releaseImplementation(libs.pluto.no.op)
+
+//    debugImplementation(libs.pluto.bundle.core)
+//    releaseImplementation(libs.pluto.bundle.core.no.op)
+
+    debugImplementation(libs.pluto.rooms.db)
+    releaseImplementation(libs.pluto.rooms.db.no.op )
 }

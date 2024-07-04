@@ -32,6 +32,7 @@ uiDesktop = "1.6.8"
 datastoreCoreAndroid = "1.1.1"
 kotlinxSerialization = "1.4.1"
 roomVersion = "2.6.1"
+plutoVersion = "2.2.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -92,6 +93,12 @@ room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "roomVers
 room-guava = { group = "androidx.room", name = "room-guava", version.ref = "roomVersion" }
 room-testing = { group = "androidx.room", name = "room-testing", version.ref = "roomVersion" }
 
+pluto = { group = "com.plutolib", name = "pluto", version.ref = "plutoVersion" }
+pluto-no-op = { group = "com.plutolib", name = "pluto-no-op", version.ref = "plutoVersion" }
+pluto-bundle-core = { group = "com.plutolib.plugins", name = "bundle-core", version.ref = "plutoVersion" }
+pluto-bundle-core-no-op = { group = "com.plutolib.plugins", name = "bundle-core-no-op", version.ref = "plutoVersion" }
+pluto-rooms-db = { group = "com.plutolib.plugins", name = "rooms-db", version.ref = "plutoVersion" }
+pluto-rooms-db-no-op = { group = "com.plutolib.plugins", name = "rooms-db-no-op", version.ref = "plutoVersion" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
