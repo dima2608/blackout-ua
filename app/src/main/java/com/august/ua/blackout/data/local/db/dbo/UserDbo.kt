@@ -9,19 +9,12 @@ import com.august.ua.blackout.data.dto.UserDto
 @Entity(tableName = "user")
 data class UserDbo(
     @PrimaryKey(autoGenerate = true)
-    var id: Int = 0,
+    var id: Long = 0,
+    @ColumnInfo("isBlackoutScheduleChangesPushEnabled")
+    val isBlackoutScheduleChangesPushEnabled: Boolean = false,
 
-    @ColumnInfo("isPushEnabled")
-    val isPushEnabled: Boolean = false,
-
-    @ColumnInfo("onboardingWasStartedBefore")
-    val onboardingWasStartedBefore: Boolean = false,
-
-    @ColumnInfo("isNotificationPermissionScreenSeen")
-    val isNotificationPermissionScreenSeen: Boolean = false,
-
-    @ColumnInfo("isOnboardingComplete")
-    val isOnboardingComplete: Boolean = false
+    @ColumnInfo("onboardingWasViewed")
+    val onboardingWasViewed: Boolean = false,
 )
 
 fun UserDbo.toUserDto() = UserDto(
@@ -29,6 +22,6 @@ fun UserDbo.toUserDto() = UserDto(
     isPushEnabled = false,
     oblastType = OblastType.Kyiv,
     queue = "1",
-    isNotificationPermissionScreenSeen = isNotificationPermissionScreenSeen,
-    isOnboardingComplete = isOnboardingComplete
+    isNotificationPermissionScreenSeen = false,
+    isOnboardingComplete = false
 )

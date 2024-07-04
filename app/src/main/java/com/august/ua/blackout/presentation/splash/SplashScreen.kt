@@ -15,9 +15,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.paint
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.core.graphics.toColor
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
@@ -26,6 +29,7 @@ import com.airbnb.lottie.compose.rememberLottieComposition
 import com.august.ua.blackout.R
 import com.august.ua.blackout.presentation.common.NavigationEvent
 import com.august.ua.blackout.ui.infrastructure.event.UIAction
+import com.august.ua.blackout.ui.theme.Black
 import com.august.ua.blackout.ui.theme.BlackoutTextStyle
 import com.august.ua.blackout.ui.utils.resource.UiText
 
@@ -39,6 +43,8 @@ fun SplashScreen(
     val progress by animateLottieCompositionAsState(composition)
     val navState by viewModel.navEvent.collectAsState()
     val data = viewModel.uiData.value
+
+    val t = 123
 
     LaunchedEffect(navState) {
         when(val state =navState) {

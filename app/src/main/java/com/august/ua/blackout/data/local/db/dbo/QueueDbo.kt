@@ -12,5 +12,7 @@ data class QueueDbo(
     @ColumnInfo("parentAvailableLocationId")
     val parentAvailableLocationId: Long,
     @ColumnInfo("queue")
-    val queue: String
+    val queue: String,
+    @ColumnInfo("light_status")
+    val lightStatus: String
 )
