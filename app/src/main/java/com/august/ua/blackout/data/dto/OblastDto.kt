@@ -17,6 +17,5 @@ fun OblastDto.toQueueDboList(availableLocationId: Long) = queues?.map {
     QueueDbo(
         parentAvailableLocationId = availableLocationId,
         queue = it,
-        lightStatus = -1
     )
 }.orEmpty()

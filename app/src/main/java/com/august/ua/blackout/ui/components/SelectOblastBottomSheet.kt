@@ -7,10 +7,9 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.august.ua.blackout.data.dto.OblastType
 import com.august.ua.blackout.data.dvo.OblastDvo
 import com.august.ua.blackout.data.dvo.OblastsDvo
-import com.august.ua.blackout.ui.common.extensions.bottomSpacer
+import com.august.ua.blackout.ui.common.extensions.itemBottomSpacer
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -32,7 +31,7 @@ fun SelectOblastBottomSheet(
             }
         }
 
-        bottomSpacer()
+        itemBottomSpacer()
 
     }
 }

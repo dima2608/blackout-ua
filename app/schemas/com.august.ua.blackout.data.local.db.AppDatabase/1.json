@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "becfc3dc94e63c92dc04f1584816260e",
+    "identityHash": "2ae43776dd449edb21dcb4081ab53434",
     "entities": [
       {
         "tableName": "user",
@@ -64,7 +64,7 @@
       },
       {
         "tableName": "queue",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`queueId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `parentAvailableLocationId` INTEGER NOT NULL, `queue` TEXT NOT NULL, `light_status` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`queueId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `parentAvailableLocationId` INTEGER NOT NULL, `queue` TEXT NOT NULL)",
         "fields": [
           {
             "fieldPath": "queueId",
@@ -82,12 +82,6 @@
             "fieldPath": "queue",
             "columnName": "queue",
             "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "lightStatus",
-            "columnName": "light_status",
-            "affinity": "INTEGER",
             "notNull": true
           }
         ],
@@ -224,7 +218,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'becfc3dc94e63c92dc04f1584816260e')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '2ae43776dd449edb21dcb4081ab53434')"
     ]
   }
 }

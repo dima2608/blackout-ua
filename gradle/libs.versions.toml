@@ -33,6 +33,7 @@ datastoreCoreAndroid = "1.1.1"
 kotlinxSerialization = "1.4.1"
 roomVersion = "2.6.1"
 plutoVersion = "2.2.1"
+pagingVersion = "3.3.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -92,6 +93,11 @@ room-compiler = { group = "androidx.room", name = "room-compiler", version.ref =
 room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "roomVersion" }
 room-guava = { group = "androidx.room", name = "room-guava", version.ref = "roomVersion" }
 room-testing = { group = "androidx.room", name = "room-testing", version.ref = "roomVersion" }
+room-paging = { group = "androidx.room", name = "room-paging", version.ref = "roomVersion" }
+
+paging-runtime = { group = "androidx.paging", name = "paging-runtime", version.ref = "pagingVersion" }
+paging-compose = { group = "androidx.paging", name = "paging-compose", version.ref = "pagingVersion" }
+paging-common = { group = "androidx.paging", name = "paging-common", version.ref = "pagingVersion" }
 
 pluto = { group = "com.plutolib", name = "pluto", version.ref = "plutoVersion" }
 pluto-no-op = { group = "com.plutolib", name = "pluto-no-op", version.ref = "plutoVersion" }

@@ -177,6 +177,7 @@ dependencies {
     ksp(libs.room.compiler)
     implementation(libs.room.ktx)
     implementation(libs.room.guava)
+    implementation(libs.room.paging)
     testImplementation(libs.room.testing)
 
     debugImplementation(libs.pluto)
@@ -187,4 +188,9 @@ dependencies {
 
     debugImplementation(libs.pluto.rooms.db)
     releaseImplementation(libs.pluto.rooms.db.no.op )
+
+
+    implementation(libs.paging.runtime)
+    testImplementation(libs.paging.common)
+    implementation(libs.paging.compose)
 }

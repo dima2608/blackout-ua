@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity("shifts")
-data class ShiftsDbo(
+data class ShiftDbo(
     @PrimaryKey(autoGenerate = true)
     val shiftId: Long = 0,
     @ColumnInfo("start")

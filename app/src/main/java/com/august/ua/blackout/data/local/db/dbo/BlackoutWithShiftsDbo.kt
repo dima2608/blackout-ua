@@ -10,6 +10,6 @@ data class BlackoutWithShiftsDbo(
         parentColumn = "blackoutId",
         entityColumn = "parentBlackoutId"
     )
-    val shifts: List<ShiftsDbo>
+    val shifts: List<ShiftDbo>
 
 )

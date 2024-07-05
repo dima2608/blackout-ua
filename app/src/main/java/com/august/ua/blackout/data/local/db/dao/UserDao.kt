@@ -5,8 +5,6 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
-import androidx.room.Update
-import com.august.ua.blackout.data.dto.OblastType
 import com.august.ua.blackout.data.local.db.dbo.UserDbo
 import kotlinx.coroutines.flow.Flow
 

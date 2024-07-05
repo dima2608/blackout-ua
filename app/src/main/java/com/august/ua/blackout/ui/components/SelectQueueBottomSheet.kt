@@ -7,8 +7,7 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.august.ua.blackout.data.dvo.OblastDvo
-import com.august.ua.blackout.data.dvo.OblastsDvo
-import com.august.ua.blackout.ui.common.extensions.bottomSpacer
+import com.august.ua.blackout.ui.common.extensions.itemBottomSpacer
 
 @Composable
 fun SelectQueueBottomSheet(
@@ -28,6 +27,6 @@ fun SelectQueueBottomSheet(
             }
         }
 
-        bottomSpacer()
+        itemBottomSpacer()
     }
 }

@@ -1,5 +1,6 @@
 package com.august.ua.blackout.data.local.db.dao
 
+import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -18,6 +19,9 @@ interface UserLocationDao {
 
     @Query("SELECT selected_queue FROM user_location")
     suspend fun getLocationsQueue(): List<String>?
+
+    @Query("SELECT selected_queue FROM user_location ORDER BY locationOrder ASC")
+    suspend fun getLocationsQueuePaging(): PagingSource<Int, UserLocationDbo>?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(userLocationDbo: UserLocationDbo)
