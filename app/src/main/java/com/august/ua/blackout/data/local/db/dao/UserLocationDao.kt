@@ -5,20 +5,19 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.august.ua.blackout.data.local.db.dbo.UserDbo
 import com.august.ua.blackout.data.local.db.dbo.UserLocationDbo
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface UserLocationDao {
     @Query("SELECT * FROM user_location")
-    suspend fun getLocations(): List<UserLocationDbo>?
+    suspend fun getLocations(): List<UserLocationDbo?>
 
     @Query("SELECT * FROM user_location")
-    fun observeUserLocations(): Flow<List<UserLocationDbo>?>
+    fun observeUserLocations(): Flow<List<UserLocationDbo?>>
 
     @Query("SELECT selected_queue FROM user_location")
-    suspend fun getLocationsQueue(): List<String>?
+    suspend fun getQueues(): List<String?>
 
     @Query("SELECT selected_queue FROM user_location ORDER BY locationOrder ASC")
     suspend fun getLocationsQueuePaging(): PagingSource<Int, UserLocationDbo>?
