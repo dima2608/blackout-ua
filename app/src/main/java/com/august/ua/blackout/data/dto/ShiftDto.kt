@@ -6,9 +6,12 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class QueueDto(
-    @SerializedName("queue")
-    val queue: String?,
-    @SerializedName("lightStatus")
-    val lightStatus: Int?,
-) : Entity, Parcelable
+data class ShiftDto(
+    @SerializedName("start")
+    val start: String,
+    @SerializedName("end")
+    val end: String,
+    @SerializedName("queues")
+    val queues: List<QueueDto>,
+
+): Entity, Parcelable
