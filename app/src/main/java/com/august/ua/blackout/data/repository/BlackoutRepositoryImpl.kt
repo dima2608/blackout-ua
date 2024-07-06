@@ -1,7 +1,6 @@
 package com.august.ua.blackout.data.repository
 
-import com.august.ua.blackout.data.dto.OblastResponse
-import com.august.ua.blackout.data.dto.OutrageDto
+import com.august.ua.blackout.data.dto.OblastResponseDto
 import com.august.ua.blackout.data.dto.OutragesResponseDto
 import com.august.ua.blackout.data.local.db.dao.CityDao
 import com.august.ua.blackout.data.local.db.dao.OutrageDao
@@ -27,7 +26,7 @@ class BlackoutRepositoryImpl(
         )
     }
 
-    override suspend fun saveCities(cities: OblastResponse) {
+    override suspend fun saveCities(cities: OblastResponseDto) {
         cityDao.insert(
             cites = OblastResponseToCitiesDboMapper(cities).transform()
         )

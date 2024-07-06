@@ -1,6 +1,6 @@
 package com.august.ua.blackout.data.remote.api
 
-import com.august.ua.blackout.data.dto.OblastResponse
+import com.august.ua.blackout.data.dto.OblastResponseDto
 import com.august.ua.blackout.data.remote.network.NetworkResult
 import retrofit2.http.GET
 
@@ -11,5 +11,5 @@ interface BlackoutService {
     }
 
     @GET("${BASE_PATH}oblast")
-    suspend fun getOblasts(): NetworkResult<OblastResponse>
+    suspend fun getOblasts(): NetworkResult<OblastResponseDto>
 }

@@ -43,4 +43,39 @@ object Dummy {
             )
         )
     )
+
+    val dummyOblastResponseDtoDto = OblastResponseDto(
+        oblasts = listOf(
+            OblastDto(
+                id = 1,
+                oblastType = OblastType.Cherkasy,
+                queues = listOf(
+                    "1",
+                    "2",
+                    "3"
+                )
+
+            ),
+            OblastDto(
+                id = 2,
+                oblastType = OblastType.Sumy,
+                queues = listOf(
+                    "1.1",
+                    "2.1",
+                    "3.1"
+                )
+
+            ),
+            OblastDto(
+                id = 3,
+                oblastType = OblastType.Odesa,
+                queues = listOf(
+                    "1.3",
+                    "2.3",
+                    "3.3"
+                )
+
+            )
+        )
+    )
 }

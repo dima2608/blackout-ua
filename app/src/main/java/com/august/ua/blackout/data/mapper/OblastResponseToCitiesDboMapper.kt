@@ -1,10 +1,10 @@
 package com.august.ua.blackout.data.mapper
 
-import com.august.ua.blackout.data.dto.OblastResponse
+import com.august.ua.blackout.data.dto.OblastResponseDto
 import com.august.ua.blackout.data.local.db.dbo.with_embeded.CityDbo
 
-class OblastResponseToCitiesDboMapper(data: OblastResponse) :
-    Mapper<OblastResponse, List<CityDbo>>(data) {
+class OblastResponseToCitiesDboMapper(data: OblastResponseDto) :
+    Mapper<OblastResponseDto, List<CityDbo>>(data) {
 
         override fun transform(): List<CityDbo> {
         return data?.oblasts?.map {
