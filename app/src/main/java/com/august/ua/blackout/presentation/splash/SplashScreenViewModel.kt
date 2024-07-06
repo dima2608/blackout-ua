@@ -66,28 +66,28 @@ class SplashScreenViewModel @Inject constructor(
 
     private fun getAllAvailableLocations() {
         viewModelScope.launch {
-            val availableLocations = listOf(
-                OblastDto(
-                    oblastType = OblastType.Kyiv,
-                    queues = listOf("1", "2", "3")
-                ),
-                OblastDto(
-                    oblastType = OblastType.Cherkasy,
-                    queues = listOf("5", "3", "2", "1")
-                ),
-                OblastDto(
-                    oblastType = OblastType.Sumy,
-                    queues = listOf("5.1", "3.1", "2.3", "1.4")
-                ),
-                OblastDto(
-                    oblastType = OblastType.Mykolaiv,
-                    queues = listOf("5.1", "3.1", "2.3", "1.4")
-                ),
-                OblastDto(
-                    oblastType = OblastType.Luhansk,
-                    queues = listOf("5.1", "3.1", "2.3", "1.4")
-                )
-            )
+//            val availableLocations = listOf(
+//                OblastDto(
+//                    oblastType = OblastType.Kyiv,
+//                    queues = listOf("1", "2", "3")
+//                ),
+//                OblastDto(
+//                    oblastType = OblastType.Cherkasy,
+//                    queues = listOf("5", "3", "2", "1")
+//                ),
+//                OblastDto(
+//                    oblastType = OblastType.Sumy,
+//                    queues = listOf("5.1", "3.1", "2.3", "1.4")
+//                ),
+//                OblastDto(
+//                    oblastType = OblastType.Mykolaiv,
+//                    queues = listOf("5.1", "3.1", "2.3", "1.4")
+//                ),
+//                OblastDto(
+//                    oblastType = OblastType.Luhansk,
+//                    queues = listOf("5.1", "3.1", "2.3", "1.4")
+//                )
+//            )
 
             //availableLocationDao.insetAllAvailableLocations(availableLocations)
 

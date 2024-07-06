@@ -4,11 +4,16 @@ import android.os.Parcelable
 import com.august.ua.blackout.data.local.db.dbo.AvailableLocationDbo
 import com.august.ua.blackout.data.local.db.dbo.QueueDbo
 import com.august.ua.blackout.domain.Entity
+import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class OblastDto(
+    @SerializedName("id")
+    val id: Int,
+    @SerializedName("key")
     val oblastType: OblastType?,
+    @SerializedName("queues")
     val queues: List<String>?
 ) : Entity, Parcelable
 

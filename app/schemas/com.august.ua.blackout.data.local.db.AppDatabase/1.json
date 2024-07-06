@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "ea5991697b325e5ad824c52edc991301",
+    "identityHash": "e854a32b8c553bff2805af31b367519f",
     "entities": [
       {
         "tableName": "user",
@@ -359,12 +359,50 @@
         },
         "indices": [],
         "foreignKeys": []
+      },
+      {
+        "tableName": "city_table",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`cityId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `id` INTEGER, `oblastType` TEXT, `queues` TEXT)",
+        "fields": [
+          {
+            "fieldPath": "cityId",
+            "columnName": "cityId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "oblastType",
+            "columnName": "oblastType",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "queues",
+            "columnName": "queues",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "cityId"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'ea5991697b325e5ad824c52edc991301')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'e854a32b8c553bff2805af31b367519f')"
     ]
   }
 }

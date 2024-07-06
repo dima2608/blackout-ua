@@ -40,7 +40,8 @@ object DatabaseModule {
     fun provideAvailableLocationDao(appDatabase: AppDatabase) = appDatabase.availableLocationsDao()
     @Provides
     fun provideOutrageDao(appDatabase: AppDatabase) = appDatabase.outrageDao()
-
+    @Provides
+    fun provideCityDao(appDatabase: AppDatabase) = appDatabase.cityDao()
 
     @Provides
     fun appDatabaseCallback(

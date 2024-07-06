@@ -8,6 +8,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import com.august.ua.blackout.App
 import com.august.ua.blackout.R
 import com.august.ua.blackout.data.local.db.dao.AvailableLocationDao
+import com.august.ua.blackout.data.local.db.dao.CityDao
 import com.august.ua.blackout.data.local.db.dao.OutrageDao
 import com.august.ua.blackout.data.local.db.dao.UserDao
 import com.august.ua.blackout.data.local.db.dao.UserLocationDao
@@ -18,6 +19,7 @@ import com.august.ua.blackout.data.local.db.dbo.QueueDbo
 import com.august.ua.blackout.data.local.db.dbo.UserDbo
 import com.august.ua.blackout.data.local.db.dbo.UserLocationDbo
 import com.august.ua.blackout.data.local.db.dbo.converters.Converters
+import com.august.ua.blackout.data.local.db.dbo.with_embeded.CityDbo
 import com.august.ua.blackout.data.local.db.dbo.with_embeded.OutrageDbo
 import com.august.ua.blackout.data.local.db.dbo.with_embeded.OutrageFullDbo
 import com.august.ua.blackout.data.local.db.dbo.with_embeded.OutrageQueueDbo
@@ -41,7 +43,8 @@ import java.io.InputStream
         OutrageDbo::class,
         OutrageFullDbo::class,
         OutrageQueueDbo::class,
-        OutrageShiftDbo::class
+        OutrageShiftDbo::class,
+        CityDbo::class
     ],
     version = 1,
     autoMigrations = [
@@ -56,5 +59,6 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun availableLocationsDao(): AvailableLocationDao
     abstract fun userLocationDao(): UserLocationDao
     abstract fun outrageDao(): OutrageDao
+    abstract fun cityDao(): CityDao
 
 }
