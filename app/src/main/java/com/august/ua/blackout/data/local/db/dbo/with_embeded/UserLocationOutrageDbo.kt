@@ -1,15 +1,15 @@
-package com.august.ua.blackout.data.local.db.dbo
+package com.august.ua.blackout.data.local.db.dbo.with_embeded
 
-import androidx.annotation.DrawableRes
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.august.ua.blackout.data.dto.OblastType
 import com.august.ua.blackout.data.dvo.LocationColorType
 import com.august.ua.blackout.data.dvo.LocationIconType
+import com.google.gson.annotations.Expose
 
-@Entity(tableName = "user_location")
-data class UserLocationDbo(
+@Entity(tableName = "user_location_outrage_table")
+data class UserLocationOutrageDbo(
     @PrimaryKey(autoGenerate = true)
     var locationId: Long = 0,
     @ColumnInfo("location_order")
@@ -27,6 +27,10 @@ data class UserLocationDbo(
     @ColumnInfo("is_location_push_enabled")
     val isLocationPushEnabled: Boolean,
 
-    @ColumnInfo("blackout_id")
-    val blackoutId: Long,
+    @ColumnInfo("date")
+    val date: String,
+
+    @ColumnInfo("shifts")
+    @Expose
+    val shifts: List<UserLocationShiftDbo>,
 )

@@ -12,6 +12,7 @@ import com.august.ua.blackout.data.local.db.dao.CityDao
 import com.august.ua.blackout.data.local.db.dao.OutrageDao
 import com.august.ua.blackout.data.local.db.dao.UserDao
 import com.august.ua.blackout.data.local.db.dao.UserLocationDao
+import com.august.ua.blackout.data.local.db.dao.UserLocationOutrageDao
 import com.august.ua.blackout.data.local.db.dbo.AvailableLocationDbo
 import com.august.ua.blackout.data.local.db.dbo.ColorDbo
 import com.august.ua.blackout.data.local.db.dbo.IconDbo
@@ -24,6 +25,8 @@ import com.august.ua.blackout.data.local.db.dbo.with_embeded.OutrageDbo
 import com.august.ua.blackout.data.local.db.dbo.with_embeded.OutrageFullDbo
 import com.august.ua.blackout.data.local.db.dbo.with_embeded.OutrageQueueDbo
 import com.august.ua.blackout.data.local.db.dbo.with_embeded.OutrageShiftDbo
+import com.august.ua.blackout.data.local.db.dbo.with_embeded.UserLocationOutrageDbo
+import com.august.ua.blackout.data.local.db.dbo.with_embeded.UserLocationShiftDbo
 import com.google.gson.Gson
 import com.google.gson.JsonParser
 import com.google.gson.reflect.TypeToken
@@ -44,7 +47,9 @@ import java.io.InputStream
         OutrageFullDbo::class,
         OutrageQueueDbo::class,
         OutrageShiftDbo::class,
-        CityDbo::class
+        CityDbo::class,
+        UserLocationOutrageDbo::class,
+        UserLocationShiftDbo::class,
     ],
     version = 1,
     autoMigrations = [
@@ -60,5 +65,6 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun userLocationDao(): UserLocationDao
     abstract fun outrageDao(): OutrageDao
     abstract fun cityDao(): CityDao
+    abstract fun userLocationOutrageDao(): UserLocationOutrageDao
 
 }

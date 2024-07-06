@@ -28,10 +28,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.august.ua.blackout.R
 import com.august.ua.blackout.presentation.common.DevicePreviews
 import com.august.ua.blackout.presentation.common.extensions.conditional
 import com.august.ua.blackout.presentation.common.extensions.singleClick
+import com.august.ua.blackout.ui.theme.BlackoutTextStyle
 import com.august.ua.blackout.ui.theme.BlackoutUaTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -85,6 +89,49 @@ fun OnboardingToolbar(
                             Modifier.align(Alignment.BottomCenter)
                         }
                     )
+            )
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun LocationToolbar(
+    transparency: Float,
+    showProgressIndicator: Boolean = false,
+) {
+    Box {
+        TopAppBar(
+            title = {
+                Row {
+                    Icon(
+                        modifier = Modifier.padding(start = 12.dp),
+                        painter = painterResource(id = R.drawable.app_lamp),
+                        tint = Color.Unspecified,
+                        contentDescription = null
+                    )
+
+                    Text(
+                        modifier = Modifier.padding(start = 8.dp),
+                        text = stringResource(id = R.string.app_name),
+                        style = BlackoutTextStyle.hero2Text.copy(fontWeight = FontWeight.W700)
+                    )
+                }
+
+            },
+            colors = TopAppBarDefaults.smallTopAppBarColors(
+                navigationIconContentColor = Color.Unspecified,
+                actionIconContentColor = Color.Unspecified,
+                containerColor = MaterialTheme.colorScheme.surface.copy(
+                    alpha = transparency
+                )
+            )
+        )
+        if (showProgressIndicator) {
+            LinearProgressIndicator(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .align(Alignment.BottomCenter)
             )
         }
     }

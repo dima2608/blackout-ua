@@ -11,6 +11,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.august.ua.blackout.navigation.Screen
+import com.august.ua.blackout.presentation.home.locations_tab.LocationsTabScreen
 
 const val LOCATIONS_GRAPH_ROUTE_PATTERN = "locations_graph"
 
@@ -25,13 +26,9 @@ fun NavGraphBuilder.locationsGraph(
        composable(
            route =  Screen.LocationsTabScreen.route
        ) {
-           Box(
-               modifier = Modifier
-                   .fillMaxSize()
-                   .background(Color.Yellow)
-           ) {
-               Text(text = "LOCATIONS_GRAPH_ROUTE_PATTERN")
-           }
+           LocationsTabScreen(
+
+           )
        }
     }
 }

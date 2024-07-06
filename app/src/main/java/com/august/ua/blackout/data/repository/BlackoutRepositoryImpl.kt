@@ -32,4 +32,8 @@ class BlackoutRepositoryImpl(
             cites = OblastResponseToCitiesDboMapper(cities).transform()
         )
     }
+
+    suspend fun saveLocations() {
+
+    }
 }

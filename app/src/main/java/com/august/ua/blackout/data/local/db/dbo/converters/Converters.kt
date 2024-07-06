@@ -4,6 +4,7 @@ import androidx.room.TypeConverter
 import com.august.ua.blackout.data.local.db.dbo.with_embeded.OutrageDbo
 import com.august.ua.blackout.data.local.db.dbo.with_embeded.OutrageQueueDbo
 import com.august.ua.blackout.data.local.db.dbo.with_embeded.OutrageShiftDbo
+import com.august.ua.blackout.data.local.db.dbo.with_embeded.UserLocationShiftDbo
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
@@ -52,9 +53,14 @@ class Converters {
         return Gson().fromJson(value, listType)
     }
 
-//    @TypeConverter
-//    fun stringListToJson(value: List<String>?) = Gson().toJson(value)
-//
-//    @TypeConverter
-//    fun jsonToStringList(value: String) = Gson().fromJson(value, Array<String>::class.java).toList()
+    @TypeConverter
+    fun fromUserLocationShiftList(value: List<UserLocationShiftDbo>?): String? {
+        return Gson().toJson(value)
+    }
+
+    @TypeConverter
+    fun toUserLocationShiftList(value: String?): List<UserLocationShiftDbo>? {
+        val listType = object : TypeToken<List<UserLocationShiftDbo>?>() {}.type
+        return Gson().fromJson(value, listType)
+    }
 }
