@@ -29,6 +29,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavOptions
@@ -48,9 +49,11 @@ import com.august.ua.blackout.ui.theme.Black
 import com.august.ua.blackout.ui.theme.BlackoutTextStyle
 import com.august.ua.blackout.ui.theme.Transparent
 import com.august.ua.blackout.ui.theme.White
+import dagger.hilt.android.lifecycle.HiltViewModel
 
 @Composable
 fun HomeScreen(
+    viewModel: HomeScreenViewModel = hiltViewModel(),
     selectedTab: String,
     externalNavController: NavController,
 ) {
@@ -111,10 +114,11 @@ fun HomeScreen(
     ) { padding ->
         Box(modifier = Modifier.fillMaxSize()) {
             Image(
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier.
+                fillMaxSize(),
                 painter = painterResource(id = R.drawable.bg_blue_yellow_gradient),
                 contentDescription = null,
-                contentScale = ContentScale.Fit
+                contentScale = ContentScale.FillHeight
             )
 
             Column(

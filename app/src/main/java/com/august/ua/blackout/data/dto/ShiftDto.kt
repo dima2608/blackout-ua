@@ -12,6 +12,6 @@ data class ShiftDto(
     @SerializedName("end")
     val end: String,
     @SerializedName("queues")
-    val queues: List<QueueDto>,
+    val queues: List<QueueDto>?,
 
 ): Entity, Parcelable

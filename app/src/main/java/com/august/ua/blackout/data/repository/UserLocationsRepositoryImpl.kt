@@ -8,7 +8,7 @@ import com.august.ua.blackout.domain.repository.UserLocationsRepository
 class UserLocationsRepositoryImpl(
     private val userLocationDao: UserLocationDao
 ): UserLocationsRepository {
-    override suspend fun getLocationsPaging(): PagingSource<Int, UserLocationDbo>? {
+    override fun getLocationsPaging(): PagingSource<Int, UserLocationDbo>? {
         return userLocationDao.getLocationsQueuePaging()
     }
 

@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "2ae43776dd449edb21dcb4081ab53434",
+    "identityHash": "ea5991697b325e5ad824c52edc991301",
     "entities": [
       {
         "tableName": "user",
@@ -148,7 +148,7 @@
       },
       {
         "tableName": "user_location",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`locationId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `locationOrder` INTEGER NOT NULL, `blackout_id` INTEGER NOT NULL, `user_location_name` TEXT NOT NULL, `selected_location_icon_id` INTEGER NOT NULL, `selected_location_color_id` INTEGER NOT NULL, `selected_location` TEXT NOT NULL, `selected_queue` TEXT NOT NULL, `is_location_push_enabled` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`locationId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `location_order` INTEGER NOT NULL, `blackout_id` INTEGER NOT NULL, `user_location_name` TEXT NOT NULL, `selected_location_icon_id` INTEGER NOT NULL, `selected_location_color_id` INTEGER NOT NULL, `selected_location` TEXT NOT NULL, `selected_queue` TEXT NOT NULL, `is_location_push_enabled` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "locationId",
@@ -158,7 +158,7 @@
           },
           {
             "fieldPath": "locationOrder",
-            "columnName": "locationOrder",
+            "columnName": "location_order",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -213,12 +213,158 @@
         },
         "indices": [],
         "foreignKeys": []
+      },
+      {
+        "tableName": "outrage_table",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`date` TEXT NOT NULL, `type` TEXT, `region` TEXT, `changeCount` INTEGER, `shifts` TEXT, PRIMARY KEY(`date`))",
+        "fields": [
+          {
+            "fieldPath": "date",
+            "columnName": "date",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "type",
+            "columnName": "type",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "region",
+            "columnName": "region",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "changeCount",
+            "columnName": "changeCount",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "shifts",
+            "columnName": "shifts",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "date"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "outrage_full_table",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`outrageId` INTEGER NOT NULL, `lastUpdate` TEXT, `accessDate` TEXT, `outrages` TEXT, PRIMARY KEY(`outrageId`))",
+        "fields": [
+          {
+            "fieldPath": "outrageId",
+            "columnName": "outrageId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "lastUpdate",
+            "columnName": "lastUpdate",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "accessDate",
+            "columnName": "accessDate",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "outrages",
+            "columnName": "outrages",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "outrageId"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "outrage_queue_table",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`queue` TEXT NOT NULL, `lightStatus` INTEGER, PRIMARY KEY(`queue`))",
+        "fields": [
+          {
+            "fieldPath": "queue",
+            "columnName": "queue",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "lightStatus",
+            "columnName": "lightStatus",
+            "affinity": "INTEGER",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "queue"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "outrage_shift_table",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`outrageShiftId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `start` TEXT NOT NULL, `end` TEXT NOT NULL, `queues` TEXT)",
+        "fields": [
+          {
+            "fieldPath": "outrageShiftId",
+            "columnName": "outrageShiftId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "start",
+            "columnName": "start",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "end",
+            "columnName": "end",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "queues",
+            "columnName": "queues",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "outrageShiftId"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '2ae43776dd449edb21dcb4081ab53434')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'ea5991697b325e5ad824c52edc991301')"
     ]
   }
 }

@@ -11,6 +11,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.august.ua.blackout.navigation.Screen
+import com.august.ua.blackout.presentation.home.settings_tab.SettingsTabScreen
 
 const val  SETTINGS_GRAPH_ROUTE_PATTERN = " settings_graph"
 
@@ -25,13 +26,7 @@ fun NavGraphBuilder.settingsGraph(
         composable(
             route = Screen.SettingsTabScreen.route
         ) {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(Color.Gray)
-            ) {
-                Text(text = "SETTINGS_GRAPH_ROUTE_PATTERN")
-            }
+            SettingsTabScreen()
         }
     }
 }

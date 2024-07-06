@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">єСвітло</string>
+
+    <string name="outrageRes">outrage.json</string>
+
     <string name="home">Дім</string>
     <string name="settings">Налаштування</string>
     <string name="search">Пошук</string>

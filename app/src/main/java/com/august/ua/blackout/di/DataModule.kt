@@ -4,6 +4,7 @@ import android.content.SharedPreferences
 import androidx.datastore.core.DataStore
 import com.august.ua.blackout.data.dto.UserDto
 import com.august.ua.blackout.data.local.datastore.LocalCacheData
+import com.august.ua.blackout.data.local.db.dao.OutrageDao
 import com.august.ua.blackout.data.local.db.dao.UserDao
 import com.august.ua.blackout.data.local.db.dao.UserLocationDao
 import com.august.ua.blackout.data.remote.api.BlackoutService
@@ -57,9 +58,11 @@ class DataModule {
     @Singleton
     fun provideBlackoutRepository(
         blackoutService: BlackoutService,
+        outrageDao: OutrageDao
     ): BlackoutRepository {
         return BlackoutRepositoryImpl(
-            blackoutService = blackoutService
+            blackoutService = blackoutService,
+            outrageDao = outrageDao
         )
     }
 

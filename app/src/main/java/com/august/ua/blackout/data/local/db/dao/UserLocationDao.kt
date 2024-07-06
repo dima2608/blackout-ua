@@ -19,8 +19,8 @@ interface UserLocationDao {
     @Query("SELECT selected_queue FROM user_location")
     suspend fun getQueues(): List<String?>
 
-    @Query("SELECT selected_queue FROM user_location ORDER BY locationOrder ASC")
-    suspend fun getLocationsQueuePaging(): PagingSource<Int, UserLocationDbo>?
+    @Query("SELECT * FROM user_location ORDER BY location_order ASC")
+    fun getLocationsQueuePaging(): PagingSource<Int, UserLocationDbo>?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(userLocationDbo: UserLocationDbo)

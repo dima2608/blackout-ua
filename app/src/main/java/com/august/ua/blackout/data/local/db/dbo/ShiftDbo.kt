@@ -4,7 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity("shifts")
+@Entity("shifts_table")
 data class ShiftDbo(
     @PrimaryKey(autoGenerate = true)
     val shiftId: Long = 0,

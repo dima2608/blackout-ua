@@ -10,7 +10,7 @@ import com.august.ua.blackout.data.dto.OblastType
 data class UserLocationDbo(
     @PrimaryKey(autoGenerate = true)
     var locationId: Long = 0,
-    @ColumnInfo("locationOrder")
+    @ColumnInfo("location_order")
     var locationOrder: Int,
 //    @ColumnInfo("parentUserId")
 //    var parentUserId: Long,

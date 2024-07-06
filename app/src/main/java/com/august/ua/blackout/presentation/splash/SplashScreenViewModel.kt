@@ -45,7 +45,7 @@ import javax.inject.Inject
 class SplashScreenViewModel @Inject constructor(
     @ApplicationContext context: Context,
     private val userRepository: UserRepository<Flow<UserDto?>, UserDto>,
-    private val availableLocationDao: AvailableLocationDao
+    //private val availableLocationDao: AvailableLocationDao
 ) : AndroidViewModel(context as Application) {
 
     private val _navEvent = MutableStateFlow<NavigationEvent>(NavigationEvent.None)
@@ -89,7 +89,7 @@ class SplashScreenViewModel @Inject constructor(
                 )
             )
 
-            availableLocationDao.insetAllAvailableLocations(availableLocations)
+            //availableLocationDao.insetAllAvailableLocations(availableLocations)
 
         }
 
