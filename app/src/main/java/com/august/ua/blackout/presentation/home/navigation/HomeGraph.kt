@@ -27,7 +27,9 @@ fun NavGraphBuilder.locationsGraph(
            route =  Screen.LocationsTabScreen.route
        ) {
            LocationsTabScreen(
-
+               navigateTo = {
+                   externalNavController.navigate(it)
+               }
            )
        }
     }

@@ -36,7 +36,7 @@ fun InputTextField(
     readOnly: Boolean = false,
     supportingText: String? = null,
     placeholder: String? = null,
-    keyboardOptions: KeyboardOptions,
+    keyboardOptions: KeyboardOptions = KeyboardOptions(),
     keyboardActions: KeyboardActions = KeyboardActions.Default,
     isError: Boolean = false,
     enabled: Boolean = true,

@@ -11,6 +11,8 @@
     <string name="locations">Локації</string>
     <string name="calendar">Календар</string>
 
+    <string name="empty_string_space"> </string>
+
     <string name="something_went_wrong">Упс, щось пішло не так</string>
     <string name="no_internet_connection">Немає з\'єднання з інтернетом</string>
     <string name="retry">Повторити</string>
@@ -62,4 +64,35 @@
     <string name="select_oblast_and_queue_error">Будь ласка оберіть область та чергу</string>
     <string name="select_oblast_first">Спочатку оберіть область</string>
     <string name="queue">черга</string>
+    
+    <string name="create_location">Створення локації</string>
+    <string name="location_headline">Місцезнаходження</string>
+    <string name="location_description">Оберіть ваше місцезнаходження</string>
+    <string name="your_region_title">Ваш регіон:</string>
+    <string name="select_queue_headline">Обрати чергу</string>
+    <string name="select_queue_description">Оберіть номер вашої черги</string>
+    <string name="your_queue_title">Ваша черга:</string>
+    <string name="location_settings_headline">Налаштування локації</string>
+    <string name="location_settings_description">Оберіть назву і іконку вашої локації.\nЦе допоможе швидко визначити її.</string>
+    <string name="location_push_headline">Сповіщення про відключення</string>
+    <string name="location_push_description">Ми можемо заздалегідь повідомити вас про\nвідключення світла</string>
+    
+    <string name="location_details">Деталі локації</string>
+    <string name="location_name_label">Назва локації</string>
+    <string name="icon">Іконка</string>
+    <string name="location_color_description_second">Оберіть колір локації щоб ви розуміли</string>
+    <string name="color">Колір</string>
+    <string name="you_do_not_now_your_queue">Не знаєте номер вашої черги?</string>
+    <string name="go_to">Перейдіть до</string>
+    <string name="your_region_list_link">списку черг вашого регіону.</string>
+    
+    <string name="location_push_on_title">Вcтановити нагадування\nпро вимкнення:</string>
+    <string name="location_push_on_description">За 15 хвилин до вимкнення</string>
+
+    <string name="next_step">Наступний крок</string>
+    <string name="save">Зберегти</string>
+
+    <string name="oblast_short">обл.</string>
+
+
 </resources>

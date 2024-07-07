@@ -10,6 +10,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowBackIosNew
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -37,6 +39,7 @@ import com.august.ua.blackout.presentation.common.extensions.conditional
 import com.august.ua.blackout.presentation.common.extensions.singleClick
 import com.august.ua.blackout.ui.theme.BlackoutTextStyle
 import com.august.ua.blackout.ui.theme.BlackoutUaTheme
+import com.august.ua.blackout.ui.theme.Transparent
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -122,10 +125,50 @@ fun LocationToolbar(
             colors = TopAppBarDefaults.smallTopAppBarColors(
                 navigationIconContentColor = Color.Unspecified,
                 actionIconContentColor = Color.Unspecified,
-                containerColor = MaterialTheme.colorScheme.surface.copy(
+                containerColor = Transparent.copy(
                     alpha = transparency
                 )
             )
+        )
+        if (showProgressIndicator) {
+            LinearProgressIndicator(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .align(Alignment.BottomCenter)
+            )
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun CreateUpdateLocationToolbar(
+    title: String,
+    onBack: () -> Unit,
+    showProgressIndicator: Boolean = false,
+) {
+    Box {
+        TopAppBar(
+            navigationIcon = {
+                IconButton(onClick = { onBack() }) {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                        contentDescription = null
+                    )
+                }
+            },
+            title = {
+                Text(
+                    modifier = Modifier.padding(start = 8.dp),
+                    text = title,
+                    style = BlackoutTextStyle.t3TextBody
+                )
+            },
+            colors = TopAppBarDefaults.smallTopAppBarColors(
+                navigationIconContentColor = Color.Unspecified,
+                actionIconContentColor = Color.Unspecified,
+                containerColor = Transparent
+            ),
         )
         if (showProgressIndicator) {
             LinearProgressIndicator(

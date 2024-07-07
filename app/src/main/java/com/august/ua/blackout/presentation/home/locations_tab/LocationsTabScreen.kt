@@ -14,6 +14,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.remember
@@ -30,6 +32,7 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.august.ua.blackout.data.dvo.LocationsDvo
+import com.august.ua.blackout.presentation.common.NavigationEvent
 import com.august.ua.blackout.presentation.home.locations_tab.event.LocationsEvent
 import com.august.ua.blackout.ui.common.extensions.itemBottomSpacer
 import com.august.ua.blackout.ui.components.AppSnackBar
@@ -41,12 +44,23 @@ import com.august.ua.blackout.ui.theme.Yellow
 @Composable
 fun LocationsTabScreen(
     viewModel: LocationsTabViewModel = hiltViewModel(),
+    navigateTo: (String) -> Unit,
+) {
 
-    ) {
+    val navEvent by viewModel.navEvent.collectAsState()
+
     LocationsTabContent(
         locations = LocationsDvo(),
-        onUiEvent = {}
+        onUiEvent = viewModel::onUiEvent
     )
+
+    LaunchedEffect(navEvent) {
+        when (val event = navEvent) {
+            NavigationEvent.CloseScreen -> Unit
+            is NavigationEvent.NavigateTo -> navigateTo(event.screenRoute)
+            NavigationEvent.None -> Unit
+        }
+    }
 }
 
 @Composable
@@ -96,7 +110,7 @@ private fun LocationsTabContent(
 
             FloatingActionButton(
                 onClick = {
-
+                    onUiEvent(LocationsEvent.AddNewLocation)
                 },
                 contentColor = Black,
                 containerColor = Yellow

@@ -4,7 +4,6 @@ import androidx.annotation.StringRes
 import com.august.ua.blackout.R
 import com.august.ua.blackout.data.dvo.OblastDvo
 import com.august.ua.blackout.data.dvo.OblastsDvo
-import com.august.ua.blackout.data.dvo.QueuesDvo
 
 sealed class OnboardingBottomSheetState(
     @StringRes

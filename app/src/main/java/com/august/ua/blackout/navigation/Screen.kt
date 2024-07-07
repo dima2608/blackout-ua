@@ -20,6 +20,7 @@ sealed class Screen(val route: String) {
     data object CalendarTabScreen: Screen("calendar_screen")
     data object SettingsTabScreen: Screen("settings_screen")
     data object LocationsTabScreen: Screen("locations_screen")
+    data object CreateUpdateLocation: Screen("create_update_location_screen")
 
 
     fun withArgs(vararg args: String): String {

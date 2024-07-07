@@ -31,9 +31,9 @@ fun AppButton(
     image: ImageVector? = null,
     imageRes: Int? = null,
     imageTint: Color = Color.Unspecified,
-    enabled: Boolean,
+    enabled: Boolean = true,
     text: String?,
-    contentPadding: PaddingValues,
+    contentPadding: PaddingValues = PaddingValues(),
     buttonColors: ButtonColors = ButtonDefaults.buttonColors(),
     onClick: () -> Unit
 ) {
