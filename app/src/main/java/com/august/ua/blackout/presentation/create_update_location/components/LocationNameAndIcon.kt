@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.august.ua.blackout.R
 import com.august.ua.blackout.data.dvo.LocationColorType
 import com.august.ua.blackout.data.dvo.LocationIconType
@@ -46,7 +47,7 @@ fun LocationNameAndIcon(
                 .padding(horizontal = 16.dp)
                 .padding(top = 16.dp, bottom = 20.dp),
             text = stringResource(id = R.string.your_region_title),
-            style = BlackoutTextStyle.h5SmallestHeading
+            style = BlackoutTextStyle.h3SmallHeading.copy(fontSize = 14.sp)
         )
 
 
@@ -66,7 +67,7 @@ fun LocationNameAndIcon(
                 .padding(horizontal = 16.dp)
                 .padding(top = 16.dp, bottom = 20.dp),
             text = stringResource(id = R.string.icon),
-            style = BlackoutTextStyle.h5SmallestHeading
+            style = BlackoutTextStyle.h3SmallHeading.copy(fontSize = 14.sp)
         )
 
         NonLazyGrid(

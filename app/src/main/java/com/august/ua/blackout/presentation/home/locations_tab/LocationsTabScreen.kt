@@ -60,6 +60,7 @@ fun LocationsTabScreen(
             is NavigationEvent.NavigateTo -> navigateTo(event.screenRoute)
             NavigationEvent.None -> Unit
         }
+        viewModel.onUiEvent(LocationsEvent.ResetNavState)
     }
 }
 

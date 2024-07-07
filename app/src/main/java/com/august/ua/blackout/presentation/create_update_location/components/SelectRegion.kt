@@ -26,6 +26,7 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.august.ua.blackout.R
 import com.august.ua.blackout.data.dto.OblastType
 import com.august.ua.blackout.data.dvo.CityDvo
@@ -62,7 +63,7 @@ fun SelectRegion(
                 .padding(horizontal = 16.dp)
                 .padding(top = 16.dp, bottom = 20.dp),
             text = stringResource(id = R.string.your_region_title),
-            style = BlackoutTextStyle.h5SmallestHeading
+            style = BlackoutTextStyle.h3SmallHeading.copy(fontSize = 14.sp)
         )
 
         LazyColumn(

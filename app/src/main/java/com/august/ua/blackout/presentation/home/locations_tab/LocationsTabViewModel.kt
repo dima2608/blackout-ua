@@ -28,6 +28,16 @@ class LocationsTabViewModel @Inject constructor(
             LocationsEvent.AddNewLocation -> _navEvent.update { NavigationEvent.NavigateTo(Screen.CreateUpdateLocation.route) }
             is LocationsEvent.OnLocationClick -> TODO()
             is LocationsEvent.OnLocationLongClick -> TODO()
+            LocationsEvent.ResetScreenState -> TODO()
+            LocationsEvent.ResetNavState -> resetNavState()
         }
+    }
+
+    private fun resetScreenState() {
+
+    }
+
+    private fun resetNavState() {
+        _navEvent.update { NavigationEvent.None }
     }
 }

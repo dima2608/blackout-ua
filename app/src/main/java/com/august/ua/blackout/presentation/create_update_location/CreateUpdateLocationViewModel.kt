@@ -131,7 +131,7 @@ class CreateUpdateLocationViewModel @Inject constructor(
                     configUiState()
                 }
                 LocationSettings -> {
-                    currentPage = LocationSettings
+                    currentPage = Push
                     configUiState()
                 }
                 Push -> {
