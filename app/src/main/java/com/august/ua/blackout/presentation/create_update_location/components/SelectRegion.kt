@@ -1,5 +1,6 @@
 package com.august.ua.blackout.presentation.create_update_location.components
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -17,9 +18,13 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
@@ -48,6 +53,12 @@ fun SelectRegion(
     val maxHeight = screenHeight - (screenHeight - 576)
     val listState = rememberLazyListState()
 
+    val cities by remember(listCities) {
+        mutableStateOf(listCities)
+    }
+
+    Log.d("TEST", "sss -> ${listCities.map { it.isSelected }}")
+
     Column(
         modifier = modifier
             .fillMaxWidth()
@@ -68,14 +79,16 @@ fun SelectRegion(
 
         LazyColumn(
             modifier = Modifier
-                .padding(bottom = 16.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
+                //.padding(bottom = 16.dp),
+            //verticalArrangement = Arrangement.spacedBy(8.dp),
+                    ,
             state = listState
         ) {
-            items(listCities) { city ->
+            items(cities) { city ->
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
+                        .clip(MaterialTheme.shapes.medium)
                         .selectable(
                             selected = city.isSelected,
                             onClick = {
@@ -87,11 +100,16 @@ fun SelectRegion(
                     Spacer(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(vertical = 8.dp)
                             .height(1.dp)
                             .alpha(0.3f)
                             .blackoutRadialGradientBorder()
 
+                    )
+
+                    Spacer(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(16.dp)
                     )
 
                     Row(
@@ -110,11 +128,17 @@ fun SelectRegion(
                         )
 
                         Text(
-                            text = "${stringResource(id = city.oblastType.oblastName)} " +
-                                    stringResource(id = R.string.oblast_short),
+                            text = stringResource(id = city.oblastType.oblastName),
                             style = BlackoutTextStyle.t3TextBody
                         )
                     }
+
+                    Spacer(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(16.dp)
+
+                    )
                 }
             }
         }
@@ -150,7 +174,7 @@ private fun Preview() {
                 CityDvo(
                     id = 3,
                     oblastType = OblastType.Kyiv,
-                    isSelected = false,
+                    isSelected = true,
                     queues = listOf(
                         QueueDvo(
                             queueName = "1",

@@ -41,7 +41,7 @@ fun LazyListScope.colorItem(
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp)
                 .padding(top = 16.dp, bottom = 20.dp),
-            text = stringResource(id = R.string.icon),
+            text = stringResource(id = R.string.color),
             style = BlackoutTextStyle.h3SmallHeading.copy(fontSize = 14.sp)
         )
 

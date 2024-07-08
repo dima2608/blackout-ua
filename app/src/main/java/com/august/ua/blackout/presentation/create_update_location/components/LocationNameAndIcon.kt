@@ -46,7 +46,7 @@ fun LocationNameAndIcon(
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp)
                 .padding(top = 16.dp, bottom = 20.dp),
-            text = stringResource(id = R.string.your_region_title),
+            text = stringResource(id = R.string.location_details),
             style = BlackoutTextStyle.h3SmallHeading.copy(fontSize = 14.sp)
         )
 

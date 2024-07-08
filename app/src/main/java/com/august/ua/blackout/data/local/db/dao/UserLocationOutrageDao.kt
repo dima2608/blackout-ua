@@ -11,7 +11,7 @@ import com.august.ua.blackout.data.local.db.dbo.with_embeded.UserLocationOutrage
 interface UserLocationOutrageDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(location: UserLocationOutrageDbo)
+    suspend fun insert(location: UserLocationOutrageDbo): Long
 
 
     @Query("DELETE FROM user_location_outrage_table")
@@ -19,4 +19,7 @@ interface UserLocationOutrageDao {
 
     @Query("DELETE FROM user_location_outrage_table WHERE locationId = :locationId ")
     suspend fun deleteLocationById(locationId: Long)
+
+    @Query("SELECT COUNT(*) FROM user_location_outrage_table")
+    suspend fun getLocationsSize(): Int
 }

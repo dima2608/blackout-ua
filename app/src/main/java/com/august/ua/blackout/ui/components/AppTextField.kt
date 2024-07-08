@@ -106,7 +106,7 @@ private fun AppTextFieldPreview() {
             placeholder = "example@gmail.com",
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
 
-        )
+            )
     }
 }
 
@@ -124,6 +124,6 @@ private fun AppTextFieldPreviewError() {
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
             isError = true,
             supportingText = "Error message",
-            )
+        )
     }
 }

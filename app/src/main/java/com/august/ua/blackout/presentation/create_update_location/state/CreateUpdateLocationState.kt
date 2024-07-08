@@ -16,7 +16,8 @@ sealed class CreateUpdateLocationState(
     @StringRes
     val subtitle: Int? = null,
     @StringRes
-    val buttonTitle: Int? = null
+    val buttonTitle: Int? = null,
+    var lastUpdate: Long = System.currentTimeMillis()
 ) {
     data object Initial : CreateUpdateLocationState()
 
@@ -25,12 +26,14 @@ sealed class CreateUpdateLocationState(
         val toolbar: Int,
         @StringRes
         val groupTitle: Int = R.string.your_region_title,
-        val listCities: List<CityDvo>
+        val listCities: List<CityDvo>,
+        val updateTime: Long = System.currentTimeMillis()
     ) : CreateUpdateLocationState(
         toolbarTitle = toolbar,
         headline = R.string.location_headline,
         subtitle = R.string.location_description,
-        buttonTitle = R.string.next_step
+        buttonTitle = R.string.next_step,
+        lastUpdate = updateTime
     )
 
     data class LocationQueueState(
@@ -40,11 +43,13 @@ sealed class CreateUpdateLocationState(
         val groupTitle: Int = R.string.your_queue_title,
         val selectedCity: CityDvo,
         val link: String,
+        val updateTime: Long = System.currentTimeMillis()
     ) : CreateUpdateLocationState(
         toolbarTitle = toolbar,
         headline = R.string.select_queue_headline,
         subtitle = R.string.select_queue_description,
-        buttonTitle = R.string.next_step
+        buttonTitle = R.string.next_step,
+        lastUpdate = updateTime
     )
 
     data class LocationSettingsState(

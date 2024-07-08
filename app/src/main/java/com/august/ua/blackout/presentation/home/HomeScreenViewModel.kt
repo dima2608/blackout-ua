@@ -35,7 +35,7 @@ class HomeScreenViewModel @Inject constructor(
 //                is ResultState.Error -> TODO()
 //                is ResultState.Success -> saveAvailableCities(response as OblastResponseDto?)
 //            }
-            saveAvailableCities(Dummy.dummyOblastResponseDtoDto)
+            //saveAvailableCities(Dummy.dummyOblastResponseDtoDto)
         }
 
     }

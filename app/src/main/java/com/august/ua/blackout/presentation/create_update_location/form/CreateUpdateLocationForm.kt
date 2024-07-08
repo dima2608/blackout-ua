@@ -13,10 +13,12 @@ data class CreateUpdateLocationForm(
     var selectedIconType: LocationIconType = LocationIconType.Diamond,
     var selectedColorType: LocationColorType = LocationColorType.Red,
     var isPushOn: Boolean = false,
+    var locationOrdinal: Int = -1,
     @StringRes
     var oblastTypeError: Int? = null,
     @StringRes
-    var queueError: Int? = null
+    var queueError: Int? = null,
+    var cities: List<CityDvo> = emptyList(),
 ) {
     fun isOblastSelected() = selectedCity != null
     fun isQueueSelected() =  selectedQueue.isNullOrBlank().not()

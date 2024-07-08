@@ -20,6 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
@@ -62,20 +63,19 @@ fun SelectQueue(
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp)
                 .padding(top = 16.dp, bottom = 20.dp),
-            text = stringResource(id = R.string.your_region_title),
+            text = stringResource(id = R.string.your_queue_title),
             style = BlackoutTextStyle.h3SmallHeading.copy(fontSize = 14.sp)
         )
 
         LazyColumn(
-            modifier = Modifier
-                .padding(bottom = 16.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
+            modifier = Modifier,
             state = listState
         ) {
             items(cities.queues) { queue ->
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
+                        .clip(MaterialTheme.shapes.medium)
                         .selectable(
                             selected = queue.isSelected,
                             onClick = {
@@ -83,15 +83,21 @@ fun SelectQueue(
                             },
                             role = Role.RadioButton
                         )
+
                 ) {
                     Spacer(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(vertical = 8.dp)
                             .height(1.dp)
                             .alpha(0.3f)
                             .blackoutRadialGradientBorder()
 
+                    )
+
+                    Spacer(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(16.dp)
                     )
 
                     Row(
@@ -114,6 +120,11 @@ fun SelectQueue(
                             style = BlackoutTextStyle.t3TextBody
                         )
                     }
+                    Spacer(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(16.dp)
+                    )
                 }
             }
         }

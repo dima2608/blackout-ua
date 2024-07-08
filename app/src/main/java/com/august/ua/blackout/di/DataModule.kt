@@ -8,6 +8,7 @@ import com.august.ua.blackout.data.local.db.dao.CityDao
 import com.august.ua.blackout.data.local.db.dao.OutrageDao
 import com.august.ua.blackout.data.local.db.dao.UserDao
 import com.august.ua.blackout.data.local.db.dao.UserLocationDao
+import com.august.ua.blackout.data.local.db.dao.UserLocationOutrageDao
 import com.august.ua.blackout.data.local.db.dbo.with_embeded.CityDbo
 import com.august.ua.blackout.data.remote.api.BlackoutService
 import com.august.ua.blackout.data.remote.api.UserService
@@ -89,10 +90,13 @@ class DataModule {
     @Provides
     @Singleton
     fun provideUserLocationsRepository(
-        userLocationDao: UserLocationDao
+        userLocationDao: UserLocationDao,
+        userLocationOutrageDao: UserLocationOutrageDao
     ): UserLocationsRepository {
         return UserLocationsRepositoryImpl(
-            userLocationDao = userLocationDao
+            userLocationDao = userLocationDao,
+            userLocationOutrageDao = userLocationOutrageDao
+
         )
     }
 

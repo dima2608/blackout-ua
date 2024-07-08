@@ -7,6 +7,6 @@ class GetOblastsUseCase(
     private val blackoutRepository: BlackoutRepository
 ) {
     suspend operator fun invoke(complexId: String, date: String): ResultState<Any> {
-        return blackoutRepository.getOblast()
+        return blackoutRepository.getOblasts()
     }
 }
