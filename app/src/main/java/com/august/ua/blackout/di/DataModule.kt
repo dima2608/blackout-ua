@@ -1,5 +1,6 @@
 package com.august.ua.blackout.di
 
+import android.content.Context
 import android.content.SharedPreferences
 import androidx.datastore.core.DataStore
 import com.august.ua.blackout.data.dto.UserDto
@@ -25,6 +26,7 @@ import com.august.ua.blackout.domain.repository.UserRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.flow.Flow
 import retrofit2.Retrofit
@@ -91,11 +93,13 @@ class DataModule {
     @Singleton
     fun provideUserLocationsRepository(
         userLocationDao: UserLocationDao,
-        userLocationOutrageDao: UserLocationOutrageDao
+        userLocationOutrageDao: UserLocationOutrageDao,
+        @ApplicationContext context: Context,
     ): UserLocationsRepository {
         return UserLocationsRepositoryImpl(
             userLocationDao = userLocationDao,
-            userLocationOutrageDao = userLocationOutrageDao
+            userLocationOutrageDao = userLocationOutrageDao,
+            context = context
 
         )
     }

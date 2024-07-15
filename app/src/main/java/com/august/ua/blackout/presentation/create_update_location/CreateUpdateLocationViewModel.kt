@@ -60,6 +60,7 @@ class CreateUpdateLocationViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
+            blackoutRepository.saveCities(Dummy.dummyOblastResponseDtoDto)
             setLocationOrdinal()
             initForm()
         }

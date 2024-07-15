@@ -98,6 +98,10 @@
     <string name="status">Статус:</string>
     <string name="hour_short">г</string>
     <string name="minutes_short">хв.</string>
+    <string name="strFetchingDataFromServer">отримую дані з сервера</string>
 
+    <string name="light_unavailable">Світло відсутнє</string>
+    <string name="turn_on_in">Включення через:</string>
+    <string name="turn_off_in">Вимкнення через:</string>
 
 </resources>

@@ -37,8 +37,10 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Fill
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.august.ua.blackout.R
 import com.august.ua.blackout.data.dvo.ElectricityStatus
 import com.august.ua.blackout.data.dvo.LocationDvo
 import com.august.ua.blackout.presentation.common.DevicePreviews
@@ -80,13 +82,13 @@ fun LocationExpandItem(
             }
             .combinedClickable(
                 onClick = {
-
+                    onClick(location)
                 },
                 onDoubleClick = {
-
+                    //onLongClick(location)
                 },
                 onLongClick = {
-
+                    onLongClick(location)
                 }
             )
             .singleClick {
@@ -144,8 +146,8 @@ fun LocationExpandItem(
                     Text(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(top = 8.dp)
-                            .padding(vertical = 8.dp),
+                            .padding(top = 4.dp)
+                            .padding(vertical = 4.dp),
                         text = location.queueAndLocation,
                         style = BlackoutTextStyle.t1BigText,
                         maxLines = 1,
@@ -162,15 +164,15 @@ fun LocationExpandItem(
 
                             Text(
                                 modifier = Modifier
-                                    .padding(vertical = 8.dp),
-                                text = location.status.name,
+                                    .padding(vertical = 4.dp),
+                                text = "${stringResource(id = R.string.status)} ${stringResource(id = location.status.statusName)}",
                                 style = BlackoutTextStyle.t1BigText,
                                 maxLines = 1,
                                 overflow = TextOverflow.Ellipsis
                             )
                             Text(
                                 modifier = Modifier
-                                    .padding(vertical = 8.dp),
+                                    .padding(vertical = 4.dp),
                                 text = location.period,
                                 style = BlackoutTextStyle.t1BigText,
                                 maxLines = 1,
@@ -179,8 +181,8 @@ fun LocationExpandItem(
 
                             Text(
                                 modifier = Modifier
-                                    .padding(vertical = 8.dp),
-                                text = location.lightTurnOnIn,
+                                    .padding(vertical = 4.dp),
+                                text = "${stringResource(id = location.status.descriptionPeriodName)} ${location.lightTurnOnIn}",
                                 style = BlackoutTextStyle.t1BigText,
                                 maxLines = 1,
                                 overflow = TextOverflow.Ellipsis
@@ -214,7 +216,9 @@ fun LocationExpandItem(
 @Composable
 private fun LocationExpandItemPreview() {
     BlackoutUaTheme {
-        Column(modifier = Modifier.fillMaxSize().background(BlueAlpha37)) {
+        Column(modifier = Modifier
+            .fillMaxSize()
+            .background(BlueAlpha37)) {
             LocationExpandItem(
                 modifier = Modifier.padding(bottom = 16.dp),
                 location = LocationDvo(

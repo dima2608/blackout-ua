@@ -6,6 +6,7 @@ import com.august.ua.blackout.data.dvo.ElectricityStatus
 import com.august.ua.blackout.data.dvo.LocationDvo
 import com.august.ua.blackout.data.dvo.LocationIconType
 import com.august.ua.blackout.data.local.db.dbo.with_embeded.UserLocationOutrageDbo
+import com.august.ua.blackout.domain.common.EMPTY_STRING
 import java.time.Duration
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
@@ -23,36 +24,40 @@ class UserLocationOutrageDboToLocationDvoMapper(
             lightTurnOnIn = calculateLightTurnOnIn(),
             locationName = data?.locationName.toString(),
             period = "${context.getString(R.string.period)} ${calculatePeriod()}",
-            queueAndLocation = "${data?.selectedQueue} ${context.getString(R.string.queue)} (${data?.selectedLocation?.oblastName})",
+            queueAndLocation = "${data?.selectedQueue} ${context.getString(R.string.queue)} (${data?.selectedLocation?.oblastName?.let { context.getString(it)}})",
             status = calculateStatus()
 
         )
     }
 
     private fun calculateLightTurnOnIn(): String {
-        val currentTime = LocalTime.now()
-        val formatter = DateTimeFormatter.ofPattern("HH:mm")
+        try {
+            val currentTime = LocalTime.now()
+            val formatter = DateTimeFormatter.ofPattern("HH:mm")
 
-        val sortedShifts = data?.shifts?.sortedBy { LocalTime.parse(it.start, formatter) }
-        val currentStatus = calculateStatus()
+            val sortedShifts = data?.shifts?.sortedBy { LocalTime.parse(it.start, formatter) }
+            val currentStatus = calculateStatus()
 
-        return if (currentStatus == ElectricityStatus.Unavailable) {
-            val currentShift = data?.shifts?.find { shift ->
-                val startTime = LocalTime.parse(shift.start, formatter)
-                val endTime = LocalTime.parse(shift.end, formatter)
-                currentTime.isAfter(startTime) && currentTime.isBefore(endTime)
+            return if (currentStatus == ElectricityStatus.Unavailable) {
+                val currentShift = data?.shifts?.find { shift ->
+                    val startTime = LocalTime.parse(shift.start, formatter)
+                    val endTime = LocalTime.parse(shift.end, formatter)
+                    currentTime.isAfter(startTime) && currentTime.isBefore(endTime)
+                }
+                val endTime = LocalTime.parse(currentShift?.end, formatter)
+                val duration = Duration.between(currentTime, endTime)
+                formatDuration(duration)
+            } else {
+                val nextShift = sortedShifts?.find { shift ->
+                    val startTime = LocalTime.parse(shift.start, formatter)
+                    currentTime.isBefore(startTime)
+                }
+                val startTime = LocalTime.parse(nextShift?.start, formatter)
+                val duration = Duration.between(currentTime, startTime)
+                formatDuration(duration)
             }
-            val endTime = LocalTime.parse(currentShift?.end, formatter)
-            val duration = Duration.between(currentTime, endTime)
-            formatDuration(duration)
-        } else {
-            val nextShift = sortedShifts?.find { shift ->
-                val startTime = LocalTime.parse(shift.start, formatter)
-                currentTime.isBefore(startTime)
-            }
-            val startTime = LocalTime.parse(nextShift?.start, formatter)
-            val duration = Duration.between(currentTime, startTime)
-            formatDuration(duration)
+        } catch (e: Exception) {
+            return "N/A"
         }
     }
 

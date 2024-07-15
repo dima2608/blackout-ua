@@ -14,7 +14,7 @@ data class UserLocationOutrageDbo(
     var locationId: Long = 0,
     @ColumnInfo("location_order")
     var locationOrder: Int,
-    @ColumnInfo("user_location_name")
+    @ColumnInfo("user_location_name", defaultValue = "")
     var locationName: String,
     @ColumnInfo("selected_location_icon_id")
     var locationIconType: LocationIconType,

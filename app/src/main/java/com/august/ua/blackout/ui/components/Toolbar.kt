@@ -40,6 +40,7 @@ import com.august.ua.blackout.presentation.common.extensions.singleClick
 import com.august.ua.blackout.ui.theme.BlackoutTextStyle
 import com.august.ua.blackout.ui.theme.BlackoutUaTheme
 import com.august.ua.blackout.ui.theme.Transparent
+import com.august.ua.blackout.ui.theme.White
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -106,28 +107,19 @@ fun LocationToolbar(
     Box {
         TopAppBar(
             title = {
-                Row {
-                    Icon(
-                        modifier = Modifier.padding(start = 12.dp),
-                        painter = painterResource(id = R.drawable.app_lamp),
-                        tint = Color.Unspecified,
-                        contentDescription = null
+                    Image(
+                        modifier = Modifier
+                            .padding(start = 12.dp),
+                        painter = painterResource(id = R.drawable.logo),
+                        contentDescription = null,
+                        alpha = 1 - transparency
                     )
-
-                    Text(
-                        modifier = Modifier.padding(start = 8.dp),
-                        text = stringResource(id = R.string.app_name),
-                        style = BlackoutTextStyle.hero2Text.copy(fontWeight = FontWeight.W700)
-                    )
-                }
 
             },
             colors = TopAppBarDefaults.smallTopAppBarColors(
                 navigationIconContentColor = Color.Unspecified,
                 actionIconContentColor = Color.Unspecified,
-                containerColor = Transparent.copy(
-                    alpha = transparency
-                )
+                containerColor = Transparent
             )
         )
         if (showProgressIndicator) {
