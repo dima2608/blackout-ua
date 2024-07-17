@@ -72,6 +72,7 @@ class UserLocationOutrageDboToLocationDvoMapper(
     }
 
     private fun calculatePeriod(): String {
+        try {
         val currentTime = LocalTime.now()
         val formatter = DateTimeFormatter.ofPattern("HH:mm")
 
@@ -102,6 +103,9 @@ class UserLocationOutrageDboToLocationDvoMapper(
             val previousEnd = previousShift?.let { LocalTime.parse(it.end, formatter).toString() } ?: "N/A"
             val nextStart = nextShift?.let { LocalTime.parse(it.start, formatter).toString() } ?: "N/A"
             "$previousEnd - $nextStart"
+        }
+        } catch (e: Exception) {
+            return "N/A"
         }
     }
 

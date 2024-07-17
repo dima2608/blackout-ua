@@ -5,7 +5,6 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -50,7 +49,6 @@ import com.august.ua.blackout.ui.theme.BlackoutUaTheme
 import com.august.ua.blackout.ui.theme.BlueAlpha37
 import com.august.ua.blackout.ui.theme.White
 
-@OptIn(ExperimentalAnimationApi::class, ExperimentalFoundationApi::class)
 @Composable
 fun LocationExpandItem(
     modifier: Modifier = Modifier,
@@ -80,17 +78,6 @@ fun LocationExpandItem(
                     style = Fill
                 )
             }
-            .combinedClickable(
-                onClick = {
-                    onClick(location)
-                },
-                onDoubleClick = {
-                    //onLongClick(location)
-                },
-                onLongClick = {
-                    onLongClick(location)
-                }
-            )
             .singleClick {
                 if (location.canBeCollapsed) {
                     isCollapsed = !isCollapsed
@@ -125,7 +112,8 @@ fun LocationExpandItem(
                         .padding(vertical = 24.dp, horizontal = 16.dp)
                 ) {
                     Row(
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
                         Image(
                             modifier = Modifier

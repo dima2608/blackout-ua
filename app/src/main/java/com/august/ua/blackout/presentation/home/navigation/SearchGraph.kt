@@ -11,6 +11,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.august.ua.blackout.navigation.Screen
+import com.august.ua.blackout.presentation.home.calendar_tab.CalendarTabScreen
 
 const val CALENDAR_GRAPH_ROUTE_PATTERN = "calendar_graph"
 
@@ -25,13 +26,7 @@ fun NavGraphBuilder.calendarGraph(
         composable(
             route = Screen.CalendarTabScreen.route
         ) {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(Color.Cyan)
-            ) {
-                Text(text = "CALENDAR_GRAPH_ROUTE_PATTERN")
-            }
+            CalendarTabScreen()
         }
     }
 }

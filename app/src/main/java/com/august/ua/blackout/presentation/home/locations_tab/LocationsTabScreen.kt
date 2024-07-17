@@ -1,5 +1,6 @@
 package com.august.ua.blackout.presentation.home.locations_tab
 
+import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -135,7 +136,7 @@ private fun LocationsTabContent(
                     containerColor = Black
                 ) {
                     Icon(
-                        modifier = Modifier.size(40.dp),
+                        modifier = Modifier.size(30.dp),
                         imageVector = Icons.Default.Add,
                         contentDescription = null
                     )
@@ -170,7 +171,7 @@ private fun LocationsTabContent(
 
                     },
                     onLongClick = {
-
+                        Log.i("TEST", "onLongClick: $it")
                     }
                 )
             }
