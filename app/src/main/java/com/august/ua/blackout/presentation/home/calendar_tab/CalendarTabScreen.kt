@@ -12,18 +12,26 @@ import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.windowInsetsBottomHeight
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -40,6 +48,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.layout.ParentDataModifier
 import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -51,10 +60,20 @@ import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.august.ua.blackout.presentation.common.DevicePreviews
+import com.august.ua.blackout.ui.components.CalendarToolbar
 import com.august.ua.blackout.ui.theme.Black
 import com.august.ua.blackout.ui.theme.BlackoutTextStyle
 import com.august.ua.blackout.ui.theme.BlackoutUaTheme
+import com.august.ua.blackout.ui.theme.BlueAlpha37
+import com.august.ua.blackout.ui.theme.BlueHighlight
+import com.august.ua.blackout.ui.theme.EggshellAlpha80
+import com.august.ua.blackout.ui.theme.PeriwinkleGray
+import com.august.ua.blackout.ui.theme.Primary
+import com.august.ua.blackout.ui.theme.Violet
 import com.august.ua.blackout.ui.theme.White
+import com.gigamole.composeshadowsplus.common.ShadowsPlusDefaults
+import com.gigamole.composeshadowsplus.common.shadowsPlus
+import com.gigamole.composeshadowsplus.rsblur.rsBlurShadow
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -71,20 +90,41 @@ fun CalendarTabScreen(
     )
 }
 
-val LAYOUT_TOP_PADDING = 30
-val LAYOUT_END_PADDING = 50
+const val LAYOUT_TOP_PADDING = 30
+const val LAYOUT_END_PADDING = 50
+const val VERTICAL_LINE_PADDING = 20
+const val OFFSET = 5
 
 @Composable
 private fun CalendarTabContent(
 
 ) {
     Scaffold(
+        topBar = {
+            CalendarToolbar(
+                onMenu = {
 
+                },
+            )
+        },
+        //containerColor = White
     ) { innerPadding ->
-        Schedule(
-            modifier = Modifier.statusBarsPadding(),
-            events = sampleEvents
-        )
+        Column(
+            modifier = Modifier.fillMaxSize()
+        ) {
+            Spacer(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(innerPadding.calculateTopPadding())
+            )
+
+            Schedule(
+                modifier = Modifier,
+                events = sampleEvents,
+                showProgressIndicator = false
+            )
+        }
+
     }
 }
 
@@ -131,9 +171,13 @@ fun BasicEvent(
     Column(
         modifier = modifier
             .fillMaxSize()
+            .rsBlurShadow(
+                color = Black.copy(0.1f)
+            )
             .padding(
-                end = 2.dp,
-                bottom = if (positionedEvent.splitType == SplitType.End) 0.dp else 2.dp
+                end = 4.dp,
+                bottom = if (positionedEvent.splitType == SplitType.End) 0.dp else 2.dp,
+                top = if (positionedEvent.splitType == SplitType.End) 0.dp else 2.dp
             )
             .clipToBounds()
             .background(
@@ -178,6 +222,20 @@ fun BasicEvent(
 }
 
 private val sampleEvents = listOf(
+    Event(
+        name = "Google I/O Keynote",
+        color = Color(0xFFAFBBF2),
+        start = LocalDateTime.parse("2021-05-18T00:00:00"),
+        end = LocalDateTime.parse("2021-05-18T01:00:00"),
+        description = "Tune in to find out about how we're furthering our mission to organize the world’s information and make it universally accessible and useful.",
+    ),
+    Event(
+        name = "Google I/O Keynote",
+        color = Color(0xFFAFBBF2),
+        start = LocalDateTime.parse("2021-05-18T22:00:00"),
+        end = LocalDateTime.parse("2021-05-18T23:00:00"),
+        description = "Tune in to find out about how we're furthering our mission to organize the world’s information and make it universally accessible and useful.",
+    ),
     Event(
         name = "Google I/O Keynote",
         color = Color(0xFFAFBBF2),
@@ -282,29 +340,68 @@ fun BasicDayHeaderPreview() {
 
 @Composable
 fun ScheduleHeader(
-    minDate: LocalDate,
-    maxDate: LocalDate,
-    dayWidth: Dp,
     modifier: Modifier = Modifier,
-    dayHeader: @Composable (day: LocalDate) -> Unit = { BasicDayHeader(day = it) },
+    sideBarWith: Int = 0,
 ) {
     val date = LocalDate.now()
     val dayOfWeek = date.format(DayOfWeekFormatter)
     val dayNumber = date.format(DayNumberFormatter)
-    Box(modifier = modifier
-        .fillMaxWidth(),
+    val dividerColor = Black.copy(0.25f)
+    val sideBarWidth: Dp =
+        with(LocalDensity.current) { (sideBarWith + VERTICAL_LINE_PADDING).toDp() }
+
+    val paddingBottom = 16
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(
+                EggshellAlpha80,
+                MaterialTheme.shapes.medium.copy(
+                    topEnd = CornerSize(0.dp),
+                    topStart = CornerSize(0.dp)
+                )
+            )
     ) {
         Column(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalAlignment = Alignment.Start
+            modifier = modifier
+                .width(sideBarWidth)
+                .drawBehind {
+                    drawLine(
+                        dividerColor,
+                        start = Offset((sideBarWith.toFloat() + VERTICAL_LINE_PADDING), 0f),
+                        end = Offset(
+                            (sideBarWith.toFloat() + VERTICAL_LINE_PADDING),
+                            size.height + OFFSET + paddingBottom
+                        ),
+                        strokeWidth = 1.dp.toPx()
+                    )
+                }
+                .padding(bottom = paddingBottom.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
+                modifier = Modifier.padding(bottom = 2.dp),
                 text = dayOfWeek,
-                textAlign = TextAlign.Start,
-                modifier = modifier
-                    .fillMaxWidth()
-                    .padding(4.dp)
+                textAlign = TextAlign.Center,
+                style = BlackoutTextStyle.t5TextSmallDescription,
+                color = Violet
             )
+
+            Box(
+                modifier = Modifier
+                    .size(35.dp)
+                    .background(Violet, CircleShape),
+                contentAlignment = Alignment.Center
+
+            ) {
+                Text(
+                    text = dayNumber,
+                    textAlign = TextAlign.Center,
+                    style = BlackoutTextStyle.h3SmallHeading.copy(color = White),
+                    modifier = Modifier.padding(4.dp)
+                )
+            }
+
         }
     }
 }
@@ -314,9 +411,7 @@ fun ScheduleHeader(
 fun ScheduleHeaderPreview() {
     BlackoutUaTheme {
         ScheduleHeader(
-            minDate = LocalDate.now(),
-            maxDate = LocalDate.now().plusDays(5),
-            dayWidth = 256.dp,
+
         )
     }
 }
@@ -332,8 +427,8 @@ fun BasicSidebarLabel(
         text = time.format(HourFormatter),
         modifier = modifier
             .fillMaxHeight(),
-        style = BlackoutTextStyle.t3TextBody,
-        textAlign = TextAlign.Center
+        style = BlackoutTextStyle.t5TextSmallDescription,
+        textAlign = TextAlign.Center,
     )
 }
 
@@ -504,6 +599,7 @@ fun Schedule(
     maxTime: LocalTime = LocalTime.MAX,
     daySize: ScheduleSize = ScheduleSize.FixedCount(1),
     hourSize: ScheduleSize = ScheduleSize.FixedSize(64.dp),
+    showProgressIndicator: Boolean = false,
 ) {
     val numDays = ChronoUnit.DAYS.between(minDate, maxDate).toInt() + 1
     val numMinutes = ChronoUnit.MINUTES.between(minTime, maxTime).toInt() + 1
@@ -513,17 +609,9 @@ fun Schedule(
     var sidebarWidth by remember { mutableStateOf(0) }
     var headerHeight by remember { mutableStateOf(0) }
     BoxWithConstraints(modifier = modifier) {
-//        val dayWidth: Dp = when (daySize) {
-//            is ScheduleSize.FixedSize -> daySize.size
-//            is ScheduleSize.FixedCount -> with(LocalDensity.current) { ((constraints.maxWidth - sidebarWidth) / daySize.count).toDp() }
-//            is ScheduleSize.Adaptive -> with(LocalDensity.current) {
-//                maxOf(
-//                    ((constraints.maxWidth - sidebarWidth) / numDays).toDp(),
-//                    daySize.minSize
-//                )
-//            }
-//        }
-        val dayWidth: Dp = with(LocalDensity.current) { (constraints.maxWidth - sidebarWidth - LAYOUT_END_PADDING).toDp() }
+
+        val dayWidth: Dp =
+            with(LocalDensity.current) { (constraints.maxWidth - sidebarWidth - LAYOUT_END_PADDING).toDp() }
 
         val hourHeight: Dp = when (hourSize) {
             is ScheduleSize.FixedSize -> hourSize.size
@@ -537,13 +625,17 @@ fun Schedule(
         }
         Column(modifier = modifier) {
             ScheduleHeader(
-                minDate = minDate,
-                maxDate = maxDate,
-                dayWidth = dayWidth,
-                dayHeader = dayHeader,
+                sideBarWith = sidebarWidth,
                 modifier = Modifier
                     .onGloballyPositioned { headerHeight = it.size.height + LAYOUT_TOP_PADDING }
             )
+            if (showProgressIndicator) {
+                LinearProgressIndicator(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .align(Alignment.CenterHorizontally)
+                )
+            }
             Row(
                 modifier = Modifier
                     .fillMaxWidth(),
@@ -597,7 +689,8 @@ fun BasicSchedule(
     val numMinutes = ChronoUnit.MINUTES.between(minTime, maxTime).toInt() + 1
     val numHours = numMinutes / 60
     val dividerColor = Black.copy(0.25f)
-    val positionedEvents = remember(events) { arrangeEvents(splitEvents(events.sortedBy(Event::start))).filter { it.end > minTime && it.start < maxTime } }
+    val positionedEvents =
+        remember(events) { arrangeEvents(splitEvents(events.sortedBy(Event::start))).filter { it.end > minTime && it.start < maxTime } }
     Layout(
         content = {
             positionedEvents.forEach { positionedEvent ->
@@ -611,7 +704,7 @@ fun BasicSchedule(
         },
         modifier = modifier
             .fillMaxWidth()
-            .offset(y = 5.dp)
+            .offset(y = OFFSET.dp)
             .drawBehind {
                 val firstHour = minTime.truncatedTo(ChronoUnit.HOURS)
                 val firstHourOffsetMinutes =
@@ -620,7 +713,7 @@ fun BasicSchedule(
                         firstHour.plusHours(1)
                     )
                 val firstHourOffset =
-                    ((firstHourOffsetMinutes + LAYOUT_TOP_PADDING )/ 60f) * hourHeight.toPx()
+                    ((firstHourOffsetMinutes + LAYOUT_TOP_PADDING) / 60f) * hourHeight.toPx()
 
                 repeat(numHours) {
                     drawLine(
@@ -642,8 +735,8 @@ fun BasicSchedule(
 
                 drawLine(
                     dividerColor,
-                    start = Offset(20f, 0f),
-                    end = Offset(20f, size.height),
+                    start = Offset(VERTICAL_LINE_PADDING.toFloat(), 0f),
+                    end = Offset(VERTICAL_LINE_PADDING.toFloat(), size.height),
                     strokeWidth = 1.dp.toPx()
                 )
             }
@@ -675,7 +768,8 @@ fun BasicSchedule(
                     minTime,
                     splitEvent.start
                 ) else 0
-                val eventY = (((eventOffsetMinutes + LAYOUT_TOP_PADDING) / 60f) * hourHeight.toPx()).roundToInt()
+                val eventY =
+                    (((eventOffsetMinutes + LAYOUT_TOP_PADDING) / 60f) * hourHeight.toPx()).roundToInt()
                 val eventOffsetDays = ChronoUnit.DAYS.between(minDate, splitEvent.date).toInt()
                 val eventX =
                     eventOffsetDays * dayWidth.roundToPx() + (splitEvent.col * (dayWidth.toPx() / splitEvent.colTotal.toFloat())).roundToInt() + eventStartPadding

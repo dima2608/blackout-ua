@@ -11,8 +11,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.MenuBook
+import androidx.compose.material.icons.automirrored.filled.MenuOpen
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowBackIosNew
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -39,6 +42,10 @@ import com.august.ua.blackout.presentation.common.extensions.conditional
 import com.august.ua.blackout.presentation.common.extensions.singleClick
 import com.august.ua.blackout.ui.theme.BlackoutTextStyle
 import com.august.ua.blackout.ui.theme.BlackoutUaTheme
+import com.august.ua.blackout.ui.theme.BlueAlpha37
+import com.august.ua.blackout.ui.theme.EggshellAlpha80
+import com.august.ua.blackout.ui.theme.PeriwinkleGray
+import com.august.ua.blackout.ui.theme.Primary
 import com.august.ua.blackout.ui.theme.Transparent
 import com.august.ua.blackout.ui.theme.White
 
@@ -169,6 +176,37 @@ fun CreateUpdateLocationToolbar(
                     .align(Alignment.BottomCenter)
             )
         }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun CalendarToolbar(
+    onMenu: () -> Unit,
+) {
+    Box {
+        TopAppBar(
+            navigationIcon = {
+                IconButton(onClick = { onMenu() }) {
+                    Icon(
+                        imageVector = Icons.Default.Menu,
+                        contentDescription = null
+                    )
+                }
+            },
+            title = {
+                Text(
+                    modifier = Modifier.padding(start = 8.dp),
+                    text = "",
+                    style = BlackoutTextStyle.t3TextBody
+                )
+            },
+            colors = TopAppBarDefaults.smallTopAppBarColors(
+                navigationIconContentColor = Color.Unspecified,
+                actionIconContentColor = Color.Unspecified,
+                containerColor = EggshellAlpha80
+            )
+        )
     }
 }
 
