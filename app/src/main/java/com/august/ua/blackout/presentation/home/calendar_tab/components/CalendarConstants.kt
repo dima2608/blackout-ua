@@ -1,6 +1,7 @@
-package com.august.ua.blackout.presentation.home.calendar_tab.event
+package com.august.ua.blackout.presentation.home.calendar_tab.components
 
 import androidx.compose.ui.graphics.Color
+import com.august.ua.blackout.presentation.home.calendar_tab.event.CalendarEvent
 import java.time.LocalDateTime
 
 const val LAYOUT_TOP_PADDING = 30

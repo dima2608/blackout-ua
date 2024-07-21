@@ -14,14 +14,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import com.august.ua.blackout.domain.common.parseCalendarEventTime
 import com.august.ua.blackout.presentation.home.calendar_tab.event.CalendarEvent
 import com.august.ua.blackout.presentation.home.calendar_tab.event.EventsProvider
 import com.august.ua.blackout.presentation.home.calendar_tab.event.PositionedCalendarEvent
 import com.august.ua.blackout.presentation.home.calendar_tab.event.SplitType
-import com.august.ua.blackout.presentation.home.calendar_tab.event.sampleCalendarEvents
 import com.august.ua.blackout.ui.theme.Black
 import com.august.ua.blackout.ui.theme.BlackoutTextStyle
 import com.august.ua.blackout.ui.theme.BlackoutUaTheme

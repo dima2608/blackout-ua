@@ -83,7 +83,7 @@ android {
             buildConfigField(
                 "String",
                 "BASE_URL",
-                "\"https://someURL\""
+                "\"https://blackout-ua.up.railway.app/api/\""
             )
         }
         debug {
@@ -96,7 +96,7 @@ android {
             buildConfigField(
                 "String",
                 "BASE_URL",
-                "\"https://someURL\""
+                "\"https://blackout-ua.up.railway.app/api/\""
             )
         }
     }

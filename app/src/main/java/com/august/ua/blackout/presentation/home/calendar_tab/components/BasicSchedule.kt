@@ -1,17 +1,16 @@
-package com.august.ua.blackout.presentation.home.calendar_tab.event
+package com.august.ua.blackout.presentation.home.calendar_tab.components
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.august.ua.blackout.presentation.home.calendar_tab.components.BasicEvent
+import com.august.ua.blackout.presentation.home.calendar_tab.event.PositionedCalendarEvent
 import com.august.ua.blackout.ui.theme.Black
 import java.time.LocalDate
 import java.time.LocalTime

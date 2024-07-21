@@ -1,4 +1,4 @@
-package com.august.ua.blackout.presentation.home.calendar_tab.event
+package com.august.ua.blackout.presentation.home.calendar_tab.components
 
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
@@ -19,7 +19,8 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.august.ua.blackout.presentation.common.DevicePreviews
-import com.august.ua.blackout.presentation.home.calendar_tab.components.BasicEvent
+import com.august.ua.blackout.presentation.home.calendar_tab.event.PositionedCalendarEvent
+import com.august.ua.blackout.presentation.home.calendar_tab.event.ScheduleSize
 import com.august.ua.blackout.presentation.home.calendar_tab.state.CalendarTabUIState
 import com.august.ua.blackout.ui.theme.BlackoutUaTheme
 import java.time.LocalDate

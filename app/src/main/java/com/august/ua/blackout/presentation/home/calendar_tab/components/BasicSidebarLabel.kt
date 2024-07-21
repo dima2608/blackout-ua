@@ -1,4 +1,4 @@
-package com.august.ua.blackout.presentation.home.calendar_tab.event
+package com.august.ua.blackout.presentation.home.calendar_tab.components
 
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.sizeIn
