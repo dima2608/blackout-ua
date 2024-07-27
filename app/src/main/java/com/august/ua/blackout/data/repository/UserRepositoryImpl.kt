@@ -26,7 +26,6 @@ class UserRepositoryImpl(
     private val sharedPreferences: SharedPreferences,
     private val userDataSource: UserDataSource,
     private val userDao: UserDao,
-    private val updateUser: UpdateUser,
 ): UserRepository<Flow<UserDto?>, UserDto> {
 
     override val userData: Flow<UserDto?> = userDao.observeUser().map { it?.toUserDto() }
