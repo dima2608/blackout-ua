@@ -182,6 +182,11 @@ dependencies {
 
     debugImplementation(libs.pluto)
     releaseImplementation(libs.pluto.no.op)
+    debugImplementation(libs.pluto.network)
+    releaseImplementation(libs.pluto.network.no.op)
+    debugImplementation(libs.pluto.network.interceptor.okhttp)
+    releaseImplementation(libs.pluto.network.interceptor.okhttp.no.op)
+
 
 //    debugImplementation(libs.pluto.bundle.core)
 //    releaseImplementation(libs.pluto.bundle.core.no.op)

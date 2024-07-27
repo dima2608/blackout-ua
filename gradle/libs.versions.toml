@@ -105,6 +105,10 @@ pluto-bundle-core = { group = "com.plutolib.plugins", name = "bundle-core", vers
 pluto-bundle-core-no-op = { group = "com.plutolib.plugins", name = "bundle-core-no-op", version.ref = "plutoVersion" }
 pluto-rooms-db = { group = "com.plutolib.plugins", name = "rooms-db", version.ref = "plutoVersion" }
 pluto-rooms-db-no-op = { group = "com.plutolib.plugins", name = "rooms-db-no-op", version.ref = "plutoVersion" }
+pluto-network = { group = "com.plutolib.plugins", name = "network", version.ref = "plutoVersion" }
+pluto-network-no-op = { group = "com.plutolib.plugins", name = "network-no-op", version.ref = "plutoVersion" }
+pluto-network-interceptor-okhttp = { group = "com.plutolib.plugins", name = "network-interceptor-okhttp", version.ref = "plutoVersion" }
+pluto-network-interceptor-okhttp-no-op = { group = "com.plutolib.plugins", name = "network-interceptor-okhttp-no-op", version.ref = "plutoVersion" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

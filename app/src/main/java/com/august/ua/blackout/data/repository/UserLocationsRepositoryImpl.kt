@@ -23,21 +23,21 @@ class UserLocationsRepositoryImpl(
     private val userLocationOutrageDao: UserLocationOutrageDao,
     private val context: Context,
 ): UserLocationsRepository {
-    override fun getLocationsPaging(): PagingSource<Int, UserLocationDbo>? {
-        return userLocationDao.getLocationsQueuePaging()
-    }
-
-    override suspend fun getLocationsQueue(): List<String?> {
-        return  userLocationDao.getQueues()
-    }
-
-    override suspend fun insert(userLocationDbo: UserLocationDbo) {
-        userLocationDao.insert(userLocationDbo)
-    }
-
-    override suspend fun deleteUserLocationById(locationId: Long) {
-        userLocationDao.deleteUserLocationById(locationId)
-    }
+//    override fun getLocationsPaging(): PagingSource<Int, UserLocationDbo>? {
+//        return userLocationDao.getLocationsQueuePaging()
+//    }
+//
+//    override suspend fun getLocationsQueue(): List<String?> {
+//        return  userLocationDao.getQueues()
+//    }
+//
+//    override suspend fun insert(userLocationDbo: UserLocationDbo) {
+//        userLocationDao.insert(userLocationDbo)
+//    }
+//
+//    override suspend fun deleteUserLocationById(locationId: Long) {
+//        userLocationDao.deleteUserLocationById(locationId)
+//    }
 
     override suspend fun saveUserLocationLocal(location: UserLocationOutrageDbo): Long {
         return userLocationOutrageDao.insert(location)

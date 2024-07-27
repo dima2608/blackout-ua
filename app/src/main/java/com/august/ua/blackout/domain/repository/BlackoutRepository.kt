@@ -10,6 +10,7 @@ import com.august.ua.blackout.domain.ResultState
 interface BlackoutRepository {
     suspend fun getOblasts(): ResultState<Any>
     suspend fun getOutrage(
+        date: String,
         oblast: List<OblastType>,
         queue: List<String>
     ): ResultState<Any>

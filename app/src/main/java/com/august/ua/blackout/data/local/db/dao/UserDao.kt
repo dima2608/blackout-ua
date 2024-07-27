@@ -33,5 +33,5 @@ interface UserDao {
 
     @Transaction
     @Query("SELECT * FROM user")
-    suspend fun getUserWithLocations(): UserWithAllLocations
+    suspend fun getUserWithLocations(): UserWithAllLocations?
 }

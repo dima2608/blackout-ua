@@ -8,10 +8,10 @@ import com.august.ua.blackout.data.local.db.dbo.with_embeded.UserLocationOutrage
 import kotlinx.coroutines.flow.Flow
 
 interface UserLocationsRepository {
-    fun getLocationsPaging(): PagingSource<Int, UserLocationDbo>?
-    suspend fun getLocationsQueue(): List<String?>
-    suspend fun insert(userLocationDbo: UserLocationDbo)
-    suspend fun deleteUserLocationById(locationId: Long)
+//    fun getLocationsPaging(): PagingSource<Int, UserLocationDbo>?
+//    suspend fun getLocationsQueue(): List<String?>
+//    suspend fun insert(userLocationDbo: UserLocationDbo)
+//    suspend fun deleteUserLocationById(locationId: Long)
     suspend fun saveUserLocationLocal(location: UserLocationOutrageDbo): Long
     suspend fun getLocationsTableSize(): Int
 

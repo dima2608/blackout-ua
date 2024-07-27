@@ -8,6 +8,7 @@ import com.august.ua.blackout.BuildConfig
 import com.august.ua.blackout.BuildConfig.BASE_URL
 import com.august.ua.blackout.data.remote.network.NetworkResultCallAdapterFactory
 import com.august.ua.blackout.data.remote.network.interceptor.AuthKeyInterceptor
+import com.pluto.plugins.network.okhttp.PlutoOkhttpInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -74,6 +75,7 @@ object NetworkModule {
             }
             if (BuildConfig.DEBUG) {
                 addInterceptor(prepareLoggingInterceptor())
+                addInterceptor(PlutoOkhttpInterceptor)
             }
         }
         builder.addInterceptor(authKeyInterceptor)

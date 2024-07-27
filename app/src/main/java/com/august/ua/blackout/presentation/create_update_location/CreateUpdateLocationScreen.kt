@@ -86,9 +86,9 @@ fun CreateUpdateLocationScreen(
     }
 
     LaunchedEffect(navEvent) {
-        when (navEvent) {
+        when (val state = navEvent) {
             NavigationEvent.CloseScreen -> navigateBack()
-            is NavigationEvent.NavigateTo -> Unit
+            is NavigationEvent.NavigateTo -> navigate(state.screenRoute)
             NavigationEvent.None -> Unit
         }
     }

@@ -3,8 +3,10 @@ package com.august.ua.blackout.presentation.create_update_location
 import android.app.Application
 import android.content.Context
 import android.provider.Settings
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+import com.august.ua.blackout.MainActivity
 import com.august.ua.blackout.R
 import com.august.ua.blackout.data.dto.OblastResponseDto
 import com.august.ua.blackout.data.dto.OblastType
@@ -18,9 +20,12 @@ import com.august.ua.blackout.data.dvo.LocationIconType
 import com.august.ua.blackout.data.dvo.PushTimeDvo
 import com.august.ua.blackout.data.local.db.dbo.with_embeded.UserLocationOutrageDbo
 import com.august.ua.blackout.domain.ResultState
+import com.august.ua.blackout.domain.common.parseCalendarEventTime
+import com.august.ua.blackout.domain.common.parseDayTime
 import com.august.ua.blackout.domain.repository.BlackoutRepository
 import com.august.ua.blackout.domain.repository.UserLocationsRepository
 import com.august.ua.blackout.domain.repository.user.UserRepository
+import com.august.ua.blackout.navigation.Screen
 import com.august.ua.blackout.presentation.common.NavigationEvent
 import com.august.ua.blackout.presentation.common.ScreenState
 import com.august.ua.blackout.presentation.create_update_location.CreateUpdateLocationPage.*
@@ -32,6 +37,8 @@ import com.august.ua.blackout.presentation.create_update_location.state.CreateUp
 import com.august.ua.blackout.ui.common.extensions.getDeviceHardwareId
 import com.august.ua.blackout.ui.common.extensions.isNotConnected
 import com.august.ua.blackout.ui.common.extensions.isNotificationPermissionGranted
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
@@ -41,6 +48,9 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.security.AccessController.getContext
+import java.time.LocalDateTime
+import java.time.ZoneOffset
+import java.time.ZonedDateTime
 import javax.inject.Inject
 
 @HiltViewModel
@@ -264,7 +274,8 @@ class CreateUpdateLocationViewModel @Inject constructor(
 
     private fun nameChanged(name: String) {
         form.name = name
-        form.locationNameError = if (name.isNullOrBlank().not()) null else R.string.please_enter_location_name
+        form.locationNameError =
+            if (name.isNullOrBlank().not()) null else R.string.please_enter_location_name
         configUiState()
     }
 
@@ -315,42 +326,61 @@ class CreateUpdateLocationViewModel @Inject constructor(
 
             confirmIsUserExist()
 
+            _screenState.update { ScreenState.Loading }
+
+            val current = ZonedDateTime.now(ZoneOffset.UTC)
+
             val response = blackoutRepository.getOutrage(
-                listOf( form.selectedCity?.oblastType!!),
+                date = current.parseDayTime(),
+                listOf(form.selectedCity?.oblastType!!),
                 listOf(form.selectedQueue!!)
             )
 
             resetScreenState()
-            when (response ) {
+            when (response) {
                 is ResultState.Error -> showError(response.errorDvo.toString())
                 is ResultState.Success -> {
                     val outrage = response.data as OutragesResponseDto
-                    saveLocation(outrage)
+                    saveLocation(outrage) { isSuccess ->
+                        if (!isSuccess) {
+                            showError(getApplication<Application>().getString(R.string.something_went_wrong))
+                            return@saveLocation
+                        }
+                    }
                     updateUser()
                 }
             }
         }
     }
 
-    private suspend fun saveLocation(outrages: OutragesResponseDto) {
-        val location = UserLocationOutrageDbo(
-            isLocationPushEnabled = form.isPushOn,
-            locationIconType = form.selectedIconType,
-            locationColorType = form.selectedColorType,
-            locationName = form.name.toString(),
-            locationOrder = form.locationOrdinal,
-            selectedLocation = form.selectedCity?.oblastType ?: OblastType.Unknown,
-            selectedQueue = form.selectedQueue.toString(),
-            date = outrages.accessDate,
-            selectedPushTime = form.selectedPushTime,
-            isOutragePushEnabled = form.isOutragePushOn,
-            userId = getUserId() ?: return,
-            shifts = outrages.outrages.mapToUserLocationShiftListDbo(
-                oblastType = form.selectedCity?.oblastType,
-                selectedQueue = form.selectedQueue
+    private suspend fun saveLocation(
+        outrages: OutragesResponseDto,
+        callBack: (isSuccess: Boolean) -> Unit
+    ) {
+        if (getUserId().isNullOrBlank()) {
+            callBack(false)
+            return
+        } else {
+            val location = UserLocationOutrageDbo(
+                isLocationPushEnabled = form.isPushOn,
+                locationIconType = form.selectedIconType,
+                locationColorType = form.selectedColorType,
+                locationName = form.name.toString(),
+                locationOrder = form.locationOrdinal,
+                selectedLocation = form.selectedCity?.oblastType ?: OblastType.Unknown,
+                selectedQueue = form.selectedQueue.toString(),
+                date = outrages.accessDate,
+                selectedPushTime = form.selectedPushTime,
+                isOutragePushEnabled = form.isOutragePushOn,
+                userId = getUserId()!!,
+                shifts = outrages.outrages.mapToUserLocationShiftListDbo(
+                    oblastType = form.selectedCity?.oblastType,
+                    selectedQueue = form.selectedQueue
+                )
             )
-        )
-        locationsRepository.saveUserLocationLocal(location)
+            locationsRepository.saveUserLocationLocal(location)
+            callBack(true)
+        }
     }
 
     private fun getPushTimes(): List<PushTimeDvo> {
@@ -377,15 +407,19 @@ class CreateUpdateLocationViewModel @Inject constructor(
     }
 
     private suspend fun createUser() {
+        _screenState.update { ScreenState.Loading }
         if (getApplication<Application>().isNotConnected) {
             _screenState.update { ScreenState.NoInternetConnection }
             return
         }
 
-        val userDto = UserDto(deviceId = getApplication<Application>().getDeviceHardwareId())
-        val response = userRepository.createUser(userDto)
+        val userDto = UserDto(
+            deviceId = getApplication<Application>().getDeviceHardwareId()
+        )
 
-        when(response) {
+        val response = userRepository.createUser(userDto)
+        resetScreenState()
+        when (response) {
             is ResultState.Error -> showError(response.errorDvo.toString())
             is ResultState.Success -> {
                 val data = response.data as UserDto
@@ -401,15 +435,32 @@ class CreateUpdateLocationViewModel @Inject constructor(
             return
         }
 
-        val response =  userRepository.updateUser()
+        val response = userRepository.updateUser(getApplication<Application>().getDeviceHardwareId())
 
-        when(response) {
+        when (response) {
             is ResultState.Error -> showError(response.errorDvo.toString())
             is ResultState.Success -> {
                 val data = response.data as UserDto
 
                 userRepository.saveNewUserData(data)
+                navigateToHome()
             }
         }
     }
+
+    private fun navigateToHome() {
+        _navEvent.update { NavigationEvent.NavigateTo(Screen.HomeScreen.route) }
+    }
+
+    private fun initFcm() {
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                return@OnCompleteListener
+            }
+            val token = task.result
+            Log.d(MainActivity::class.java.simpleName, "token =========>>>>>> $token")
+            //send token to serv
+        })
+    }
+
 }

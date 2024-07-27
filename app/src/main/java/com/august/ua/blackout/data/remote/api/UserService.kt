@@ -13,7 +13,7 @@ import retrofit2.http.Path
 interface UserService {
 
     private companion object {
-        private const val BASE_PATH = "app/user"
+        private const val BASE_PATH = "/user"
     }
 
     @FormUrlEncoded
@@ -30,15 +30,15 @@ interface UserService {
         @Field("userId") userId: String
     ): NetworkResult<Unit>
 
-    @FormUrlEncoded
-    @PATCH("${BASE_PATH}/user/{id}")
+
+    @PATCH("${BASE_PATH}/{id}")
     suspend fun updateUser(
         @Path("id") userId: String,
         @Body user: UserDto?
-    ): NetworkResult<Unit>
+    ): NetworkResult<UserDto>
 
-    @FormUrlEncoded
-    @POST("${BASE_PATH}/user")
+
+    @POST(BASE_PATH)
     suspend fun createUser(
         @Body user: UserDto?
     ): NetworkResult<UserDto>

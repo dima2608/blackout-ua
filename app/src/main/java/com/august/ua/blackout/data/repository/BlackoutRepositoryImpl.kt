@@ -25,16 +25,17 @@ class BlackoutRepositoryImpl(
     }
 
     override suspend fun getOutrage(
+        date: String,
         oblast: List<OblastType>,
         queue: List<String>
     ): ResultState<Any> {
-        return blackoutService.getOutrage(oblastType = oblast.first(), queue = queue).toResultState { it }
+        return blackoutService.getOutrage(date = date,oblastType = oblast.first(), queue = queue).toResultState { it }
     }
 
     override suspend fun saveOutrages(outrage: OutragesResponseDto) {
-        outrageDao.insert(
-            outrage = OutragesResponseDtoToOutrageFullDboMapper(outrage).transform()
-        )
+//        outrageDao.insert(
+//            outrage = OutragesResponseDtoToOutrageFullDboMapper(outrage).transform()
+//        )
     }
 
     override suspend fun saveCities(cities: OblastResponseDto) {

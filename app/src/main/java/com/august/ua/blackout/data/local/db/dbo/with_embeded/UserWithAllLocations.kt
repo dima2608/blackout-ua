@@ -12,7 +12,7 @@ data class UserWithAllLocations(
     val user: UserDbo,
     @Relation(
         parentColumn = "id",
-        entityColumn = "userId"
+        entityColumn = "user_id"
     )
     val locations: List<UserLocationOutrageDbo>
 )

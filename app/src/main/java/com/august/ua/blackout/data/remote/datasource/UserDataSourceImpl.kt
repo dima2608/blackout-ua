@@ -25,7 +25,7 @@ class UserDataSourceImpl(
         )
     }
 
-    override suspend fun updateUser(user: UserDto, userId: String): NetworkResult<Unit> {
+    override suspend fun updateUser(user: UserDto, userId: String): NetworkResult<UserDto> {
         return userService.updateUser(userId, user)
     }
 

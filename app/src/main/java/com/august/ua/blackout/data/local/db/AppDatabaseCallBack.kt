@@ -50,7 +50,7 @@ class AppDatabaseCallBack(
         val outrageDao = database.outrageDao()
 
         // Empty database on first load
-        outrageDao.deleteAll()
+        //outrageDao.deleteAll()
 
         val outrageList = outrageFull.outrages
 //            outrageList?.forEach {

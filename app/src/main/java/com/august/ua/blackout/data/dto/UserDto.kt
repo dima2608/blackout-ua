@@ -12,10 +12,8 @@ data class UserDto(
     @SerializedName("id")
     val id: String? = null,
     @SerializedName("deviceId")
-    @Transient
     val deviceId: String? = null,
     @SerializedName("fcmToken")
-    @Transient
     val fcmToken: String? = null,
     @SerializedName("locations")
     val locations: List<LocationDto>? = null,

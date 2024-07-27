@@ -21,40 +21,40 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface AvailableLocationDao {
 
-    @Query("SELECT * FROM available_location")
-    suspend fun getAvailableLocations(): AvailableLocationDbo?
-
-    @Query("SELECT * FROM available_location")
-    fun observeAvailableLocations(): Flow<List<AvailableLocationDbo>?>
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAllAvailableLocations(locations: List<AvailableLocationDbo>)
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAvailableLocation(locations: AvailableLocationDbo): Long
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAllQueues(locations: List<QueueDbo>)
-
-    @Query("DELETE FROM available_location")
-    suspend fun deleteAll()
-
-    @Transaction
-    suspend fun update(locations: List<AvailableLocationDbo>) {
-        deleteAll()
-        insertAllAvailableLocations(locations)
-    }
-
-    @Transaction
-    @Query("SELECT * FROM available_location")
-    suspend fun getAvailableLocationsWithQueue(): List<AvailableLocationsWithQueuesDbo>
-
-    @Transaction
-    suspend fun insetAllAvailableLocations(locations: List<OblastDto>) {
-        for (location in locations) {
-            Log.e("TEST", "location: $location")
-            val id = insertAvailableLocation(location.toAvailableLocationDbo())
-            insertAllQueues(location.toQueueDboList(id))
-        }
-    }
+//    @Query("SELECT * FROM available_location")
+//    suspend fun getAvailableLocations(): AvailableLocationDbo?
+//
+//    @Query("SELECT * FROM available_location")
+//    fun observeAvailableLocations(): Flow<List<AvailableLocationDbo>?>
+//
+//    @Insert(onConflict = OnConflictStrategy.REPLACE)
+//    suspend fun insertAllAvailableLocations(locations: List<AvailableLocationDbo>)
+//
+//    @Insert(onConflict = OnConflictStrategy.REPLACE)
+//    suspend fun insertAvailableLocation(locations: AvailableLocationDbo): Long
+//
+//    @Insert(onConflict = OnConflictStrategy.REPLACE)
+//    suspend fun insertAllQueues(locations: List<QueueDbo>)
+//
+//    @Query("DELETE FROM available_location")
+//    suspend fun deleteAll()
+//
+//    @Transaction
+//    suspend fun update(locations: List<AvailableLocationDbo>) {
+//        deleteAll()
+//        insertAllAvailableLocations(locations)
+//    }
+//
+//    @Transaction
+//    @Query("SELECT * FROM available_location")
+//    suspend fun getAvailableLocationsWithQueue(): List<AvailableLocationsWithQueuesDbo>
+//
+//    @Transaction
+//    suspend fun insetAllAvailableLocations(locations: List<OblastDto>) {
+//        for (location in locations) {
+//            Log.e("TEST", "location: $location")
+//            val id = insertAvailableLocation(location.toAvailableLocationDbo())
+//            insertAllQueues(location.toQueueDboList(id))
+//        }
+//    }
 }

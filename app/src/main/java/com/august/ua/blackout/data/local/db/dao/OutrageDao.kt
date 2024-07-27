@@ -11,12 +11,12 @@ interface OutrageDao {
 //    @Query("SELECT * from outrage_full_table")
 //    fun getDevelopers(): LiveData<List<Developer>>
 
-    @Query("SELECT * from outrage_full_table")
-    suspend fun getDevelopers(): List<OutrageFullDbo>
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(outrage: OutrageFullDbo)
-
-    @Query("DELETE FROM outrage_full_table")
-    fun deleteAll()
+//    @Query("SELECT * from outrage_full_table")
+//    suspend fun getDevelopers(): List<OutrageFullDbo>
+//
+//    @Insert(onConflict = OnConflictStrategy.REPLACE)
+//    suspend fun insert(outrage: OutrageFullDbo)
+//
+//    @Query("DELETE FROM outrage_full_table")
+//    fun deleteAll()
 }

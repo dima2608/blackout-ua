@@ -10,6 +10,6 @@ interface UserDataSource {
         userId: String
     ): NetworkResult<Unit>
 
-    suspend fun updateUser(user: UserDto, userId: String): NetworkResult<Unit>
+    suspend fun updateUser(user: UserDto, userId: String): NetworkResult<UserDto>
     suspend fun createUser(user: UserDto): NetworkResult<UserDto>
 }

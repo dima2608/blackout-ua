@@ -6,7 +6,7 @@ import com.august.ua.blackout.data.dto.UserDto
 import com.august.ua.blackout.data.local.db.dbo.with_embeded.UserWithAllLocations
 
 class UserWithAllLocationsToUserDtoMapper(
-    data: UserWithAllLocations,
+    data: UserWithAllLocations?,
 ) : Mapper<UserWithAllLocations, UserDto>(data) {
 
     override fun transform(): UserDto {

@@ -45,7 +45,11 @@ fun AppNavigation(
         ) {
             CreateUpdateLocationScreen(
                 navigate = {
-                    navController.navigate(it)
+                    navController.navigate(it) {
+                        popUpTo(navController.graph.id) {
+                            inclusive = true
+                        }
+                    }
                 },
                 navigateBack = {
                     navController.popBackStackSingle()

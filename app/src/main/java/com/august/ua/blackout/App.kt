@@ -6,6 +6,7 @@ import android.os.Bundle
 import com.august.ua.blackout.data.local.db.AppDatabase
 import com.august.ua.blackout.di.DatabaseModule.DATA_BASE_NAME
 import com.pluto.Pluto
+import com.pluto.plugins.network.PlutoNetworkPlugin
 import com.pluto.plugins.rooms.db.PlutoRoomsDBWatcher
 import com.pluto.plugins.rooms.db.PlutoRoomsDatabasePlugin
 import dagger.hilt.android.HiltAndroidApp
@@ -35,7 +36,7 @@ class App: Application() {
 
     private fun initializePluto(application: Application) {
         Pluto.Installer(application)
-//            .addPlugin(PlutoNetworkPlugin("network"))
+            .addPlugin(PlutoNetworkPlugin())
 //            .addPlugin(PlutoExceptionsPlugin("exceptions"))
 //            .addPlugin(PlutoSharePreferencesPlugin("share_preferences"))
             .addPlugin(PlutoRoomsDatabasePlugin())

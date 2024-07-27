@@ -25,7 +25,9 @@ interface BlackoutService {
 
     @GET("${BASE_PATH}outrage")
     suspend fun getOutrage(
+        @Query("date") date: String,
         @Query("queues") queue: List<String>,
+        @Query("final") final: Boolean = true,
         @Query("region") oblastType: OblastType
     ): NetworkResult<OutragesResponseDto>
 

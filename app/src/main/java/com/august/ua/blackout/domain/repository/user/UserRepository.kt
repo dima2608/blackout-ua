@@ -24,7 +24,7 @@ interface UserRepository<T, D> {
         userId: String
     ): ResultState<Unit>
 
-    suspend fun updateUser(): ResultState<Any>
+    suspend fun updateUser(id: String): ResultState<Any>
     suspend fun getUser(): UserDbo?
     suspend fun createUser(user: D): ResultState<Any>
     suspend fun getUserWithLocations(): UserDto?

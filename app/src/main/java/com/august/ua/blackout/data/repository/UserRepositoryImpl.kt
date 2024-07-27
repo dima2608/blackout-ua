@@ -75,10 +75,10 @@ class UserRepositoryImpl(
         ).toResultState { it }
     }
 
-    override suspend fun updateUser(): ResultState<Any> {
+    override suspend fun updateUser(id: String): ResultState<Any> {
         val user = getUserWithLocations()
         if (user.id.isNullOrBlank()) return ResultState.Error(ErrorDvo(R.string.something_went_wrong))
-        return userDataSource.updateUser(userId = user.id, user = user).toResultState { it }
+        return userDataSource.updateUser(userId = id, user = user).toResultState { it }
     }
 
     override suspend fun getUser(): UserDbo? {
