@@ -1,5 +1,6 @@
 package com.august.ua.blackout.data.remote.datasource
 
+import com.august.ua.blackout.data.dto.UserDto
 import com.august.ua.blackout.data.remote.api.UserService
 import com.august.ua.blackout.data.remote.network.NetworkResult
 
@@ -22,5 +23,13 @@ class UserDataSourceImpl(
             deviceId = deviceId,
             userId = userId
         )
+    }
+
+    override suspend fun updateUser(user: UserDto, userId: String): NetworkResult<Unit> {
+        return userService.updateUser(userId, user)
+    }
+
+    override suspend fun createUser(user: UserDto): NetworkResult<UserDto> {
+        return userService.createUser(user)
     }
 }

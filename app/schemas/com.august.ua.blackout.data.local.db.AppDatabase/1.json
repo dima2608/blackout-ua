@@ -2,33 +2,21 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "21ff84be23648a7ebcd9906b0a030675",
+    "identityHash": "c262f781cc1d21de81664d3491834027",
     "entities": [
       {
         "tableName": "user",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `isBlackoutScheduleChangesPushEnabled` INTEGER NOT NULL, `onboardingWasViewed` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
             "columnName": "id",
             "affinity": "INTEGER",
             "notNull": true
-          },
-          {
-            "fieldPath": "isBlackoutScheduleChangesPushEnabled",
-            "columnName": "isBlackoutScheduleChangesPushEnabled",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "onboardingWasViewed",
-            "columnName": "onboardingWasViewed",
-            "affinity": "INTEGER",
-            "notNull": true
           }
         ],
         "primaryKey": {
-          "autoGenerate": true,
+          "autoGenerate": false,
           "columnNames": [
             "id"
           ]
@@ -400,7 +388,7 @@
       },
       {
         "tableName": "user_location_outrage_table",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`locationId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `location_order` INTEGER NOT NULL, `user_location_name` TEXT NOT NULL DEFAULT '', `selected_location_icon_id` TEXT NOT NULL, `selected_location_color_id` TEXT NOT NULL, `selected_location` TEXT NOT NULL, `selected_queue` TEXT NOT NULL, `is_location_push_enabled` INTEGER NOT NULL, `date` TEXT NOT NULL, `shifts` TEXT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`locationId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `location_order` INTEGER NOT NULL, `user_location_name` TEXT NOT NULL DEFAULT '', `selected_location_icon_id` TEXT NOT NULL, `selected_location_color_id` TEXT NOT NULL, `selected_location` TEXT NOT NULL, `selected_queue` TEXT NOT NULL, `is_location_push_enabled` INTEGER NOT NULL, `date` TEXT NOT NULL, `selected_push_time` TEXT, `shifts` TEXT NOT NULL)",
         "fields": [
           {
             "fieldPath": "locationId",
@@ -456,6 +444,12 @@
             "columnName": "date",
             "affinity": "TEXT",
             "notNull": true
+          },
+          {
+            "fieldPath": "selectedPushTime",
+            "columnName": "selected_push_time",
+            "affinity": "TEXT",
+            "notNull": false
           },
           {
             "fieldPath": "shifts",
@@ -515,7 +509,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '21ff84be23648a7ebcd9906b0a030675')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'c262f781cc1d21de81664d3491834027')"
     ]
   }
 }

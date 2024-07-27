@@ -1,6 +1,8 @@
 package com.august.ua.blackout.presentation.create_update_location
 
 import android.app.Activity
+import android.app.Application
+import android.content.Intent
 import android.webkit.URLUtil
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
@@ -27,6 +29,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.paint
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -36,27 +39,30 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat.startActivity
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.august.ua.blackout.R
 import com.august.ua.blackout.data.dto.OblastType
 import com.august.ua.blackout.data.dvo.CityDvo
 import com.august.ua.blackout.data.dvo.QueueDvo
-import com.august.ua.blackout.navigation.Screen
 import com.august.ua.blackout.presentation.common.DevicePreviews
 import com.august.ua.blackout.presentation.common.NavigationEvent
 import com.august.ua.blackout.presentation.common.ScreenState
+import com.august.ua.blackout.presentation.common.extensions.singleClick
 import com.august.ua.blackout.presentation.create_update_location.components.LocationSettings
-import com.august.ua.blackout.presentation.create_update_location.components.PushItem
+import com.august.ua.blackout.presentation.create_update_location.components.PushItems
 import com.august.ua.blackout.presentation.create_update_location.components.SelectQueue
 import com.august.ua.blackout.presentation.create_update_location.components.SelectRegion
 import com.august.ua.blackout.presentation.create_update_location.event.CreateUpdateLocationEvent
 import com.august.ua.blackout.presentation.create_update_location.state.CreateUpdateLocationState
-import com.august.ua.blackout.presentation.onboarding.event.OnboardingEvent
 import com.august.ua.blackout.ui.components.AppButton
 import com.august.ua.blackout.ui.components.AppSnackBar
 import com.august.ua.blackout.ui.components.CreateUpdateLocationToolbar
+import com.august.ua.blackout.ui.components.showSnackbar
 import com.august.ua.blackout.ui.theme.BlackoutTextStyle
 import com.august.ua.blackout.ui.theme.BlackoutUaTheme
+import com.google.common.reflect.Reflection.getPackageName
+
 
 @Composable
 fun CreateUpdateLocationScreen(
@@ -80,7 +86,7 @@ fun CreateUpdateLocationScreen(
     }
 
     LaunchedEffect(navEvent) {
-        when(navEvent) {
+        when (navEvent) {
             NavigationEvent.CloseScreen -> navigateBack()
             is NavigationEvent.NavigateTo -> Unit
             NavigationEvent.None -> Unit
@@ -101,12 +107,17 @@ private fun CreateUpdateLocationContent(
     }
 
     var link by remember { mutableStateOf("") }
+    val focusManager = LocalFocusManager.current
 
     Scaffold(
+        modifier = Modifier
+            .singleClick(indication = null) {
+                focusManager.clearFocus()
+            },
         topBar = {
             CreateUpdateLocationToolbar(
                 title = stringResource(id = uiState.toolbarTitle ?: R.string.empty_string_space),
-                showProgressIndicator = false,
+                showProgressIndicator = screenState == ScreenState.Loading,
                 onBack = {
                     onUiEvent(CreateUpdateLocationEvent.PreviousScreen)
                 }
@@ -172,6 +183,7 @@ private fun CreateUpdateLocationContent(
                                 }
                             )
                         }
+
                         is CreateUpdateLocationState.LocationQueueState -> {
                             link = uiState.link
                             SelectQueue(
@@ -184,6 +196,7 @@ private fun CreateUpdateLocationContent(
                                 }
                             )
                         }
+
                         is CreateUpdateLocationState.LocationSettingsState -> {
                             LocationSettings(
                                 modifier = Modifier
@@ -192,6 +205,7 @@ private fun CreateUpdateLocationContent(
                                 name = uiState.locationName,
                                 selectedIcon = uiState.selectedIconType,
                                 selectedColor = uiState.selectedColorType,
+                                nameError = uiState.locationNameError,
                                 onNameChanged = {
                                     onUiEvent(CreateUpdateLocationEvent.NameChanged(it))
                                 },
@@ -203,14 +217,19 @@ private fun CreateUpdateLocationContent(
                                 }
                             )
                         }
+
                         is CreateUpdateLocationState.LocationPushState -> {
-                            PushItem(
+                            PushItems(
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .padding(horizontal = 16.dp),
-                               isPushOn = uiState.isOn,
-                                onCheckedChange = {
-                                    onUiEvent(CreateUpdateLocationEvent.OnPushOn(it))
+                                pushTimes = uiState.pushTimes,
+                                isOutrageChangePushOn = uiState.isOutragePushOn,
+                                onCheckedChange = { type, isOn ->
+                                    onUiEvent(CreateUpdateLocationEvent.OnPushOn(type, isOn))
+                                },
+                                onOutrageChangePushChange = {
+                                    onUiEvent(CreateUpdateLocationEvent.OnOutrageUpdatePushOn(it))
                                 }
                             )
                         }
@@ -219,13 +238,80 @@ private fun CreateUpdateLocationContent(
 
                 FindYourQueue(link = link)
 
-                AppButton(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp),
-                    text = stringResource(id = uiState.buttonTitle ?: R.string.empty_string_space),
-                ) {
-                    onUiEvent(CreateUpdateLocationEvent.NextScreen)
+                AnimatedVisibility(uiState != CreateUpdateLocationState.Initial) {
+                    AppButton(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp),
+                        text = stringResource(
+                            id = uiState.buttonTitle ?: R.string.empty_string_space
+                        ),
+                    ) {
+                        onUiEvent(CreateUpdateLocationEvent.NextScreen)
+                    }
+                }
+            }
+        }
+
+        val noInternetConnectionTitle = stringResource(id = R.string.no_internet_connection)
+        val noInternetConnectionLabel = stringResource(id = R.string.retry)
+
+        val activity = LocalContext.current as Activity
+
+        LaunchedEffect(screenState) {
+            when (screenState) {
+                is ScreenState.ErrorState -> {
+                    if (screenState.customRetryTitle != null) {
+                        showSnackbar(
+                            message = screenState.error,
+                            actionLabel = screenState.customRetryTitle,
+                            scope = scope,
+                            snackbar = snackbar,
+                            onSnackbarDismissed = {
+                                onUiEvent(CreateUpdateLocationEvent.OnSnackbarDismissed)
+                            },
+                            onActionPerformed = {
+                                val intent = Intent()
+                                intent.setAction("android.settings.APP_NOTIFICATION_SETTINGS")
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                                intent.putExtra(
+                                    "android.provider.extra.APP_PACKAGE",
+                                    activity.packageName
+                                )
+                                activity.startActivity(intent)
+
+                                onUiEvent(CreateUpdateLocationEvent.ResetScreenState)
+                            }
+                        )
+                    } else {
+                        showSnackbar(
+                            message = screenState.error,
+                            scope = scope,
+                            snackbar = snackbar,
+                            onSnackbarDismissed = {
+                                onUiEvent(CreateUpdateLocationEvent.OnSnackbarDismissed)
+                            }
+                        )
+                    }
+                }
+
+                ScreenState.Loading -> {}
+                ScreenState.NoInternetConnection -> showSnackbar(
+                    message = noInternetConnectionTitle,
+                    actionLabel = noInternetConnectionLabel,
+                    scope = scope,
+                    snackbar = snackbar,
+                    onSnackbarDismissed = {
+                        onUiEvent(CreateUpdateLocationEvent.OnSnackbarDismissed)
+                    },
+                    onActionPerformed = {
+                        onUiEvent(CreateUpdateLocationEvent.OnSnackbarRetry)
+                    }
+                )
+
+                ScreenState.NoInternetConnectionFullscreen -> Unit
+                ScreenState.None -> {
+                    snackbar.currentSnackbarData?.dismiss()
                 }
             }
         }

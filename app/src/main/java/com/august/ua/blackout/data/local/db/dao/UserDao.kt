@@ -5,7 +5,9 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
+import com.august.ua.blackout.data.local.db.dbo.AvailableLocationsWithQueuesDbo
 import com.august.ua.blackout.data.local.db.dbo.UserDbo
+import com.august.ua.blackout.data.local.db.dbo.with_embeded.UserWithAllLocations
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -20,9 +22,6 @@ interface UserDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(userDbo: UserDbo)
 
-//    @Query("UPDATE user SET current_location = :location WHERE id = :id")
-//    suspend fun updatePushEnabled(id: String, location: OblastType)
-
     @Query("DELETE FROM user")
     suspend fun deleteAll()
 
@@ -31,4 +30,8 @@ interface UserDao {
         deleteAll()
         insert(userDbo)
     }
+
+    @Transaction
+    @Query("SELECT * FROM user")
+    suspend fun getUserWithLocations(): UserWithAllLocations
 }

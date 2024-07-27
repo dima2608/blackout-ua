@@ -66,7 +66,6 @@ fun HomeScreen(
     //val notificationsCount by viewModel.notificationsCount.collectAsStateWithLifecycle(initialValue = 0)
     val notificationsCount = 0
 
-
     Scaffold(
         bottomBar = {
             NavigationBar(

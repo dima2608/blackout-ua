@@ -18,7 +18,6 @@ fun LazyListScope.itemTitle(
 ) = item {
     Text(
         modifier = Modifier
-            .padding(horizontal = 16.dp)
             .padding(top = 18.dp, bottom = 16.dp)
             .fillMaxWidth(),
         text = stringResource(id = title),

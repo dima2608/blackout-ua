@@ -8,20 +8,16 @@ import com.august.ua.blackout.data.dto.UserDto
 
 @Entity(tableName = "user")
 data class UserDbo(
-    @PrimaryKey(autoGenerate = true)
-    var id: Long = 0,
-    @ColumnInfo("isBlackoutScheduleChangesPushEnabled")
-    val isBlackoutScheduleChangesPushEnabled: Boolean = false,
-
-    @ColumnInfo("onboardingWasViewed")
-    val onboardingWasViewed: Boolean = false,
+    @PrimaryKey(autoGenerate = false)
+    var id: String,
+    @ColumnInfo("isAllPushTurnOn")
+    var isAllPushTurnOn: Boolean = false,
+    @ColumnInfo("isOutrageUpdatePushOn")
+    var isOutrageUpdatePushOn: Boolean = false,
+    @ColumnInfo("isNextDayOutragePushOn")
+    var isNextDayOutragePushOn: Boolean = false,
 )
 
 fun UserDbo.toUserDto() = UserDto(
-    id = id.toString(),
-    isPushEnabled = false,
-    oblastType = OblastType.Kyiv,
-    queue = "1",
-    isNotificationPermissionScreenSeen = false,
-    isOnboardingComplete = false
+    id = id,
 )

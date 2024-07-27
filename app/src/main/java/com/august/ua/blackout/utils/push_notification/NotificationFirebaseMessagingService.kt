@@ -16,13 +16,10 @@ import com.august.ua.blackout.MainActivity
 import com.august.ua.blackout.R
 import com.august.ua.blackout.data.dto.PushNotificationDto
 import com.august.ua.blackout.data.dto.UserDto
-import com.august.ua.blackout.domain.ResultState
-import com.august.ua.blackout.domain.repository.UserRepository
+import com.august.ua.blackout.domain.repository.user.UserRepository
 import com.august.ua.blackout.ui.common.extensions.getDeviceHardwareId
-import com.august.ua.blackout.ui.common.extensions.isConnected
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
-import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

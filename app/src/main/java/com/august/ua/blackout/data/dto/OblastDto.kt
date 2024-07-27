@@ -13,6 +13,8 @@ data class OblastDto(
     val id: Int,
     @SerializedName("key")
     val oblastType: OblastType?,
+    @SerializedName("name")
+    val name: String? = null,
     @SerializedName("queues")
     val queues: List<String>?
 ) : Entity, Parcelable

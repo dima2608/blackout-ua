@@ -1,5 +1,6 @@
 package com.august.ua.blackout.presentation.create_update_location.components
 
+import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -22,6 +23,8 @@ fun LocationSettings(
     name: String,
     selectedIcon: LocationIconType,
     selectedColor: LocationColorType,
+    @StringRes
+    nameError: Int?,
     onNameChanged: (String) -> Unit,
     selectedIconChanged: (LocationIconType) -> Unit,
     selectedColorChanged: (LocationColorType) -> Unit
@@ -39,7 +42,7 @@ fun LocationSettings(
             onNameChanged = onNameChanged,
             selectedIcon = selectedIcon,
             selectedIconChanged = selectedIconChanged,
-
+            nameError = nameError,
         )
 
         item {
@@ -75,7 +78,8 @@ private fun Preview() {
             },
             selectedColorChanged = {
 
-            }
+            },
+            nameError = null
         )
     }
 }

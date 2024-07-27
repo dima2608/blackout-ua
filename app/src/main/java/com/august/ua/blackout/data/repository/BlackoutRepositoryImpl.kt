@@ -1,6 +1,7 @@
 package com.august.ua.blackout.data.repository
 
 import com.august.ua.blackout.data.dto.OblastResponseDto
+import com.august.ua.blackout.data.dto.OblastType
 import com.august.ua.blackout.data.dto.OutragesResponseDto
 import com.august.ua.blackout.data.dvo.CityDvo
 import com.august.ua.blackout.data.local.db.dao.CityDao
@@ -20,7 +21,14 @@ class BlackoutRepositoryImpl(
     private val cityDao: CityDao,
 ): BlackoutRepository {
     override suspend fun getOblasts(): ResultState<Any> {
-        return blackoutService.getOblasts().toResultState { result -> result }
+        return blackoutService.getOblasts().toResultState { result -> OblastResponseDto(result) }
+    }
+
+    override suspend fun getOutrage(
+        oblast: List<OblastType>,
+        queue: List<String>
+    ): ResultState<Any> {
+        return blackoutService.getOutrage(oblastType = oblast.first(), queue = queue).toResultState { it }
     }
 
     override suspend fun saveOutrages(outrage: OutragesResponseDto) {

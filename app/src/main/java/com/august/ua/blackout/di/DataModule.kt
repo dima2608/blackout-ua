@@ -4,13 +4,11 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.datastore.core.DataStore
 import com.august.ua.blackout.data.dto.UserDto
-import com.august.ua.blackout.data.local.datastore.LocalCacheData
 import com.august.ua.blackout.data.local.db.dao.CityDao
 import com.august.ua.blackout.data.local.db.dao.OutrageDao
 import com.august.ua.blackout.data.local.db.dao.UserDao
 import com.august.ua.blackout.data.local.db.dao.UserLocationDao
 import com.august.ua.blackout.data.local.db.dao.UserLocationOutrageDao
-import com.august.ua.blackout.data.local.db.dbo.with_embeded.CityDbo
 import com.august.ua.blackout.data.remote.api.BlackoutService
 import com.august.ua.blackout.data.remote.api.UserService
 import com.august.ua.blackout.data.remote.datasource.BlackoutDataSource
@@ -22,7 +20,7 @@ import com.august.ua.blackout.data.repository.UserLocationsRepositoryImpl
 import com.august.ua.blackout.data.repository.UserRepositoryImpl
 import com.august.ua.blackout.domain.repository.BlackoutRepository
 import com.august.ua.blackout.domain.repository.UserLocationsRepository
-import com.august.ua.blackout.domain.repository.UserRepository
+import com.august.ua.blackout.domain.repository.user.UserRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

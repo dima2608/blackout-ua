@@ -6,6 +6,7 @@ import com.august.ua.blackout.data.dto.OblastType
 import com.august.ua.blackout.data.dvo.CityDvo
 import com.august.ua.blackout.data.dvo.LocationColorType
 import com.august.ua.blackout.data.dvo.LocationIconType
+import com.august.ua.blackout.data.dvo.PushTimeDvo
 import com.august.ua.blackout.data.local.db.dbo.with_embeded.CityDbo
 
 sealed class CreateUpdateLocationState(
@@ -57,7 +58,9 @@ sealed class CreateUpdateLocationState(
         val toolbar: Int,
         val locationName: String,
         val selectedIconType: LocationIconType,
-        val selectedColorType: LocationColorType
+        val selectedColorType: LocationColorType,
+        @StringRes
+        val locationNameError: Int?
     ) : CreateUpdateLocationState(
         toolbarTitle = toolbar,
         headline = R.string.location_settings_headline,
@@ -68,11 +71,12 @@ sealed class CreateUpdateLocationState(
     data class LocationPushState(
         @StringRes
         val toolbar: Int,
-        val isOn: Boolean,
+        val pushTimes: List<PushTimeDvo>,
         @StringRes
         val pushGroupTitle: Int = R.string.location_push_on_title,
         @StringRes
         val pushGroupDescription: Int = R.string.location_push_on_description,
+        val isOutragePushOn: Boolean,
     ) : CreateUpdateLocationState(
         toolbarTitle = toolbar,
         headline = R.string.location_push_headline,

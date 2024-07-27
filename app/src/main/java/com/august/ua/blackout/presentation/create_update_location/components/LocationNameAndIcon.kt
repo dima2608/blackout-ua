@@ -1,5 +1,6 @@
 package com.august.ua.blackout.presentation.create_update_location.components
 
+import androidx.annotation.StringRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -31,6 +32,8 @@ fun LocationNameAndIcon(
     onNameChanged: (String) -> Unit,
     selectedIcon: LocationIconType,
     selectedIconChanged: (LocationIconType) -> Unit,
+    @StringRes
+    nameError: Int?,
 ) {
     Column(
         modifier = modifier
@@ -58,7 +61,9 @@ fun LocationNameAndIcon(
                 .padding(top = 8.dp),
             placeholder = stringResource(id = R.string.location_name_label),
             value = name,
-            onValueChange = onNameChanged
+            isError = nameError != null,
+            onValueChange = onNameChanged,
+            supportingText = if (nameError!= null) stringResource(id = nameError) else null
         )
 
         Text(
@@ -99,6 +104,8 @@ fun LazyListScope.locationNameAndIcon(
     onNameChanged: (String) -> Unit,
     selectedIcon: LocationIconType,
     selectedIconChanged: (LocationIconType) -> Unit,
+    @StringRes
+    nameError: Int?,
 ) = item {
     LocationNameAndIcon(
         modifier = modifier,
@@ -106,6 +113,7 @@ fun LazyListScope.locationNameAndIcon(
         onNameChanged = onNameChanged,
         selectedIcon = selectedIcon,
         selectedIconChanged = selectedIconChanged,
+        nameError = nameError
     )
 }
 
@@ -122,7 +130,8 @@ private fun Preview() {
             selectedIconChanged = {
 
             },
-            selectedIcon = LocationIconType.Dumbbell
+            selectedIcon = LocationIconType.Dumbbell,
+            nameError = null
         )
     }
 }

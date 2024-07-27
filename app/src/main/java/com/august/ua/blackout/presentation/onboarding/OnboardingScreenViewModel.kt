@@ -13,7 +13,7 @@ import com.august.ua.blackout.data.dto.UserDto
 import com.august.ua.blackout.data.dvo.OblastDvo
 import com.august.ua.blackout.data.dvo.OblastsDvo
 import com.august.ua.blackout.domain.ResultState
-import com.august.ua.blackout.domain.repository.UserRepository
+import com.august.ua.blackout.domain.repository.user.UserRepository
 import com.august.ua.blackout.presentation.common.NavigationEvent
 import com.august.ua.blackout.presentation.common.ScreenState
 import com.august.ua.blackout.presentation.onboarding.OnboardingPage.*
@@ -69,8 +69,8 @@ class OnboardingScreenViewModel @Inject constructor(
     private fun initUserForm() {
         viewModelScope.launch {
             userRepository.userData.first()?.let {
-                userForm.oblastType = it.oblastType
-                userForm.queue = it.queue
+//                userForm.oblastType = it.oblastType
+//                userForm.queue = it.queue
             }
             initDefaultUiState()
         }
@@ -213,9 +213,9 @@ class OnboardingScreenViewModel @Inject constructor(
         viewModelScope.launch {
             val user = UserDto(
                 id  = null,
-                isPushEnabled = null,
-                oblastType = userForm.oblastType ?: OblastType.Unknown,
-                queue = userForm.queue ?: "-1"
+//                isPushEnabled = null,
+//                oblastType = userForm.oblastType ?: OblastType.Unknown,
+//                queue = userForm.queue ?: "-1"
             )
 
             userRepository.saveNewUserData(user)

@@ -64,6 +64,7 @@
     <string name="select_oblast_and_queue_error">Будь ласка оберіть область та чергу</string>
     <string name="select_oblast_first">Спочатку оберіть область</string>
     <string name="queue">черга</string>
+    <string name="please_enter_location_name">Будь лака оберіть назву для локалії</string>
     
     <string name="create_location">Створення локації</string>
     <string name="location_headline">Місцезнаходження</string>
@@ -88,7 +89,7 @@
     <string name="your_region_list_link">списку черг вашого регіону.</string>
     
     <string name="location_push_on_title">Вcтановити нагадування\nпро вимкнення:</string>
-    <string name="location_push_on_description">За 15 хвилин до вимкнення</string>
+    <string name="location_push_on_description">За %s хвилин до вимкнення</string>
 
     <string name="next_step">Наступний крок</string>
     <string name="save">Зберегти</string>
@@ -103,5 +104,10 @@
     <string name="light_unavailable">Світло відсутнє</string>
     <string name="turn_on_in">Включення через:</string>
     <string name="turn_off_in">Вимкнення через:</string>
+
+    <string name="please_give_notification_permission">Будь ласка надайде дозвід надсилання Push-сповіщень</string>
+    <string name="give">надати</string>
+    <string name="outrage_change_push_description">Налаштуйте сповіщення в разі зміни графіку\nвідключень</string>
+<string name="outrage_change_push_title">Сповіщення про зміну графіка</string>
 
 </resources>
