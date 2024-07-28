@@ -17,12 +17,12 @@ data class UserDto(
     val fcmToken: String? = null,
     @SerializedName("locations")
     val locations: List<LocationDto>? = null,
-    @SerializedName("isAllPushTurnOn")
-    var isAllPushTurnOn: Boolean = false,
-    @SerializedName("isOutrageUpdatePushOn")
-    var isOutrageUpdatePushOn: Boolean = false,
-    @SerializedName("isNextDayOutragePushOn")
-    var isNextDayOutragePushOn: Boolean = false,
+    @SerializedName("isPushEnabled")
+    var isAllPushTurnOn: Boolean = true,
+    @SerializedName("isPushUpdateOutrageEnabled")
+    var isOutrageUpdatePushOn: Boolean = true,
+    @SerializedName("isPushNextDayEnabled")
+    var isNextDayOutragePushOn: Boolean = true,
 ) : Parcelable, Entity
 
 fun UserDto.toUserDbo() = UserDbo(

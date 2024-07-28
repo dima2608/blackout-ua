@@ -11,15 +11,18 @@ data class UserDbo(
     @PrimaryKey(autoGenerate = false)
     var id: String,
     @ColumnInfo("isAllPushTurnOn")
-    var isAllPushTurnOn: Boolean = false,
+    var isAllPushTurnOn: Boolean = true,
     @ColumnInfo("isOutrageUpdatePushOn")
-    var isOutrageUpdatePushOn: Boolean = false,
+    var isOutrageUpdatePushOn: Boolean = true,
     @ColumnInfo("isNextDayOutragePushOn")
-    var isNextDayOutragePushOn: Boolean = false,
+    var isNextDayOutragePushOn: Boolean = true,
     @ColumnInfo("isGrantPushPermissionScreenSeen")
     var isGrantPushPermissionScreenSeen: Boolean = false,
 )
 
 fun UserDbo.toUserDto() = UserDto(
     id = id,
+    isNextDayOutragePushOn = isNextDayOutragePushOn,
+    isOutrageUpdatePushOn = isOutrageUpdatePushOn,
+    isAllPushTurnOn = isAllPushTurnOn
 )

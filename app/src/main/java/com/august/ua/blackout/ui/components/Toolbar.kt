@@ -5,6 +5,7 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -32,6 +33,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -40,6 +42,7 @@ import com.august.ua.blackout.R
 import com.august.ua.blackout.presentation.common.DevicePreviews
 import com.august.ua.blackout.presentation.common.extensions.conditional
 import com.august.ua.blackout.presentation.common.extensions.singleClick
+import com.august.ua.blackout.ui.common.extensions.getVersionName
 import com.august.ua.blackout.ui.theme.BlackoutTextStyle
 import com.august.ua.blackout.ui.theme.BlackoutUaTheme
 import com.august.ua.blackout.ui.theme.BlueAlpha37
@@ -121,6 +124,51 @@ fun LocationToolbar(
                         contentDescription = null,
                         alpha = 1 - transparency
                     )
+
+            },
+            colors = TopAppBarDefaults.smallTopAppBarColors(
+                navigationIconContentColor = Color.Unspecified,
+                actionIconContentColor = Color.Unspecified,
+                containerColor = Transparent
+            )
+        )
+        if (showProgressIndicator) {
+            LinearProgressIndicator(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .align(Alignment.BottomCenter)
+            )
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun TitleToolbar(
+    title: String,
+    showProgressIndicator: Boolean = false,
+) {
+    val buildVersion = LocalContext.current.getVersionName() ?: "0.0.0"
+    Box {
+        TopAppBar(
+            title = {
+                Column {
+                    Text(
+                        modifier = Modifier.padding(start = 8.dp),
+                        text = title,
+                        style = BlackoutTextStyle.t3TextBody
+                    )
+
+                    Text(
+                        modifier = Modifier.padding(start = 8.dp, top = 4.dp),
+                        text = stringResource(
+                            id = R.string.settings_version,
+                            stringResource(id = R.string.app_name),
+                            buildVersion
+                        ),
+                        style = BlackoutTextStyle.t4TextSmallDescription
+                    )
+                }
 
             },
             colors = TopAppBarDefaults.smallTopAppBarColors(

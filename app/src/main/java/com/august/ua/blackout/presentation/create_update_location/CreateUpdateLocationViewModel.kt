@@ -98,6 +98,7 @@ class CreateUpdateLocationViewModel @Inject constructor(
             setLocationOrdinal()
             resetScreenState()
             initForm()
+            confirmIsUserExist()
         }
 
     }
@@ -428,7 +429,8 @@ class CreateUpdateLocationViewModel @Inject constructor(
 
             val userDto = UserDto(
                 deviceId = getApplication<Application>().getDeviceHardwareId(),
-                fcmToken = fcmToken
+                fcmToken = fcmToken,
+                locations = emptyList()
             )
 
             val response = userRepository.createUser(userDto)
