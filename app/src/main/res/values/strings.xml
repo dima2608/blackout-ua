@@ -100,7 +100,7 @@
     <string name="status">Статус:</string>
     <string name="hour_short">г</string>
     <string name="minutes_short">хв.</string>
-    <string name="strFetchingDataFromServer">отримую дані з сервера</string>
+    <string name="strFetchingDataFromServer">Завантажую дані</string>
 
     <string name="light_unavailable">Світло відсутнє</string>
     <string name="turn_on_in">Включення через:</string>
@@ -115,5 +115,8 @@
     <string name="enable_notifications_description">Увімкніть сповіщення, щоб не пропустити всі оновлення в електропостачанні.</string>
     <string name="reject">Заборонити</string>
     <string name="enable">Ввімкнути</string>
+
+    <string name="no_locations">Відсутні локації</string>
+    <string name="no_locations_description">Здається, ви ще не додали\nжодної локації?. Натсніть на плюсик\nщоб додати.</string>
 
 </resources>

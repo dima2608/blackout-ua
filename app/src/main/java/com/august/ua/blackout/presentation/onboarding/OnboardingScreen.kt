@@ -228,7 +228,7 @@ private fun OnboardingScreenContent(
             )
 
             ScreenState.Loading -> {}
-            ScreenState.NoInternetConnection -> showSnackbar(
+            is ScreenState.NoInternetConnection -> showSnackbar(
                 message = noInternetConnectionTitle,
                 actionLabel = noInternetConnectionLabel,
                 scope = scope,

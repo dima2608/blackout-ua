@@ -309,7 +309,13 @@ class CreateUpdateLocationViewModel @Inject constructor(
         viewModelScope.launch {
 
             if (getApplication<Application>().isNotConnected) {
-                _screenState.update { ScreenState.NoInternetConnection }
+                _screenState.update {
+                    ScreenState.NoInternetConnection(
+                        action = {
+                            processCreatingLocation()
+                        }
+                    )
+                }
                 return@launch
             }
 
@@ -402,48 +408,66 @@ class CreateUpdateLocationViewModel @Inject constructor(
     private suspend fun isUserExist() = getUserId() != null
 
     private suspend fun confirmIsUserExist() {
-        if (!isUserExist()) createUser()
+        if (!isUserExist()) initFcmAndCreateUser()
     }
 
-    private suspend fun createUser() {
-        _screenState.update { ScreenState.Loading }
-        if (getApplication<Application>().isNotConnected) {
-            _screenState.update { ScreenState.NoInternetConnection }
-            return
-        }
+    private fun createUser(fcmToken: String) {
+        viewModelScope.launch {
 
-        val userDto = UserDto(
-            deviceId = getApplication<Application>().getDeviceHardwareId()
-        )
+            _screenState.update { ScreenState.Loading }
+            if (getApplication<Application>().isNotConnected) {
+                _screenState.update {
+                    ScreenState.NoInternetConnection(
+                        action = {
+                            createUser(fcmToken)
+                        }
+                    )
+                }
+                return@launch
+            }
 
-        val response = userRepository.createUser(userDto)
-        resetScreenState()
-        when (response) {
-            is ResultState.Error -> showError(response.errorDvo.toString())
-            is ResultState.Success -> {
-                val data = response.data as UserDto
+            val userDto = UserDto(
+                deviceId = getApplication<Application>().getDeviceHardwareId(),
+                fcmToken = fcmToken
+            )
 
-                userRepository.saveNewUserData(data)
+            val response = userRepository.createUser(userDto)
+            resetScreenState()
+            when (response) {
+                is ResultState.Error -> showError(response.errorDvo.toString())
+                is ResultState.Success -> {
+                    val data = response.data as UserDto
+
+                    userRepository.saveNewUserData(data)
+                }
             }
         }
     }
 
-    private suspend fun updateUser() {
-        if (getApplication<Application>().isNotConnected) {
-            _screenState.update { ScreenState.NoInternetConnection }
-            return
-        }
+    private fun updateUser() {
+        viewModelScope.launch {
+            if (getApplication<Application>().isNotConnected) {
+                _screenState.update {
+                    ScreenState.NoInternetConnection(
+                        action = {
+                            updateUser()
+                        }
+                    )
+                }
+                return@launch
+            }
 
-        val response =
-            userRepository.updateUser(getApplication<Application>().getDeviceHardwareId())
+            val response =
+                userRepository.updateUser(getApplication<Application>().getDeviceHardwareId())
 
-        when (response) {
-            is ResultState.Error -> showError(response.errorDvo.toString())
-            is ResultState.Success -> {
-                val data = response.data as UserDto
+            when (response) {
+                is ResultState.Error -> showError(response.errorDvo.toString())
+                is ResultState.Success -> {
+                    val data = response.data as UserDto
 
-                userRepository.saveNewUserData(data)
-                navigateToHome()
+                    userRepository.saveNewUserData(data)
+                    navigateToHome()
+                }
             }
         }
     }
@@ -456,18 +480,23 @@ class CreateUpdateLocationViewModel @Inject constructor(
         _navEvent.update { NavigationEvent.None }
     }
 
-    private fun initFcm() {
+    private fun initFcmAndCreateUser() {
         FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
             if (!task.isSuccessful) {
                 return@OnCompleteListener
             }
             val token = task.result
             Log.d(MainActivity::class.java.simpleName, "token =========>>>>>> $token")
-            //send token to serv
+            createUser(token)
         })
     }
 
 
-    private suspend fun isNotificationPermissionScreenSeen() = userRepository.getUser()?.isGrantPushPermissionScreenSeen == true
+    private suspend fun isNotificationPermissionScreenSeen() =
+        userRepository.getUser()?.isGrantPushPermissionScreenSeen == true
 
+    fun performSnackbarAction(action: () -> Unit) {
+        resetScreenState()
+        action()
+    }
 }

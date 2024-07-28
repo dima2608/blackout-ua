@@ -13,6 +13,7 @@ import com.august.ua.blackout.navigation.Screen
 import com.august.ua.blackout.presentation.common.NavigationEvent
 import com.august.ua.blackout.presentation.common.ScreenState
 import com.august.ua.blackout.presentation.home.locations_tab.event.LocationsEvent
+import com.august.ua.blackout.ui.common.extensions.isNotConnected
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -55,11 +56,12 @@ class LocationsTabViewModel @Inject constructor(
 
     fun onUiEvent(event: LocationsEvent) {
         when (event) {
-            LocationsEvent.AddNewLocation -> _navEvent.update { NavigationEvent.NavigateTo(Screen.CreateUpdateLocation.route) }
-            is LocationsEvent.OnLocationClick -> TODO()
-            is LocationsEvent.OnLocationLongClick -> TODO()
+            LocationsEvent.AddNewLocation -> processAddNewLocation()
+            is LocationsEvent.OnLocationClick -> Unit
+            is LocationsEvent.OnLocationLongClick -> Unit
             LocationsEvent.ResetScreenState -> resetScreenState()
             LocationsEvent.ResetNavState -> resetNavState()
+            LocationsEvent.OnSnackbarDismissed -> resetScreenState()
         }
     }
 
@@ -69,5 +71,23 @@ class LocationsTabViewModel @Inject constructor(
 
     private fun resetNavState() {
         _navEvent.update { NavigationEvent.None }
+    }
+
+    private fun processAddNewLocation() {
+        if (getApplication<Application>().isNotConnected) {
+            _screenState.update { ScreenState.NoInternetConnection(
+                action = {
+                    processAddNewLocation()
+                }
+            ) }
+            return
+        }
+
+        _navEvent.update { NavigationEvent.NavigateTo(Screen.CreateUpdateLocation.route) }
+    }
+
+    fun performSnackbarAction(action: () -> Unit) {
+        resetScreenState()
+        action()
     }
 }
