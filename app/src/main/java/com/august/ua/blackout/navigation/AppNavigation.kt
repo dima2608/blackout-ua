@@ -11,6 +11,8 @@ import com.august.ua.blackout.presentation.onboarding.navigation.ONBOARDING_GRAP
 import com.august.ua.blackout.presentation.onboarding.navigation.onboardingGraph
 import com.august.ua.blackout.presentation.splash.SplashScreen
 import com.august.ua.blackout.ui.common.extensions.popBackStackSingle
+import com.august.ua.blackout.ui.components.noEnterTransition
+import com.august.ua.blackout.ui.components.noExitTransition
 
 @Composable
 fun AppNavigation(
@@ -18,7 +20,9 @@ fun AppNavigation(
 ) {
     NavHost(
         navController = navController,
-        startDestination = Screen.SplashScreen.route
+        startDestination = Screen.SplashScreen.route,
+        enterTransition = noEnterTransition,
+        exitTransition = noExitTransition
     ) {
 
         composable(route = Screen.SplashScreen.route) {

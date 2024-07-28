@@ -45,6 +45,8 @@ import com.august.ua.blackout.presentation.home.navigation.LOCATIONS_GRAPH_ROUTE
 import com.august.ua.blackout.presentation.home.navigation.calendarGraph
 import com.august.ua.blackout.presentation.home.navigation.locationsGraph
 import com.august.ua.blackout.presentation.home.navigation.settingsGraph
+import com.august.ua.blackout.ui.components.noEnterTransition
+import com.august.ua.blackout.ui.components.noExitTransition
 import com.august.ua.blackout.ui.theme.Black
 import com.august.ua.blackout.ui.theme.BlackoutTextStyle
 import com.august.ua.blackout.ui.theme.Transparent
@@ -128,6 +130,8 @@ fun HomeScreen(
                 NavHost(
                     navController = navController,
                     startDestination = LOCATIONS_GRAPH_ROUTE_PATTERN,
+                    enterTransition = noEnterTransition,
+                    exitTransition = noExitTransition
                 ) {
                     locationsGraph(navController = navController, externalNavController = externalNavController)
                     calendarGraph(navController = navController, externalNavController = externalNavController)
