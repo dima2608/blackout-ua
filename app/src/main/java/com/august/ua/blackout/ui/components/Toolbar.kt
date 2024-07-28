@@ -161,7 +161,7 @@ fun TitleToolbar(
                     )
 
                     Text(
-                        modifier = Modifier.padding(start = 8.dp, top = 4.dp),
+                        modifier = Modifier.padding(start = 16.dp, top = 4.dp),
                         text = stringResource(
                             id = R.string.settings_version_v1,
                             buildVersion
