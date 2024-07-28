@@ -38,6 +38,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.august.ua.blackout.R
 import com.august.ua.blackout.presentation.common.DevicePreviews
 import com.august.ua.blackout.presentation.common.extensions.conditional
@@ -156,14 +157,13 @@ fun TitleToolbar(
                     Text(
                         modifier = Modifier.padding(start = 8.dp),
                         text = title,
-                        style = BlackoutTextStyle.t3TextBody
+                        style = BlackoutTextStyle.h1Heading.copy(fontWeight = FontWeight.W700, fontSize = 24.sp)
                     )
 
                     Text(
                         modifier = Modifier.padding(start = 8.dp, top = 4.dp),
                         text = stringResource(
-                            id = R.string.settings_version,
-                            stringResource(id = R.string.app_name),
+                            id = R.string.settings_version_v1,
                             buildVersion
                         ),
                         style = BlackoutTextStyle.t4TextSmallDescription

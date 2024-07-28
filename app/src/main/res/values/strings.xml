@@ -119,6 +119,7 @@
     <string name="no_locations">Відсутні локації</string>
     <string name="no_locations_description">Здається, ви ще не додали\nжодної локації?. Натсніть на плюсик\nщоб додати.</string>
 
-    <string name="settings_version">%s для Android версія %s</string>
+    <string name="settings_version">%s для Android\nверсія %s</string>
+    <string name="settings_version_v1">версія %s</string>
 
 </resources>
