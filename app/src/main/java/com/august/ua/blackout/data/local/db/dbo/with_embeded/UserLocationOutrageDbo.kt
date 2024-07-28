@@ -34,7 +34,7 @@ data class UserLocationOutrageDbo(
     @ColumnInfo("date")
     val date: String,
     @ColumnInfo("selected_push_time")
-    val selectedPushTime: OutragePushTime?,
+    val selectedPushTime: List<OutragePushTime>?,
 
 //    @ColumnInfo("shifts")
 //    @Expose

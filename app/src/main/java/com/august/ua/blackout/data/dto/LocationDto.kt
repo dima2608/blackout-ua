@@ -12,7 +12,7 @@ data class LocationDto(
     @SerializedName("region")
     val region: OblastType?,
     @SerializedName("notificationLeadTime")
-    val outragePushTime: OutragePushTime?,
+    val outragePushTime: List<OutragePushTime>?,
     @SerializedName("queue")
     val queue: String?
 ): Entity, Parcelable

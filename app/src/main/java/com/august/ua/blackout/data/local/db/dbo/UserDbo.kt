@@ -16,6 +16,8 @@ data class UserDbo(
     var isOutrageUpdatePushOn: Boolean = false,
     @ColumnInfo("isNextDayOutragePushOn")
     var isNextDayOutragePushOn: Boolean = false,
+    @ColumnInfo("isGrantPushPermissionScreenSeen")
+    var isGrantPushPermissionScreenSeen: Boolean = false,
 )
 
 fun UserDbo.toUserDto() = UserDto(

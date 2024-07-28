@@ -15,9 +15,9 @@ data class CreateUpdateLocationForm(
     var selectedIconType: LocationIconType = LocationIconType.Diamond,
     var selectedColorType: LocationColorType = LocationColorType.Red,
     var isPushOn: Boolean = false,
-    var selectedPushTime: OutragePushTime? = null,
+    var selectedPushTime: MutableList<OutragePushTime> = mutableListOf(OutragePushTime.FifteenMin),
     var locationOrdinal: Int = -1,
-    var isOutragePushOn: Boolean = false,
+    var isOutragePushOn: Boolean = true,
     @StringRes
     var oblastTypeError: Int? = null,
     @StringRes

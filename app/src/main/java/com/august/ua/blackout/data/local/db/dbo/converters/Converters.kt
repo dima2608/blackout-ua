@@ -1,6 +1,7 @@
 package com.august.ua.blackout.data.local.db.dbo.converters
 
 import androidx.room.TypeConverter
+import com.august.ua.blackout.data.dto.OutragePushTime
 import com.august.ua.blackout.data.local.db.dbo.with_embeded.OutrageDbo
 import com.august.ua.blackout.data.local.db.dbo.with_embeded.OutrageQueueDbo
 import com.august.ua.blackout.data.local.db.dbo.with_embeded.OutrageShiftDbo
@@ -62,5 +63,19 @@ class Converters {
     fun toUserLocationShiftList(value: String?): List<UserLocationShiftDbo>? {
         val listType = object : TypeToken<List<UserLocationShiftDbo>?>() {}.type
         return Gson().fromJson(value, listType)
+    }
+
+    @TypeConverter
+    fun fromOutragePushTimeList(value: List<OutragePushTime>?): String {
+        val gson = Gson()
+        val type = object : TypeToken<List<OutragePushTime>>() {}.type
+        return gson.toJson(value, type)
+    }
+
+    @TypeConverter
+    fun toOutragePushTimeList(value: String): List<OutragePushTime>? {
+        val gson = Gson()
+        val type = object : TypeToken<List<OutragePushTime>>() {}.type
+        return gson.fromJson(value, type)
     }
 }

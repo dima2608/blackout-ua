@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "be091164544d89cf7a3d2fdc3e4224be",
+    "identityHash": "8bc64cd3a234a6e14ca407b3df36e5a8",
     "entities": [
       {
         "tableName": "user",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `isAllPushTurnOn` INTEGER NOT NULL, `isOutrageUpdatePushOn` INTEGER NOT NULL, `isNextDayOutragePushOn` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `isAllPushTurnOn` INTEGER NOT NULL, `isOutrageUpdatePushOn` INTEGER NOT NULL, `isNextDayOutragePushOn` INTEGER NOT NULL, `isGrantPushPermissionScreenSeen` INTEGER NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -29,6 +29,12 @@
           {
             "fieldPath": "isNextDayOutragePushOn",
             "columnName": "isNextDayOutragePushOn",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "isGrantPushPermissionScreenSeen",
+            "columnName": "isGrantPushPermissionScreenSeen",
             "affinity": "INTEGER",
             "notNull": true
           }
@@ -221,7 +227,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'be091164544d89cf7a3d2fdc3e4224be')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '8bc64cd3a234a6e14ca407b3df36e5a8')"
     ]
   }
 }

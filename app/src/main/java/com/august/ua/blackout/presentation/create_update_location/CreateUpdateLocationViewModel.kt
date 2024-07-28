@@ -2,7 +2,6 @@ package com.august.ua.blackout.presentation.create_update_location
 
 import android.app.Application
 import android.content.Context
-import android.provider.Settings
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
@@ -21,7 +20,6 @@ import com.august.ua.blackout.data.dvo.PushTimeDvo
 import com.august.ua.blackout.data.local.db.dbo.with_embeded.UserLocationOutrageDbo
 import com.august.ua.blackout.domain.ResultState
 import com.august.ua.blackout.domain.common.EMPTY_STRING
-import com.august.ua.blackout.domain.common.parseCalendarEventTime
 import com.august.ua.blackout.domain.common.parseDayTime
 import com.august.ua.blackout.domain.repository.BlackoutRepository
 import com.august.ua.blackout.domain.repository.UserLocationsRepository
@@ -48,8 +46,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import java.security.AccessController.getContext
-import java.time.LocalDateTime
 import java.time.ZoneOffset
 import java.time.ZonedDateTime
 import javax.inject.Inject
@@ -219,7 +215,11 @@ class CreateUpdateLocationViewModel @Inject constructor(
                 }
 
                 Push -> {
-                    processCreatingLocation()
+                    if (isNotificationPermissionScreenSeen()) {
+                        processCreatingLocation()
+                    } else {
+
+                    }
                 }
             }
         }
@@ -285,18 +285,10 @@ class CreateUpdateLocationViewModel @Inject constructor(
             return
         }
 
-        if (!getApplication<Application>().isNotificationPermissionGranted()) {
-            showError(
-                getApplication<Application>().getString(R.string.please_give_notification_permission),
-                getApplication<Application>().getString(R.string.give)
-            )
-            return
-        }
-
         if (isOn) {
-            form.selectedPushTime = type
+            form.selectedPushTime.add(type)
         } else {
-            form.selectedPushTime = null
+            form.selectedPushTime.remove(type)
         }
 
         configUiState()
@@ -393,7 +385,7 @@ class CreateUpdateLocationViewModel @Inject constructor(
     private fun getPushTimes(): List<PushTimeDvo> {
         val pushTimes = OutragePushTime.entries.map {
             PushTimeDvo(
-                isSelected = form.selectedPushTime == it,
+                isSelected = form.selectedPushTime.contains(it),
                 type = it
             )
         }
@@ -470,5 +462,8 @@ class CreateUpdateLocationViewModel @Inject constructor(
             //send token to serv
         })
     }
+
+
+    private suspend fun isNotificationPermissionScreenSeen() = userRepository.getUser()?.isGrantPushPermissionScreenSeen == true
 
 }
