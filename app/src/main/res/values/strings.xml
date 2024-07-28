@@ -14,6 +14,7 @@
     <string name="empty_string_space"> </string>
 
     <string name="something_went_wrong">Упс, щось пішло не так</string>
+    <string name="user_creation_error">Упс, не змогли створити юзера, спробуйте пізніше</string>
     <string name="no_internet_connection">Немає з\'єднання з інтернетом</string>
     <string name="retry">Повторити</string>
 

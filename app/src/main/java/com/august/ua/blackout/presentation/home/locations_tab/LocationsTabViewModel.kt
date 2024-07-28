@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.august.ua.blackout.data.dvo.LocationDvo
+import com.august.ua.blackout.domain.common.parseCalendarDay
 import com.august.ua.blackout.domain.repository.UserLocationsRepository
 import com.august.ua.blackout.navigation.Screen
 import com.august.ua.blackout.presentation.common.NavigationEvent
@@ -19,6 +20,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.time.LocalDate
 import javax.inject.Inject
 
 @HiltViewModel

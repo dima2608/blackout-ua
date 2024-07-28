@@ -20,6 +20,7 @@ import com.august.ua.blackout.data.dvo.LocationIconType
 import com.august.ua.blackout.data.dvo.PushTimeDvo
 import com.august.ua.blackout.data.local.db.dbo.with_embeded.UserLocationOutrageDbo
 import com.august.ua.blackout.domain.ResultState
+import com.august.ua.blackout.domain.common.EMPTY_STRING
 import com.august.ua.blackout.domain.common.parseCalendarEventTime
 import com.august.ua.blackout.domain.common.parseDayTime
 import com.august.ua.blackout.domain.repository.BlackoutRepository
@@ -343,7 +344,7 @@ class CreateUpdateLocationViewModel @Inject constructor(
                     val outrage = response.data as OutragesResponseDto
                     saveLocation(outrage) { isSuccess ->
                         if (!isSuccess) {
-                            showError(getApplication<Application>().getString(R.string.something_went_wrong))
+                            showError(getApplication<Application>().getString(R.string.user_creation_error))
                             return@saveLocation
                         }
                     }
@@ -373,12 +374,18 @@ class CreateUpdateLocationViewModel @Inject constructor(
                 selectedPushTime = form.selectedPushTime,
                 isOutragePushEnabled = form.isOutragePushOn,
                 userId = getUserId()!!,
-                shifts = outrages.outrages.mapToUserLocationShiftListDbo(
-                    oblastType = form.selectedCity?.oblastType,
-                    selectedQueue = form.selectedQueue
-                )
             )
-            locationsRepository.saveUserLocationLocal(location)
+            val locationId = locationsRepository.saveUserLocationLocal(location)
+
+            val shifts = outrages.outrages.mapToUserLocationShiftListDbo(
+                oblastType = form.selectedCity?.oblastType,
+                selectedQueue = form.selectedQueue,
+                locationId = locationId
+            )
+
+            val date = outrages.outrages?.firstOrNull()?.date ?: EMPTY_STRING
+            locationsRepository.saveLocationShifts(shifts, date)
+
             callBack(true)
         }
     }
@@ -435,7 +442,8 @@ class CreateUpdateLocationViewModel @Inject constructor(
             return
         }
 
-        val response = userRepository.updateUser(getApplication<Application>().getDeviceHardwareId())
+        val response =
+            userRepository.updateUser(getApplication<Application>().getDeviceHardwareId())
 
         when (response) {
             is ResultState.Error -> showError(response.errorDvo.toString())

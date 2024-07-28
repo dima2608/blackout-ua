@@ -9,8 +9,10 @@ import com.google.gson.annotations.SerializedName
 data class UserLocationShiftDbo(
     @PrimaryKey(autoGenerate = true)
     val outrageShiftId: Long = 0,
-//    @ColumnInfo("shift_date")
-//    val shiftDate: String,
+    @ColumnInfo("parent_location_id")
+    val locationId: Long,
+    @ColumnInfo("shift_date")
+    val shiftDate: String,
     @SerializedName("start")
     @ColumnInfo(name = "start")
     val start: String,

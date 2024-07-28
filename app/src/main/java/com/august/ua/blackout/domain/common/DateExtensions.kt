@@ -5,6 +5,7 @@ import okhttp3.internal.format
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
+import java.time.ZoneOffset
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
@@ -24,4 +25,12 @@ fun LocalDateTime.parseCalendarEventTime(): String = format(EventTimeFormatter)
 fun ZonedDateTime.parseDayTime(): String {
     val formatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME
     return format(formatter)
+}
+
+
+fun getCurrentShiftDate(): String {
+    val date = LocalDate.now()
+    val dateTimeAtMidnight = LocalDateTime.of(date, LocalTime.MIDNIGHT)
+    val offsetDateTime = dateTimeAtMidnight.atOffset(ZoneOffset.UTC)
+    return offsetDateTime.format(DayTimeFormatter)
 }

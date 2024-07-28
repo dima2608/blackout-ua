@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "eb93b194f72aa5198fa8dbc21815b84e",
+    "identityHash": "be091164544d89cf7a3d2fdc3e4224be",
     "entities": [
       {
         "tableName": "user",
@@ -82,7 +82,7 @@
       },
       {
         "tableName": "user_location_outrage_table",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`locationId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `user_id` TEXT NOT NULL, `location_order` INTEGER NOT NULL, `user_location_name` TEXT NOT NULL DEFAULT '', `selected_location_icon_id` TEXT NOT NULL, `selected_location_color_id` TEXT NOT NULL, `selected_location` TEXT NOT NULL, `selected_queue` TEXT NOT NULL, `is_location_push_enabled` INTEGER NOT NULL, `is_outrage_push_enable` INTEGER NOT NULL, `date` TEXT NOT NULL, `selected_push_time` TEXT, `shifts` TEXT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`locationId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `user_id` TEXT NOT NULL, `location_order` INTEGER NOT NULL, `user_location_name` TEXT NOT NULL DEFAULT '', `selected_location_icon_id` TEXT NOT NULL, `selected_location_color_id` TEXT NOT NULL, `selected_location` TEXT NOT NULL, `selected_queue` TEXT NOT NULL, `is_location_push_enabled` INTEGER NOT NULL, `is_outrage_push_enable` INTEGER NOT NULL, `date` TEXT NOT NULL, `selected_push_time` TEXT)",
         "fields": [
           {
             "fieldPath": "locationId",
@@ -156,12 +156,6 @@
             "columnName": "selected_push_time",
             "affinity": "TEXT",
             "notNull": false
-          },
-          {
-            "fieldPath": "shifts",
-            "columnName": "shifts",
-            "affinity": "TEXT",
-            "notNull": true
           }
         ],
         "primaryKey": {
@@ -175,12 +169,24 @@
       },
       {
         "tableName": "user_location_shift_table",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`outrageShiftId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `start` TEXT NOT NULL, `end` TEXT NOT NULL, `lightStatus` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`outrageShiftId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `parent_location_id` INTEGER NOT NULL, `shift_date` TEXT NOT NULL, `start` TEXT NOT NULL, `end` TEXT NOT NULL, `lightStatus` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "outrageShiftId",
             "columnName": "outrageShiftId",
             "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "locationId",
+            "columnName": "parent_location_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "shiftDate",
+            "columnName": "shift_date",
+            "affinity": "TEXT",
             "notNull": true
           },
           {
@@ -215,7 +221,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'eb93b194f72aa5198fa8dbc21815b84e')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'be091164544d89cf7a3d2fdc3e4224be')"
     ]
   }
 }

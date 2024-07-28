@@ -6,25 +6,27 @@ import com.august.ua.blackout.data.dvo.ElectricityStatus
 import com.august.ua.blackout.data.dvo.LocationDvo
 import com.august.ua.blackout.data.dvo.LocationIconType
 import com.august.ua.blackout.data.local.db.dbo.with_embeded.UserLocationOutrageDbo
+import com.august.ua.blackout.data.local.db.dbo.with_embeded.UserLocationsWithShifts
+import com.august.ua.blackout.data.local.db.dbo.with_embeded.UserWithAllLocations
 import com.august.ua.blackout.domain.common.EMPTY_STRING
 import java.time.Duration
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
 class UserLocationOutrageDboToLocationDvoMapper(
-    data: UserLocationOutrageDbo,
+    data:  UserLocationsWithShifts,
     private val context: Context,
-) : Mapper<UserLocationOutrageDbo, LocationDvo>(data) {
+) : Mapper<UserLocationsWithShifts, LocationDvo>(data) {
 
     override fun transform(): LocationDvo {
         return  LocationDvo(
-            canBeCollapsed = data?.locationOrder != 1,
-            icon = data?.locationIconType?.icon ?: LocationIconType.Diamond.icon,
-            isCollapsedState = data?.locationOrder != 1,
+            canBeCollapsed = data?.location?.locationOrder != 1,
+            icon = data?.location?.locationIconType?.icon ?: LocationIconType.Diamond.icon,
+            isCollapsedState = data?.location?.locationOrder != 1,
             lightTurnOnIn = calculateLightTurnOnIn(),
-            locationName = data?.locationName.toString(),
+            locationName = data?.location?.locationName.toString(),
             period = "${context.getString(R.string.period)} ${calculatePeriod()}",
-            queueAndLocation = "${data?.selectedQueue} ${context.getString(R.string.queue)} (${data?.selectedLocation?.oblastName?.let { context.getString(it)}})",
+            queueAndLocation = "${data?.location?.selectedQueue} ${context.getString(R.string.queue)} (${data?.location?.selectedLocation?.oblastName?.let { context.getString(it)}})",
             status = calculateStatus()
 
         )

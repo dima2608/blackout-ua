@@ -13,6 +13,7 @@ import com.august.ua.blackout.data.local.db.dao.UserLocationDao
 import com.august.ua.blackout.data.local.db.dao.UserLocationOutrageDao
 import com.august.ua.blackout.data.local.db.dbo.UserLocationDbo
 import com.august.ua.blackout.data.local.db.dbo.with_embeded.UserLocationOutrageDbo
+import com.august.ua.blackout.data.local.db.dbo.with_embeded.UserLocationShiftDbo
 import com.august.ua.blackout.data.mapper.UserLocationOutrageDboToLocationDvoMapper
 import com.august.ua.blackout.domain.repository.UserLocationsRepository
 import kotlinx.coroutines.flow.Flow
@@ -47,17 +48,23 @@ class UserLocationsRepositoryImpl(
         return userLocationOutrageDao.getLocationsSize()
     }
 
-    override suspend fun getLocationsOutragePaging(): Flow<PagingData<LocationDvo>> {
+    override suspend fun getLocationsOutragePaging(
+        shiftDate: String
+    ): Flow<PagingData<LocationDvo>> {
         return Pager(
             config = PagingConfig(pageSize = 10, prefetchDistance = 2),
             pagingSourceFactory = {
-                userLocationOutrageDao.getLocationsOutragePaging()
+                userLocationOutrageDao.getUserWithLocationsWithShiftsPaging(shiftDate)
             }
         ).flow.map { pagingData ->
             pagingData.map { entity ->
                 UserLocationOutrageDboToLocationDvoMapper(entity, context).transform()
             }
         }
+    }
+
+    override suspend fun saveLocationShifts(shifts: List<UserLocationShiftDbo>, date: String) {
+        return userLocationOutrageDao.updateShifts(shifts, date)
     }
 
 }

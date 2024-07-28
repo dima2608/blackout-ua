@@ -3,6 +3,7 @@ package com.august.ua.blackout.data.dto
 import android.os.Parcelable
 import com.august.ua.blackout.data.local.db.dbo.with_embeded.UserLocationShiftDbo
 import com.august.ua.blackout.domain.Entity
+import com.august.ua.blackout.domain.common.getCurrentShiftDate
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
@@ -22,7 +23,8 @@ data class OutrageDto(
 
 fun List<OutrageDto>?.mapToUserLocationShiftListDbo(
     oblastType: OblastType?,
-    selectedQueue: String?
+    selectedQueue: String?,
+    locationId: Long,
 ) = this?.filter { outrage ->
     outrage.region == oblastType && outrage.shifts?.any { shift ->
         shift.queues?.any { it.queue == selectedQueue } == true
@@ -34,7 +36,9 @@ fun List<OutrageDto>?.mapToUserLocationShiftListDbo(
         UserLocationShiftDbo(
             start = shift.start,
             end = shift.end,
-            lightStatus = shift.queues?.first { it.queue == selectedQueue }?.lightStatus ?: -1
+            lightStatus = shift.queues?.first { it.queue == selectedQueue }?.lightStatus ?: -1,
+            shiftDate = outrage.date ?: "",
+            locationId = locationId
         )
     }.orEmpty()
 }.orEmpty()
