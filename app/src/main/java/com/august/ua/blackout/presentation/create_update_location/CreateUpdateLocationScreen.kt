@@ -91,6 +91,7 @@ fun CreateUpdateLocationScreen(
             is NavigationEvent.NavigateTo -> navigate(state.screenRoute)
             NavigationEvent.None -> Unit
         }
+        viewModel.resetNavState()
     }
 }
 

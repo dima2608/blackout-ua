@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 import com.august.ua.blackout.data.dto.OblastType
 import com.august.ua.blackout.data.dto.UserDto
 
-@Entity(tableName = "user")
+@Entity(tableName = "user_table")
 data class UserDbo(
     @PrimaryKey(autoGenerate = false)
     var id: String,

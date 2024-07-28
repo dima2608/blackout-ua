@@ -218,7 +218,7 @@ class CreateUpdateLocationViewModel @Inject constructor(
                     if (isNotificationPermissionScreenSeen()) {
                         processCreatingLocation()
                     } else {
-
+                        _navEvent.update { NavigationEvent.NavigateTo(Screen.GiveNotificationPermission.route) }
                     }
                 }
             }
@@ -450,6 +450,10 @@ class CreateUpdateLocationViewModel @Inject constructor(
 
     private fun navigateToHome() {
         _navEvent.update { NavigationEvent.NavigateTo(Screen.HomeScreen.route) }
+    }
+
+    fun resetNavState() {
+        _navEvent.update { NavigationEvent.None }
     }
 
     private fun initFcm() {

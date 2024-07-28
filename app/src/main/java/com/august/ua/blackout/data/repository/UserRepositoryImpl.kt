@@ -90,6 +90,10 @@ class UserRepositoryImpl(
         return UserWithAllLocationsToUserDtoMapper(userWithLocations).transform()
     }
 
+    override suspend fun saveIsAskNotificationScreenWasShown(wasSeen: Boolean) {
+        return userDao.setIsNotificationPermissionScreenWasSeen(wasSeen)
+    }
+
     override suspend fun createUser(user: UserDto): ResultState<Any> {
         return userDataSource.createUser(user).toResultState { it }
     }

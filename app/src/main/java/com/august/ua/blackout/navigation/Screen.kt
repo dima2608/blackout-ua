@@ -21,6 +21,7 @@ sealed class Screen(val route: String) {
     data object SettingsTabScreen: Screen("settings_screen")
     data object LocationsTabScreen: Screen("locations_screen")
     data object CreateUpdateLocation: Screen("create_update_location_screen")
+    data object GiveNotificationPermission: Screen("give_notification_permission_screen")
 
 
     fun withArgs(vararg args: String): String {
