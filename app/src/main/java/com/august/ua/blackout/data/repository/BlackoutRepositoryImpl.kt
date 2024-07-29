@@ -2,6 +2,7 @@ package com.august.ua.blackout.data.repository
 
 import com.august.ua.blackout.data.dto.OblastResponseDto
 import com.august.ua.blackout.data.dto.OblastType
+import com.august.ua.blackout.data.dto.OutrageSearchDto
 import com.august.ua.blackout.data.dto.OutragesResponseDto
 import com.august.ua.blackout.data.dvo.CityDvo
 import com.august.ua.blackout.data.local.db.dao.CityDao
@@ -46,6 +47,10 @@ class BlackoutRepositoryImpl(
 
     override suspend fun getCitiesLocal(): List<CityDvo> {
         return cityDao.getCities().map { it.toCityDvo() }
+    }
+
+    override suspend fun getOutrageSearch(search: OutrageSearchDto): ResultState<Any> {
+        return blackoutService.getOutrageSearch(search).toResultState { it }
     }
 
     suspend fun saveLocations() {

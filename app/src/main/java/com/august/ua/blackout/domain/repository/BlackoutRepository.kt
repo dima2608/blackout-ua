@@ -2,6 +2,7 @@ package com.august.ua.blackout.domain.repository
 
 import com.august.ua.blackout.data.dto.OblastResponseDto
 import com.august.ua.blackout.data.dto.OblastType
+import com.august.ua.blackout.data.dto.OutrageSearchDto
 import com.august.ua.blackout.data.dto.OutragesResponseDto
 import com.august.ua.blackout.data.dvo.CityDvo
 import com.august.ua.blackout.data.local.db.dbo.with_embeded.CityDbo
@@ -17,4 +18,5 @@ interface BlackoutRepository {
     suspend fun saveOutrages(outrage: OutragesResponseDto)
     suspend fun saveCities(cities: OblastResponseDto)
     suspend fun getCitiesLocal(): List<CityDvo>
+    suspend fun getOutrageSearch(search: OutrageSearchDto): ResultState<Any>
 }

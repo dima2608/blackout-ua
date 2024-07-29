@@ -4,6 +4,7 @@ package com.august.ua.blackout.data.remote.api
 import com.august.ua.blackout.data.dto.OblastDto
 import com.august.ua.blackout.data.dto.OblastResponseDto
 import com.august.ua.blackout.data.dto.OblastType
+import com.august.ua.blackout.data.dto.OutrageSearchDto
 import com.august.ua.blackout.data.dto.OutragesResponseDto
 import com.august.ua.blackout.data.dto.UserDto
 import com.august.ua.blackout.data.remote.network.NetworkResult
@@ -35,5 +36,10 @@ interface BlackoutService {
     @FormUrlEncoded
     suspend fun crateUser(
         @Body user: UserDto?
+    ): NetworkResult<OutragesResponseDto>
+
+    @POST("${BASE_PATH}outrage/search")
+    suspend fun getOutrageSearch(
+        @Body body: OutrageSearchDto?
     ): NetworkResult<OutragesResponseDto>
 }

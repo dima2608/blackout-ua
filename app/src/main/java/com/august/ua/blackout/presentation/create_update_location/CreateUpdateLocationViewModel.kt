@@ -10,6 +10,8 @@ import com.august.ua.blackout.R
 import com.august.ua.blackout.data.dto.OblastResponseDto
 import com.august.ua.blackout.data.dto.OblastType
 import com.august.ua.blackout.data.dto.OutragePushTime
+import com.august.ua.blackout.data.dto.OutrageRegionsDto
+import com.august.ua.blackout.data.dto.OutrageSearchDto
 import com.august.ua.blackout.data.dto.OutragesResponseDto
 import com.august.ua.blackout.data.dto.UserDto
 import com.august.ua.blackout.data.dto.mapToUserLocationShiftListDbo
@@ -323,11 +325,16 @@ class CreateUpdateLocationViewModel @Inject constructor(
 
             val current = ZonedDateTime.now(ZoneOffset.UTC)
 
-            val response = blackoutRepository.getOutrage(
-                date = current.parseDayTime(),
-                listOf(form.selectedCity?.oblastType!!),
-                listOf(form.selectedQueue!!)
+            val searchRequestData = OutrageSearchDto(
+                regions = listOf(
+                    OutrageRegionsDto(
+                        region = form.selectedCity?.oblastType!!,
+                        queues = listOf(form.selectedQueue!!)
+                    )
+                )
             )
+
+            val response = blackoutRepository.getOutrageSearch(searchRequestData)
 
             resetScreenState()
             when (response) {
