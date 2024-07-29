@@ -22,7 +22,7 @@ class UserWithAllLocationsToUserDtoMapper(
     private fun prepareLocations() = data?.locations?.map {
         LocationDto(
             name = it.locationName,
-            outragePushTime = it.selectedPushTime,
+            outragePushTime = it.selectedPushTime?.map {pushTime ->  pushTime.timeMin },
             queue = it.selectedQueue,
             region = it.selectedLocation
         )

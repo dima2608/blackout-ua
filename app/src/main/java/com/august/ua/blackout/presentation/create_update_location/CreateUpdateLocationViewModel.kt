@@ -437,7 +437,7 @@ class CreateUpdateLocationViewModel @Inject constructor(
             val userDto = UserDto(
                 deviceId = getApplication<Application>().getDeviceHardwareId(),
                 fcmToken = fcmToken,
-                locations = emptyList()
+                //locations = emptyList()
             )
 
             val response = userRepository.createUser(userDto)
@@ -466,8 +466,7 @@ class CreateUpdateLocationViewModel @Inject constructor(
                 return@launch
             }
 
-            val response =
-                userRepository.updateUser(getApplication<Application>().getDeviceHardwareId())
+            val response = userRepository.updateUser()
 
             when (response) {
                 is ResultState.Error -> showError(response.errorDvo.toString())

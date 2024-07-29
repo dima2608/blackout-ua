@@ -31,9 +31,9 @@ interface UserService {
     ): NetworkResult<Unit>
 
 
-    @PATCH("${BASE_PATH}/{id}")
+    @PATCH("${BASE_PATH}/{userId}")
     suspend fun updateUser(
-        @Path("id") userId: String,
+        @Path("userId") userId: String,
         @Body user: UserDto?
     ): NetworkResult<UserDto>
 
