@@ -78,7 +78,8 @@ fun CreateUpdateLocationScreen(
     CreateUpdateLocationContent(
         uiState = uiState,
         onUiEvent = viewModel::onUiEvent,
-        screenState = screenState
+        screenState = screenState,
+        onActionPerformed = viewModel::performSnackbarAction
     )
 
     BackHandler {
@@ -91,6 +92,7 @@ fun CreateUpdateLocationScreen(
             is NavigationEvent.NavigateTo -> navigate(state.screenRoute)
             NavigationEvent.None -> Unit
         }
+        viewModel.resetNavState()
     }
 }
 
@@ -98,7 +100,8 @@ fun CreateUpdateLocationScreen(
 private fun CreateUpdateLocationContent(
     uiState: CreateUpdateLocationState,
     onUiEvent: (CreateUpdateLocationEvent) -> Unit,
-    screenState: ScreenState
+    screenState: ScreenState,
+    onActionPerformed: ((() -> Unit) -> Unit)?,
 ) {
     val listState = rememberLazyListState()
     val scope = rememberCoroutineScope()
@@ -296,7 +299,7 @@ private fun CreateUpdateLocationContent(
                 }
 
                 ScreenState.Loading -> {}
-                ScreenState.NoInternetConnection -> showSnackbar(
+                is ScreenState.NoInternetConnection -> showSnackbar(
                     message = noInternetConnectionTitle,
                     actionLabel = noInternetConnectionLabel,
                     scope = scope,
@@ -305,7 +308,7 @@ private fun CreateUpdateLocationContent(
                         onUiEvent(CreateUpdateLocationEvent.OnSnackbarDismissed)
                     },
                     onActionPerformed = {
-                        onUiEvent(CreateUpdateLocationEvent.OnSnackbarRetry)
+                        onActionPerformed?.invoke(screenState.action)
                     }
                 )
 
@@ -490,7 +493,10 @@ private fun Prev() {
             onUiEvent = {
 
             },
-            screenState = ScreenState.None
+            screenState = ScreenState.None,
+            onActionPerformed = {
+
+            }
         )
     }
 }

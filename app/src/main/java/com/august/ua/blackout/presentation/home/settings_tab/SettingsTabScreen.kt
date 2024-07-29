@@ -1,83 +1,78 @@
 package com.august.ua.blackout.presentation.home.settings_tab
 
-import android.util.Log
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.ClipboardManager
-import androidx.compose.ui.platform.LocalClipboardManager
-import androidx.compose.ui.text.AnnotatedString
-import com.august.ua.blackout.MainActivity
-import com.august.ua.blackout.ui.components.AppButton
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.firebase.messaging.FirebaseMessaging
-import com.pluto.Pluto
-import com.pluto.plugins.rooms.db.PlutoRoomsDatabasePlugin
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.august.ua.blackout.R
+import com.august.ua.blackout.presentation.common.ScreenState
+import com.august.ua.blackout.presentation.create_update_location.state.CreateUpdateLocationState
+import com.august.ua.blackout.ui.components.AppSnackBar
+import com.august.ua.blackout.ui.components.TitleToolbar
 
 @Composable
-fun SettingsTabScreen() {
+fun SettingsTabScreen(
+    viewModel: SettingsViewModel = hiltViewModel(),
+) {
+    val uiState by viewModel.uiState.collectAsState()
+    val screenState by viewModel.screenState.collectAsState()
+    val navEvent by viewModel.navEvent.collectAsState()
 
-    val clipboardManager: ClipboardManager = LocalClipboardManager.current
-    var tokenText by remember { mutableStateOf("")}
+    SettingsTabContent(
+        uiState = uiState,
+        screenState = screenState,
+        onActionPerformed = {}
+    )
+}
 
-//    LaunchedEffect(Unit) {
-//        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
-//            if (!task.isSuccessful) {
-//                return@OnCompleteListener
-//            }
-//            val token = task.result
-//            Log.d(MainActivity::class.java.simpleName, "token =========>>>>>> $token")
-//            tokenText = token
-//        })
-//    }
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
+@Composable
+private fun SettingsTabContent(
+    uiState: CreateUpdateLocationState,
+    screenState: ScreenState,
+    onActionPerformed: ((() -> Unit) -> Unit)?,
+) {
+    val listState = rememberLazyListState()
+    val scope = rememberCoroutineScope()
+    val snackbar = remember {
+        SnackbarHostState()
+    }
 
-
-        Column(
-            modifier = Modifier
-                .fillMaxSize(),
-            verticalArrangement = Arrangement.Center
-        ) {
-            AppButton(
-                modifier = Modifier.fillMaxWidth(),
-                enabled = true,
-                text = "Open Debug",
-                contentPadding = PaddingValues()
-            ) {
-                Pluto.open(PlutoRoomsDatabasePlugin.ID)
-            }
-
-
-            AppButton(
-                modifier = Modifier.fillMaxWidth(),
-                enabled = true,
-                text = "Get my FCM",
-                contentPadding = PaddingValues()
-            ) {
-                FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
-                    if (!task.isSuccessful) {
-                        return@OnCompleteListener
-                    }
-                    val token = task.result
-                    Log.d(MainActivity::class.java.simpleName, "token =========>>>>>> $token")
-                    clipboardManager.setText(AnnotatedString(token))
-                })
-            }
+    var link by remember { mutableStateOf("") }
+    val focusManager = LocalFocusManager.current
+    val context = LocalContext.current
+    Scaffold(
+        modifier = Modifier,
+        topBar = {
+            TitleToolbar(
+                title = stringResource(id = R.string.settings),
+                showProgressIndicator = screenState == ScreenState.Loading
+            )
+        },
+        snackbarHost = {
+            AppSnackBar(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp)
+                    .padding(bottom = 12.dp),
+                snackBarHostState = snackbar
+            )
         }
+    ) { innerPadding ->
+
 
     }
 }

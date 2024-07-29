@@ -37,22 +37,28 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.august.ua.blackout.R
 import com.august.ua.blackout.data.dvo.LocationDvo
 import com.august.ua.blackout.presentation.common.NavigationEvent
+import com.august.ua.blackout.presentation.common.ScreenState
 import com.august.ua.blackout.presentation.home.locations_tab.components.ErrorMessage
 import com.august.ua.blackout.presentation.home.locations_tab.components.LoadingNextPageItem
 import com.august.ua.blackout.presentation.home.locations_tab.components.LocationExpandItem
 import com.august.ua.blackout.presentation.home.locations_tab.components.PageLoader
 import com.august.ua.blackout.presentation.home.locations_tab.event.LocationsEvent
+import com.august.ua.blackout.presentation.onboarding.event.OnboardingEvent
 import com.august.ua.blackout.ui.common.extensions.isScrollingUp
 import com.august.ua.blackout.ui.common.extensions.itemBottomSpacer
 import com.august.ua.blackout.ui.components.AppSnackBar
 import com.august.ua.blackout.ui.components.LocationToolbar
+import com.august.ua.blackout.ui.components.NoLocationFound
+import com.august.ua.blackout.ui.components.showSnackbar
 import com.august.ua.blackout.ui.theme.Black
 import com.august.ua.blackout.ui.theme.White
 import com.august.ua.blackout.ui.theme.Yellow
@@ -66,10 +72,13 @@ fun LocationsTabScreen(
 
     val navEvent by viewModel.navEvent.collectAsState()
     val locationsState = viewModel.locationsState.collectAsLazyPagingItems()
+    val screenState by viewModel.screenState.collectAsState()
 
     LocationsTabContent(
         locationsPagingItem = locationsState,
-        onUiEvent = viewModel::onUiEvent
+        screenState = screenState,
+        onUiEvent = viewModel::onUiEvent,
+        onActionPerformed = viewModel::performSnackbarAction
     )
 
     LaunchedEffect(navEvent) {
@@ -85,7 +94,9 @@ fun LocationsTabScreen(
 @Composable
 private fun LocationsTabContent(
     locationsPagingItem: LazyPagingItems<LocationDvo>,
-    onUiEvent: (LocationsEvent) -> Unit
+    screenState: ScreenState,
+    onUiEvent: (LocationsEvent) -> Unit,
+    onActionPerformed: ((() -> Unit) -> Unit)?,
 ) {
 
     val listState = rememberLazyListState()
@@ -156,9 +167,11 @@ private fun LocationsTabContent(
         ) {
 
             item {
-                Spacer(modifier = Modifier
-                    .fillMaxWidth()
-                    .height(innerPadding.calculateTopPadding()))
+                Spacer(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(innerPadding.calculateTopPadding())
+                )
             }
 
             items(locationsPagingItem.itemCount) { index ->
@@ -209,10 +222,52 @@ private fun LocationsTabContent(
                                 onClickRetry = { retry() })
                         }
                     }
+
+                    loadState.source.refresh is LoadState.NotLoading && loadState.append.endOfPaginationReached && itemCount < 1 -> {
+                        item {
+                            NoLocationFound(modifier = Modifier.fillMaxSize())
+                        }
+                    }
                 }
             }
 
             itemBottomSpacer()
         }
+
+        val noInternetConnectionTitle = stringResource(id = R.string.no_internet_connection)
+        val noInternetConnectionLabel = stringResource(id = R.string.retry)
+
+        LaunchedEffect(screenState) {
+            when (screenState) {
+                is ScreenState.ErrorState -> showSnackbar(
+                    message = screenState.error,
+                    scope = scope,
+                    snackbar = snackbar,
+                    onSnackbarDismissed = {
+                        onUiEvent(LocationsEvent.OnSnackbarDismissed)
+                    }
+                )
+
+                ScreenState.Loading -> {}
+                is ScreenState.NoInternetConnection -> showSnackbar(
+                    message = noInternetConnectionTitle,
+                    actionLabel = noInternetConnectionLabel,
+                    scope = scope,
+                    snackbar = snackbar,
+                    onSnackbarDismissed = {
+                        onUiEvent(LocationsEvent.OnSnackbarDismissed)
+                    },
+                    onActionPerformed = {
+                        onActionPerformed?.invoke(screenState.action)
+                    }
+                )
+
+                ScreenState.NoInternetConnectionFullscreen -> Unit
+                ScreenState.None -> {
+                    snackbar.currentSnackbarData?.dismiss()
+                }
+            }
+        }
+
     }
 }

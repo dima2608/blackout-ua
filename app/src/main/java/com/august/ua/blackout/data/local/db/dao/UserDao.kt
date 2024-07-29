@@ -13,17 +13,20 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface UserDao {
 
-    @Query("SELECT * FROM user LIMIT 1")
+    @Query("SELECT * FROM user_table LIMIT 1")
     suspend fun getUser(): UserDbo?
 
-    @Query("SELECT * FROM user LIMIT 1")
+    @Query("SELECT * FROM user_table LIMIT 1")
     fun observeUser(): Flow<UserDbo?>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(userDbo: UserDbo)
 
-    @Query("DELETE FROM user")
+    @Query("DELETE FROM user_table")
     suspend fun deleteAll()
+
+    @Query("UPDATE user_table SET isGrantPushPermissionScreenSeen = :wasSeen")
+    suspend fun setIsNotificationPermissionScreenWasSeen(wasSeen:Boolean)
 
     @Transaction
     suspend fun update(userDbo: UserDbo) {
@@ -32,6 +35,6 @@ interface UserDao {
     }
 
     @Transaction
-    @Query("SELECT * FROM user")
+    @Query("SELECT * FROM user_table")
     suspend fun getUserWithLocations(): UserWithAllLocations?
 }

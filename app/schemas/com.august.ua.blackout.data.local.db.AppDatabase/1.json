@@ -2,10 +2,10 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "8bc64cd3a234a6e14ca407b3df36e5a8",
+    "identityHash": "d7dcbf93a3a32b69e56013168de51f5f",
     "entities": [
       {
-        "tableName": "user",
+        "tableName": "user_table",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `isAllPushTurnOn` INTEGER NOT NULL, `isOutrageUpdatePushOn` INTEGER NOT NULL, `isNextDayOutragePushOn` INTEGER NOT NULL, `isGrantPushPermissionScreenSeen` INTEGER NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
@@ -227,7 +227,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '8bc64cd3a234a6e14ca407b3df36e5a8')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'd7dcbf93a3a32b69e56013168de51f5f')"
     ]
   }
 }

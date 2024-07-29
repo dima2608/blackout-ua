@@ -17,6 +17,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.august.ua.blackout.R
+import com.august.ua.blackout.ui.theme.Black
 
 @Composable
 fun PageLoader(modifier: Modifier = Modifier) {
@@ -31,7 +32,7 @@ fun PageLoader(modifier: Modifier = Modifier) {
             maxLines = 1,
             overflow = TextOverflow.Ellipsis
         )
-        CircularProgressIndicator(Modifier.padding(top = 10.dp))
+        CircularProgressIndicator(Modifier.padding(top = 10.dp), color = Black)
     }
 }
 
@@ -41,7 +42,8 @@ fun LoadingNextPageItem(modifier: Modifier) {
         modifier = modifier
             .fillMaxWidth()
             .padding(10.dp)
-            .wrapContentWidth(Alignment.CenterHorizontally)
+            .wrapContentWidth(Alignment.CenterHorizontally),
+        color = Black
     )
 }
 

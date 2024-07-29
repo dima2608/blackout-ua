@@ -28,4 +28,5 @@ interface UserRepository<T, D> {
     suspend fun getUser(): UserDbo?
     suspend fun createUser(user: D): ResultState<Any>
     suspend fun getUserWithLocations(): UserDto?
+    suspend fun saveIsAskNotificationScreenWasShown(wasSeen: Boolean)
 }

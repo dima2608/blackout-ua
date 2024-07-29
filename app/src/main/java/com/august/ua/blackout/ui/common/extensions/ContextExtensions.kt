@@ -87,3 +87,17 @@ fun Context.updateResources(language: String) {
         resources.updateConfiguration(configuration, resources.displayMetrics)
     }
 }
+
+fun Context.getVersionName(): String? {
+    try {
+        return packageManager.getPackageInfo(
+            packageName,
+            0
+        ).versionName + " (${packageManager.getPackageInfo(packageName, 0).longVersionCode})"
+    } catch (e: PackageManager.NameNotFoundException) {
+        e.printStackTrace()
+    } catch (e: Exception) {
+        e.printStackTrace()
+    }
+    return null
+}
